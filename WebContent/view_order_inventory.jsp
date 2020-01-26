@@ -349,8 +349,8 @@
 							<option value="Unallocated">Unallocated</option>
 							<option value="Allocated">Allocated</option>
 							<option value="Processing">Processing</option>
-							<option value="Delivered">Delivered</option>
-							<option value="Failed">Failed</option>
+							<option value="Completed">Completed</option>
+							<option value="Cancelled">Cancelled</option>
 						</select></td>
 					</tr>
 					

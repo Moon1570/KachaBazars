@@ -36,7 +36,7 @@ public class OrderDao {
 				OrdersModel sub =  (OrdersModel) type;
 				
 				if (sub.getDeliveryPersonModel() != null) {
-					if (sub.getDeliveryPersonModel().getDeliveryPersonId() == delId && sub.getOrderStatus().equalsIgnoreCase("allocated")) {
+					if (sub.getDeliveryPersonModel().getDeliveryPersonId() == delId) {
 						ordersModels2.add(sub);
 						
 						System.out.println("Union Id = " + sub.getDeliveryPersonModel().getDeliveryPersonId());

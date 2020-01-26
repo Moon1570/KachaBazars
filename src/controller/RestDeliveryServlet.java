@@ -41,7 +41,7 @@ public class RestDeliveryServlet extends HttpServlet {
 		if (action == null) {
 			System.out.println("No action is GIVEN");
 		}
-		else if (action.equals("getneworders")) {
+		else if (action.equals("getorders")) {
 			
 			int delId = Integer.parseInt(request.getParameter("delId"));
 			
