@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -58,17 +59,15 @@ public class CustomerModel {
 	@Column(name = "customer_dob")
 	private Date customerDOB;
 	
-	@Column(name = "customer_image_path")
-	private String customerImagePath;
-	
-	@Column(name = "customer_image_name")
-	private String customerImageName;
-	
 	@Column(name = "customer_password")
 	private String customerPassword;
 	
 	@Column(name = "customer_zipcode")
 	private String customerZipcode;
+	
+	@Lob
+    @Column(name="customer_image", nullable=false, columnDefinition="mediumblob")
+    private byte[] image;
 
 	public int getCustomerId() {
 		return customerId;
@@ -166,21 +165,15 @@ public class CustomerModel {
 		this.customerDOB = customerDOB;
 	}
 
-	public String getCustomerImagePath() {
-		return customerImagePath;
+	
+	public byte[] getImage() {
+		return image;
 	}
 
-	public void setCustomerImagePath(String customerImagePath) {
-		this.customerImagePath = customerImagePath;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
-	public String getCustomerImageName() {
-		return customerImageName;
-	}
-
-	public void setCustomerImageName(String customerImageName) {
-		this.customerImageName = customerImageName;
-	}
 	public String getCustomerPassword() {
 		return customerPassword;
 	}

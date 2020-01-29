@@ -109,5 +109,7 @@
 	<classpathentry kind="lib" path="C:/Users/HP/Desktop/Backups/7_10/ecommerce/WebContent/WEB-INF/lib/netty-transport-native-epoll-4.0.37.Final-linux-x86_64.jar"/>
 	<classpathentry kind="lib" path="C:/Users/HP/Desktop/Backups/7_10/ecommerce/WebContent/WEB-INF/lib/reactive-streams-1.0.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/HP/Desktop/Backups/7_10/ecommerce/WebContent/WEB-INF/lib/slf4j-api-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/Users/HP/Desktop/Backups/7_10/ecommerce/WebContent/WEB-INF/lib/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/HP/Desktop/Backups/7_10/ecommerce/WebContent/WEB-INF/lib/commons-text-1.8.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

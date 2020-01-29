@@ -13,7 +13,21 @@ body
 	text-align: center;
 }
 
+.mbar
+{
+	top: 0;
+	left: 0;
+	right: 0;
+	position: fixed;
+	height: 80px;
+	background-color: #4ce67f;
+}
 
+.hlogo h2
+{
+	color: #ffff;
+	line-height: 40px;
+}
 
 .navbar
 {

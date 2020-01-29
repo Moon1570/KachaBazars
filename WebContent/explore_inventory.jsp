@@ -8,7 +8,6 @@
 <%@page import="dao.AreaDao"%>
 <%@page import="model.DistrictModel"%>
 <%@page import="model.DivisionModel"%>
-<%@page import="model.AreaModel"%>
 <%@page import="model.CustomerModel"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.DBData"%>
@@ -50,7 +49,7 @@
 	<c:forEach items="${productList }" var="product">
 
 		<img calss="product-image"
-			src="images/products/${product.productImageName }"
+			src="./getimage?id=${product.productId}&action=product"
 			alt="Image">
 		<a
 			href="./viewproducts?action=sellerorder&productid=${product.productId }">

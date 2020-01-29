@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -56,11 +57,9 @@ public class SellerModel {
 	@Column(name = "seller_dob")
 	private Date sellerDOB;
 	
-	@Column(name = "seller_image_path")
-	private String sellerImagePath;
-	
-	@Column(name = "seller_image_name")
-	private String sellerImageName;
+	@Lob
+    @Column(name="seller_image", nullable=false, columnDefinition="mediumblob")
+    private byte[] image;
 	
 	@Column(name = "nid")
 	private String sellerNID;
@@ -195,19 +194,13 @@ public class SellerModel {
 		this.sellerGender = sellerGender;
 	}
 
-	public String getSellerImagePath() {
-		return sellerImagePath;
+	public byte[] getImage() {
+		return image;
 	}
 
-	public void setSellerImagePath(String sellerImagePath) {
-		this.sellerImagePath = sellerImagePath;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
-	public String getSellerImageName() {
-		return sellerImageName;
-	}
-
-	public void setSellerImageName(String sellerImageName) {
-		this.sellerImageName = sellerImageName;
-	}
+	
 }

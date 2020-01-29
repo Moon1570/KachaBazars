@@ -4,7 +4,6 @@
 <%@page import="model.DivisionModel"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.AreaDao"%>
-<%@page import="model.AreaModel"%>
 <%@page import="dao.DBData"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

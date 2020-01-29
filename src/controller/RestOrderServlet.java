@@ -46,6 +46,9 @@ public class RestOrderServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		
 		String action = request.getParameter("action");
 		if (action.equals("orderfrominventory")) {
 			
@@ -112,7 +115,14 @@ public class RestOrderServlet extends HttpServlet {
 			ordersModel.setProductModel(productModel);
 			ordersModel.setPaymentStatus(true);
 			
-			System.out.println("here");
+			double qty = ordersModel.getOrderQuantity();
+			double stock = productModel.getProductStock();
+			
+			stock = stock-qty;
+			
+			productModel.setProductStock(stock);
+			
+			db.updateProduct(productModel);
 			
 			db.saveOrder(ordersModel);
 			
@@ -222,6 +232,14 @@ public class RestOrderServlet extends HttpServlet {
 			
 			OrderSellerProductModel orderSellerProductModel = db.getOrderSellerProductByTranId(tranId);
 			orderSellerProductModel.setPaymentStatus(true);
+			
+			double qty = orderSellerProductModel.getOrderQuantity();
+			SellersProduct sellersProduct = orderSellerProductModel.getSellersProduct();
+			double stock = sellersProduct.getProductQuantity();
+			stock = stock-qty;
+			
+			sellersProduct.setProductQuantity(stock);
+			db.updateSellerProduct(sellersProduct);
 			db.updateOrderSellerProduct(orderSellerProductModel);
 			
 			PrintWriter pWriter = response.getWriter();

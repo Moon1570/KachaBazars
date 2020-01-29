@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import customs.EscapeString;
 import dao.DBData;
 import dao.DeliveryDao;
 import model.DeliveryPersonModel;
@@ -78,8 +79,8 @@ public class DeliveryPersonOperationServlet extends HttpServlet {
 
 		if (action.equalsIgnoreCase("dlogin")) {
 
-			String phone = request.getParameter("deliveryPersonPhone");
-			String password = request.getParameter("deliveryPersonPassword");
+			String phone = EscapeString.EscapePassword(request.getParameter("deliveryPersonPhone"));
+			String password = EscapeString.EscapePassword(request.getParameter("deliveryPersonPassword"));
 
 			DeliveryPersonModel deliveryPersonModel = new DeliveryPersonModel();
 

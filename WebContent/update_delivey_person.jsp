@@ -178,38 +178,38 @@
 	
 	
 	<div class="container">
-		<form enctype="multipart/form-data" action="./deliveries" method="post">
+		<form enctype="multipart/form-data" action="./deliveries?action=update" method="post">
 		<div class="box">
 			
 			<table>
 				<tr>
 					<td>First Name</td>
-					<td><input type="text" name="deliveryPersonFirstName" required="required"></td>
+					<td><input type="text" name="deliveryPersonFirstName" value="" required="required"></td>
 				</tr>
 				
 				<tr>
 					<td>Last Name</td>
-					<td><input type="text" name="deliveryPersonLastName" required="required"></td>
+					<td><input type="text" name="deliveryPersonLastName" value="" required="required"></td>
 				</tr>
 				
 				<tr>
 					<td>Phone Number</td>
-					<td><input type="text" name="deliveryPersonPhone" required="required"></td>
+					<td><input type="text" name="deliveryPersonPhone" value="" required="required"></td>
 				</tr>
 				
 				<tr>
 					<td>Date of Birth</td>
-					<td><input type="date" name="deliveryPersonDOB" required="required"></td>
+					<td><input type="date" name="deliveryPersonDOB" value="" required="required"></td>
 				</tr>
 				
 				<tr>
 					<td>Image</td>
-					<td><input type="file" name="deliveryImage" required="required"></td>
+					<td><input type="file" name="deliveryImage" value="" required="required"></td>
 				</tr>
 				
 				<tr>
 					<td>NID</td>
-					<td><input type="text" name="deliveryPersonNID" required="required"></td>
+					<td><input type="text" name="deliveryPersonNID" value="" required="required"></td>
 				</tr>
 				
 				<tr>
@@ -285,20 +285,14 @@
 					
 					<tr>
 						<td>Password</td>
-						<td><input type="password" class="input-field"  name="deliveryPassword" required="required">
+						<td><input type="password" class="input-field" value="" name="deliveryPassword" required="required">
 								
 						</td>
 					</tr>
 	
 				
 			</table>
-			<c:if test="${action=='update'}">
-				<input type="hidden" value="update" name="action">	
-			</c:if>
-						
-			<c:if test="${action=='add'}">
-				<input type="hidden" value="add" name="action">
-			</c:if>
+			
 			
 			<div class="submit-button" align="center">
 				<input type="submit" value="Submit">

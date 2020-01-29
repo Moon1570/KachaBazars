@@ -50,48 +50,14 @@
 
 </head>
 <body>
-	<div class="menubar">
-		<div class="head-navbar">
-			<div class="logo">
+	<div class="mbar">
+		<div class="hnavbar">
+			<div class="hlogo">
 				<h2>KachaBazar<span>.com</span></h2>
 			</div>
 			
-			
-			
-			
-			
-			<nav class="main-menu">
-				<ul>
-					<li class="menu-name-1"><b><a href="Homepage.jsp">Home</a></b></li>
-					
-				
-
-
-					<c:if test="${login=='login'}">
-						<li class="menu-name-1"><b><a
-								href="./Cart?cid=${cid}&action=view">Cart</a></b></li>
-
-					</c:if>
-					<c:if test="${login!='login'}">
-						<li class="menu-name-1"><b><a
-								href="./customers?action=login">Cart</a></b></li>
-					</c:if>
-
-
-					<c:if test="${login=='login'}">
-						<li class="menu-name-1"><b><a
-								href="./customers?action=logout">Logout</a></b></li>
-					</c:if>
-					<c:if test="${login!='login'}">
-						<li class="menu-name-1"><b><a
-								href="./customers?action=login">Login</a></b></li>
-					</c:if>
-
-
-				</ul>
-			</nav>
 		</div>
-		</div>
+	</div>
 
 </body>
 </html>

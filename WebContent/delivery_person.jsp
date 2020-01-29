@@ -107,7 +107,7 @@
 					<th>Phone</th>
 					<th>Image</th>
 					<th>Date of Birth</th>
-					<th>Zone</th>
+					<th colspan="2">action</th>
 				</tr>
 					
 				<c:forEach items="${deliveries}" var="delivery">
@@ -115,11 +115,19 @@
 						<td>${delivery.deliveryPersonId}</td>
 						<td>${delivery.deliveryPersonFirstName}</td>
 						<td>${delivery.deliveryPersonLastName}</td>	
-						<td>${delivery.deliveryPersonAddress}</td>
+						<td>${delivery.deliveryHoldingNumber}, ${delivery.delieryStreet}, ${delivery.deliveryVillage}, 
+						${delivery.unionModel.unionBanglaName}, ${delivery.upazillaModel.upazillaBangaName}, ${delivery.districtModel.districtBanglaName}, ${delivery.divisionmodel.divisionBanglaName}
+						</td>
 						<td>${delivery.deliveryPersonPhone}</td>
-						<td><img alt="" src="images/delivery/${delivery.deliveryPersonImageName}" height="50px" width="90px"> </td>
+						<td><img alt="" src="./getimage?id=${delivery.deliveryPersonId}&action=delivery" height="50px" width="90px"> </td>
 						<td>${delivery.deliveryPersonDOB}</td>
-						<td>${delivery.deliveryZone.areaName }</td>
+						<td><b>
+						<!-- 
+						<a class="blue-button table-radius"
+						href="./deliveries?action=update&dpid=${delivery.deliveryPersonId}"><del>Update</del></a></b></td>
+						 -->
+					<td><b><a class="red-button"
+						href="./deliveries?action=delete&dpid=${delivery.deliveryPersonId}">Delete</a></b></td>
 					</tr>
 				</c:forEach>
 			</table>

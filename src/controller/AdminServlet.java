@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import customs.EscapeString;
 import dao.DBData;
 import model.AdminModel;
 import model.CustomerModel;
@@ -21,6 +22,8 @@ public class AdminServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession();
 		
@@ -54,6 +57,8 @@ public class AdminServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		
 		String action = request.getParameter("action");
 		
@@ -61,7 +66,7 @@ public class AdminServlet extends HttpServlet {
 			
 			String name, password;
 			
-			name = request.getParameter("adminName");
+			name = EscapeString.Escape(request.getParameter("adminName"));
 			password = request.getParameter("adminPassword");
 			
 			AdminModel adminModel =db.getAdminPasswordByName(name);

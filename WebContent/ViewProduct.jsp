@@ -42,13 +42,14 @@
 			<table class="product-table">
 				<tr>
 					<td colspan="2"><img class="product-image"
-						src="images/products/${product.productImageName}" alt="image">
+						src="./getimage?id=${product.productId}&action=product" alt="image">
 					</td>
 				</tr>
 
 				<tr>
 					<td colspan="2"><h1>
-							<u>${product.productName}</u>
+							<u>${product.productName}</u><br>
+							<u>${message }</u>
 						</h1></td>
 				</tr>
 
@@ -70,6 +71,10 @@
 				<tr>
 					<td class="section"><h4>Price :</td>
 					<td><h4>${product.productPrice}/=</td>
+				</tr>
+				<tr>
+					<td class="section"><h4>Stock :</td>
+					<td><h4>${product.productStock}/=</td>
 				</tr>
 
 				<tr>

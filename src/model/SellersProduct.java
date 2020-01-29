@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -33,11 +34,9 @@ public class SellersProduct {
 	@Column(name = "product_description")
 	private String productDescription;
 	
-	@Column(name = "product_image_path")
-	private String productImagePath;
-	
-	@Column(name = "product_image_name")
-	private String productImageName;
+	@Lob
+    @Column(name="category_image", nullable=false, columnDefinition="mediumblob")
+    private byte[] image;
 	
 	@Column(name = "product_price")
 	private double productPrice;
@@ -97,20 +96,14 @@ public class SellersProduct {
 		this.productDescription = productDescription;
 	}
 
-	public String getProductImagePath() {
-		return productImagePath;
+	
+
+	public byte[] getImage() {
+		return image;
 	}
 
-	public void setProductImagePath(String productImagePath) {
-		this.productImagePath = productImagePath;
-	}
-
-	public String getProductImageName() {
-		return productImageName;
-	}
-
-	public void setProductImageName(String productImageName) {
-		this.productImageName = productImageName;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	public double getProductPrice() {

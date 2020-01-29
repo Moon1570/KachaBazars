@@ -65,7 +65,7 @@ public class DemandServlet extends HttpServlet {
 			for (int i = 0; i < intArray.length; i++) {
 				if (intArray[i] != 0 ) {
 					ProductModel productModel = db.getProductById(i);
-					productModel.setProductQuantity(intArray[i]);
+				//	productModel.setProductQuantity(intArray[i]);
 					productModels2.add(productModel);
 				}
 			}

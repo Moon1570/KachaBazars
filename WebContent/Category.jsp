@@ -1,6 +1,5 @@
 <%@page import="model.CategoryModel"%>
 <%@page import="model.ProductModel"%>
-<%@page import="model.AreaModel"%>
 <%@page import="model.OrdersModel"%>
 <%@page import="model.DeliveryPersonModel"%>
 <%@page import="model.SellerModel"%>
@@ -107,7 +106,7 @@
 				<td>${category.categoryId}</td>
 				<td>${category.categoryName}</td>
 				<td>${category.categoryDescription}</td>
-				<td><img alt="" src="images/categories/${category.categoryImageName}" width="200px" height="120px"> </td>
+				<td><img alt="" src="./getimage?id=${category.categoryId}&action=category" width="200px" height="120px"> </td>
 				<td>
 					<a class="blue-button small" href="/ecommerce/categories?action=update&id=${category.categoryId}">Update</a>
 				</td>

@@ -6,7 +6,6 @@
 <%@page import="dao.AreaDao"%>
 <%@page import="model.DistrictModel"%>
 <%@page import="model.DivisionModel"%>
-<%@page import="model.AreaModel"%>
 <%@page import="model.CustomerModel"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.DBData"%>
@@ -52,7 +51,7 @@
 					
 				<li class="product-card">
 				<div class="image-holder">
-					<img calss="product-image" src="images/sellerproducts/${product.productImageName}" alt="Image">
+					<img calss="product-image" src="./getimage?id=${product.productId}&action=sellerproduct" alt="Image">
 					<div class="product-options">
 						<div class="option">
 							<a href="./viewproducts?action=sellerorder&productid=${product.productId }"> <h4>One click buy</h4></a>

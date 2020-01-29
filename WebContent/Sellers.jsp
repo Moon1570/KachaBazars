@@ -123,7 +123,7 @@
 						<td>${seller.upazillaModel.upazillaBangaName}</td>
 						<td>${seller.unionModel.unionBanglaName}</td>
 						<td>${seller.sellerPhone}</td>
-						<td><img alt="" src="images/sellers/${seller.sellerImageName}" height="50px" width="90px"> </td>
+						<td><img alt="" src="./getimage?id=${seller.sellerId}&action=seller" height="50px" width="90px"> </td>
 						<td>${seller.sellerDOB}</td>
 					</tr>
 				</c:forEach>

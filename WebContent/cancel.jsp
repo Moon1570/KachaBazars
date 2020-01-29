@@ -8,7 +8,6 @@
 <%@page import="dao.AreaDao"%>
 <%@page import="model.DistrictModel"%>
 <%@page import="model.DivisionModel"%>
-<%@page import="model.AreaModel"%>
 <%@page import="model.CustomerModel"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.DBData"%>
@@ -27,15 +26,7 @@
 </head>
 <body>
 
-<%
-	Map<String, String[]> map = request.getParameterMap();
-	String[] act = map.get("status");
-	System.out.println(act[0]);
-	
-	System.out.println(request.getParameter("errorReason"));
-	
-	%>
-	
+
 	<div class="page-info">
 		<h2>
 			<u>Payment Status</u>
@@ -43,7 +34,7 @@
 	</div>
 	
 	<div class="img-info">
-		<img alt="Cancelled" src="images\close.gif">
+		<a href="Homepage.jsp"> <img alt="Cancelled" src="images\close.gif"> </a>
 	</div>
 
 <div class="info cancel">

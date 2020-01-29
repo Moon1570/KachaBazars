@@ -7,7 +7,6 @@
 <%@page import="dao.AreaDao"%>
 <%@page import="model.DistrictModel"%>
 <%@page import="model.DivisionModel"%>
-<%@page import="model.AreaModel"%>
 <%@page import="model.CustomerModel"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.DBData"%>
@@ -38,7 +37,7 @@
 	</div>
 	
 	<div class="img-info">
-		<img alt="success" src="images\success.gif">
+		<a href="Homepage.jsp"><img alt="success" src="images\success.gif"></a>
 	</div>
 
 <div class="info success">

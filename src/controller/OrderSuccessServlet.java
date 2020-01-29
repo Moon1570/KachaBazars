@@ -16,6 +16,8 @@ import dao.DBData;
 import dao.OrderDao;
 import model.OrderSellerProductModel;
 import model.OrdersModel;
+import model.ProductModel;
+import model.SellersProduct;
 import sslcommerz.TransactionResponseValidator;
 
 
@@ -50,21 +52,29 @@ public class OrderSuccessServlet extends HttpServlet {
 				}	
 			}	
 			try {
+				
 				if (transactionResponseValidator.receiveSuccessResponse(map2)) {
 					
 					String tranId = map2.get("tran_id");
-					System.out.println(tranId + "dsbfdjksbf");
 					
 					OrdersModel ordersModel = od.getOrderByTransactionId(tranId);
 					
 					ordersModel.setPaymentStatus(true);
+					double qty = ordersModel.getOrderQuantity();
+					double stock = ordersModel.getProductModel().getProductStock();
 					
+					stock = stock - qty;
+					
+					ProductModel productModel = ordersModel.getProductModel();
+					productModel.setProductStock(stock);
+					
+					db.updateProduct(productModel);					
 					db.updateOrder(ordersModel);
 					
-					request.getRequestDispatcher("/Homepage.jsp").forward(request, response);
+					request.getRequestDispatcher("/success.jsp").forward(request, response);
 				}
 				else {
-					request.getRequestDispatcher("fail.jsp").forward(request, response);
+					request.getRequestDispatcher("/fail.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -88,7 +98,6 @@ public class OrderSuccessServlet extends HttpServlet {
 				if (transactionResponseValidator.receiveSuccessResponse(map2)) {
 					
 					String tranId = map2.get("tran_id");
-					System.out.println(tranId + "dsbfdjksbf");
 					
 					OrdersModel ordersModel = od.getOrderByTransactionId(tranId);
 					
@@ -107,15 +116,25 @@ public class OrderSuccessServlet extends HttpServlet {
 						
 						sub.setPaymentStatus(true);
 						
+						double qty = sub.getOrderQuantity();
+						double stock = sub.getProductModel().getProductStock();
+						
+						stock = stock - qty;
+						
+						ProductModel productModel = sub.getProductModel();
+						productModel.setProductStock(stock);
+						
+						db.updateProduct(productModel);
+						
 						db.updateOrder(sub);
 
 					}
 					
 					
-					request.getRequestDispatcher("Homepage.jsp").forward(request, response);
+					request.getRequestDispatcher("/success.jsp").forward(request, response);
 				}
 				else {
-					request.getRequestDispatcher("fail.jsp").forward(request, response);
+					request.getRequestDispatcher("/fail.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -145,12 +164,21 @@ public class OrderSuccessServlet extends HttpServlet {
 					
 					ordersModel.setPaymentStatus(true);
 					
+					double qty = ordersModel.getOrderQuantity();
+					SellersProduct sellersProduct = ordersModel.getSellersProduct();
+					double stock = sellersProduct.getProductQuantity();
+					
+					stock = stock-qty;
+					
+					sellersProduct.setProductQuantity(stock);
+					
+					db.updateSellerProduct(sellersProduct);
 					db.updateOrderSellerProduct(ordersModel);
 					
-					request.getRequestDispatcher("Homepage.jsp").forward(request, response);
+					request.getRequestDispatcher("/success.jsp").forward(request, response);
 				}
 				else {
-					request.getRequestDispatcher("fail.jsp").forward(request, response);
+					request.getRequestDispatcher("/fail.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

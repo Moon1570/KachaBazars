@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import org.apache.commons.io.IOUtils;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
@@ -40,6 +43,8 @@ public class SellerServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		
+		
 		RequestDispatcher rd = null;
 		HttpSession session = request.getSession();
 		
@@ -119,20 +124,27 @@ public class SellerServlet extends HttpServlet {
 			String time = (dtf.format(now));
 
 			Part part = request.getPart("sellerImage");
-			String sellerImageName = getImageFileName(part);
-			sellerImageName = time + "_" + sellerImageName;
+			
+			InputStream inputStream = null;
 
-			String savePath = ("C:\\Users\\HP\\git\\test\\ecommerce\\WebContent\\images\\sellers" + File.separator + sellerImageName);
+			// prints out some information for debugging
+			System.out.println(part.getName());
+			System.out.println(part.getSize());
+			System.out.println(part.getContentType());
 
-			File fileSaveDirectory = new File(savePath);
-			part.write(savePath + File.separator);
+			// obtains input stream of the upload file
+
+			
+			
+			
+			inputStream = part.getInputStream();
+			byte[] bytes = IOUtils.toByteArray(inputStream);
 
 			sellerModel.setUnionModel(unionModel);
 			sellerModel.setUpazillaModel(upazillaModel);
 			sellerModel.setDistrictModel(districtModel);
 			sellerModel.setDivisionmodel(sellerDivision);
-			sellerModel.setSellerImageName(sellerImageName);
-			sellerModel.setSellerImagePath(savePath);
+			sellerModel.setImage(bytes);
 			sellerModel.setSellerPhone(sellerPhone);
 			sellerModel.setSellerFirstName(sellerFirstName);
 			sellerModel.setSellerLastName(sellerLastName);

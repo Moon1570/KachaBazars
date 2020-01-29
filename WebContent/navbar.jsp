@@ -67,7 +67,7 @@
 						<div class="profile-image second-option">
 							<a href="./profiles?action=customerprofile"><img
 								alt="user-image"
-								src="images/customers/${customer.customerImageName }"></a>
+								src="./getimage?id=${customer.customerId}&action=customer"></a>
 						</div> <%
  	} else {
  %>

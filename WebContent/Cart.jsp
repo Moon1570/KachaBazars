@@ -84,7 +84,7 @@
 					<td>${count }</td>
 						
 					<td class="name">${option.productModel.productName}</td>
-					<td class="image"><img src="images/products/${option.productModel.productImageName}" alt="Image"></td>
+					<td class="image"><img src="./getimage?id=${option.productModel.productId}&action=product" alt="Image"></td>
 					<td class="quantity">${option.cartProductQuantity}</td>
 					<td class="subtotal">${subTotal}/=</td>
 				</tr>

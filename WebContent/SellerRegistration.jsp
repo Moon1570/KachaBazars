@@ -22,7 +22,101 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Poppins&display=swap"
 	rel="stylesheet">
-<title>Products</title>
+<title>Kachabazars</title>
+
+<script type="text/javascript">
+	
+
+	function loadDistricts(str) {
+		var xhttp = new XMLHttpRequest();
+		
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+
+				var o = JSON.parse(this.responseText); // is a javascript object
+				json = JSON.stringify(o)
+
+				var ele = document.getElementById('districtsDropDown');
+				ele.innerHTML="";
+				for (x in o) {
+				
+					ele.innerHTML = ele.innerHTML
+							+ '<option value="' + x + '">'
+							+ o[x] + '</option>';
+				}
+				/*
+				for (x in o) {
+					document.getElementById("divisions").innerHTML += x + o[x]
+							+ "</br>";
+				}
+*/
+			}
+
+		};
+		xhttp.open("GET",
+				"./dropdown?divisionsId=" + str + "&action=divisions", true);
+		xhttp.send();
+		//alert("Hello...")
+
+	}
+
+	function loadUpazillas(str) {
+		var xhttp = new XMLHttpRequest();
+		
+		
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+
+				var o = JSON.parse(this.responseText); // is a javascript object
+				json = JSON.stringify(o)
+
+				var ele = document.getElementById('upazillasDropDown');
+				ele.innerHTML="";
+				for (x in o) {
+				
+					ele.innerHTML = ele.innerHTML
+							+ '<option value="' + x + '">'
+							+ o[x] + '</option>';
+				}
+			}
+
+		};
+		xhttp.open("GET",
+				"./dropdown?districtId="+str+"&action=districts", true);
+		xhttp.send();
+		//alert("Hello...")
+
+	}
+
+	function loadUnions(str) {
+		var xhttp = new XMLHttpRequest();
+		
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+
+				var o = JSON.parse(this.responseText); // is a javascript object
+				json = JSON.stringify(o)
+
+				var ele = document.getElementById('unionsDropDown');
+				ele.innerHTML="";
+				for (x in o) {
+					ele.innerHTML = ele.innerHTML
+							+ '<option value="' + x + '">'
+							+ o[x] + '</option>';
+				}
+
+
+			}
+
+		};
+		xhttp.open("GET",
+				"./dropdown?upazillasId="+str+"&action=unions", true);
+		xhttp.send();
+		//alert("Hello...")
+
+	}
+</script>
+
 </head>
 <body>
 
@@ -126,75 +220,59 @@
 					<td><input type="text" name="sellerPhone" required="required"></td>
 				</tr>
 				
-				<%
-					DBData db = new DBData();
-					AreaDao ad = new AreaDao();
-					
-					List<DivisionModel> divisionModels = db.getAllDivision();
-					request.setAttribute("divisions", divisionModels);
-				%>
 				
-				<tr>
-					<td>Seller Division</td>
-					<td>
-						<select name="sellerDivision" required="required">
-							<c:forEach items="${divisions}" var="division">
-								<option value="${division.divisionId }">${division.divisionBanglaName}</option>
-							</c:forEach>
-						</select>
-					</td>
-				</tr>
+				
+				
+				
+				
 				
 				<%
-					
-					List<DistrictModel> districtModels = ad.getAllDistricts();
-					request.setAttribute("districts", districtModels);
-				%>
+						DBData db = new DBData();
+						AreaDao ad = new AreaDao();
+
+						List<DivisionModel> divisionModels = db.getAllDivision();
+						request.setAttribute("divisions", divisionModels);
+					%>
+
+					<tr>
+						<td>Seller Division</td>
+						<td><select class="input-field" id="divisionsDropDown" onchange="loadDistricts(this.value)"  name="sellerDivision" required="required">
+								<c:forEach items="${divisions}" var="division">
+									<option value="${division.divisionId }">${division.divisionBanglaName}</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+
+					<tr>
+						<td>Seller District</td>
+						<td><select class="input-field" id="districtsDropDown" onchange="loadUpazillas(this.value)" name="sellerDistrict" required="required">
+						
+						</select></td>
+					</tr>
+
+
+					<tr>
+						<td>Seller Upazilla</td>
+						<td><select class="input-field" name="sellerUpazilla" id="upazillasDropDown" onchange="loadUnions(this.value)" required="required">
+								
+						</select></td>
+					</tr>
+
+
+
+					<tr>
+						<td>Seller Union</td>
+						<td><select class="input-field" id="unionsDropDown" name="sellerUnion" required="required">
+								
+						</select></td>
+					</tr>
 				
-				<tr>
-					<td>Seller District</td>
-					<td>
-						<select name="sellerDistrict" required="required">
-							<c:forEach items="${districts}" var="district">
-								<option value="${district.districtId }">${district.districtBanglaName}</option>
-							</c:forEach>
-						</select>
-					</td>
-				</tr>
 				
-				<%
-					
-					List<UpazillaModel> upazillaModels = ad.getAllUpazillas();
-					request.setAttribute("upazillas", upazillaModels);
-				%>
 				
-				<tr>
-					<td>Seller Upazilla</td>
-					<td>
-						<select name="sellerUpazilla" required="required">
-							<c:forEach items="${upazillas}" var="upazilla">
-								<option value="${upazilla.upazillaId }">${upazilla.upazillaBangaName}</option>
-							</c:forEach>
-						</select>
-					</td>
-				</tr>
 				
-				<%
-					
-					List<UnionModel> unionModels = ad.getAllUnions();
-					request.setAttribute("unions", unionModels);
-				%>
 				
-				<tr>
-					<td>Seller Union</td>
-					<td>
-						<select name="sellerUnion" required="required">
-							<c:forEach items="${unions}" var="union">
-								<option value="${union.unionId }">${union.unionBanglaName}</option>
-							</c:forEach>
-						</select>
-					</td>
-				</tr>
+				
+				
 				<tr>
 					<td>Seller Village</td>
 					<td><input type="text" name="sellerVillage" required="required"></td>

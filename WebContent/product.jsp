@@ -1,5 +1,4 @@
 <%@page import="model.ProductModel"%>
-<%@page import="model.AreaModel"%>
 <%@page import="model.OrdersModel"%>
 <%@page import="model.DeliveryPersonModel"%>
 <%@page import="model.SellerModel"%>
@@ -114,6 +113,7 @@
 				<th>ImageName</th>
 				<th>Seller's Price</th>
 				<th>Government Price</th>
+				<th>Stock</th>
 				<th colspan="2">Action</th>
 			</tr>
 			<c:forEach items="${products}" var="product">
@@ -121,10 +121,11 @@
 					<td>${product.productId }</td>
 					<td>${product.productName}</td>
 					<td>${product.productDescription}</td>
-					<td><img src="images/products/${product.productImageName}"
+					<td><img src="./getimage?id=${product.productId}&action=product"
 						alt="product image" height="80px" width="100px"></td>
 					<td>${product.productPrice}</td>
 					<td>${product.governmentPrice}</td>
+					<td>${product.productStock}</td>
 
 					<td><b><a class="blue-button table-radius"
 						href="./products?action=update&pid=${product.productId}&cid=${product.productCategory.categoryId}">Update</a></b></td>

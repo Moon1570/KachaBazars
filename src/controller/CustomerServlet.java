@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +19,9 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.websocket.Session;
 
+import org.apache.commons.io.IOUtils;
+
+import customs.EscapeString;
 import dao.AreaDao;
 import dao.DBData;
 import model.CartModel;
@@ -35,7 +39,7 @@ public class CustomerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	DBData db = new DBData();
-    
+	AreaDao aDao = new AreaDao();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -106,17 +110,17 @@ public class CustomerServlet extends HttpServlet {
 		if (action.equals("reg")) {
 			CustomerModel customerModel = new CustomerModel();
 			
-			String customerFirstName = request.getParameter("customerFirstName");
-			String customerLastName = request.getParameter("customerLastName");
-			String customerPhone = request.getParameter("customerPhone");
+			String customerFirstName = EscapeString.Escape(request.getParameter("customerFirstName"));
+			String customerLastName = EscapeString.Escape(request.getParameter("customerLastName"));
+			String customerPhone = EscapeString.EscapePassword(request.getParameter("customerPhone"));
 			int customerDivisionId = Integer.parseInt(request.getParameter("customerDivision"));
-			String customerPassword = request.getParameter("customerPassword");
-			String customerVillage = request.getParameter("customerVillage");
-			String customerStreet = request.getParameter("customerStreet");
-			String customerHoldingNumber = request.getParameter("customerHoldingNumber");
-			String customerZipcode = request.getParameter("customerZipcode");
+			String customerPassword = EscapeString.EscapePassword(request.getParameter("customerPassword"));
+			String customerVillage = EscapeString.Escape(request.getParameter("customerVillage"));
+			String customerStreet = EscapeString.Escape(request.getParameter("customerStreet"));
+			String customerHoldingNumber = EscapeString.EscapePassword(request.getParameter("customerHoldingNumber"));
+			String customerZipcode = EscapeString.EscapePassword(request.getParameter("customerZipcode"));
 			
-			AreaDao aDao = new AreaDao();
+			
 			DivisionModel divisionModel = aDao.getDivisionById(customerDivisionId);
 			
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
@@ -124,15 +128,21 @@ public class CustomerServlet extends HttpServlet {
 			String time = (dtf.format(now));
 			
 			Part part = request.getPart("customerImage");
-			String customerImageName = getImageFileName(part);
+						
+			InputStream inputStream = null;
+
+			// prints out some information for debugging
+			System.out.println(part.getName());
+			System.out.println(part.getSize());
+			System.out.println(part.getContentType());
+
+			// obtains input stream of the upload file
+
 			
-			customerImageName = time + "_" +  customerImageName;
 			
 			
-			String savePath=("C:\\Users\\HP\\Desktop\\Backups\\7_10\\ecommerce\\WebContent\\images\\customers"+File.separator+customerImageName);
-			
-			File fileSaveDirectory = new File(savePath);
-			part.write(savePath+File.separator);
+			inputStream = part.getInputStream();
+			byte[] bytes = IOUtils.toByteArray(inputStream);
 			
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 			String customerDOB = request.getParameter("customerDOB");
@@ -156,6 +166,7 @@ public class CustomerServlet extends HttpServlet {
 			int uniId = Integer.parseInt(request.getParameter("customerUnion"));
 			UnionModel unionModel = aDao.getUnionById(uniId);
 			
+			customerModel.setImage(bytes);
 			customerModel.setCustomerStreet(customerStreet);
 			customerModel.setCustomerVillage(customerVillage);
 			customerModel.setCustomerHoldingNumber(customerHoldingNumber);
@@ -168,12 +179,8 @@ public class CustomerServlet extends HttpServlet {
 			customerModel.setCustomerLastName(customerLastName);
 			customerModel.setCustomerPhone(customerPhone);
 			customerModel.setCustomerPassword(customerPassword);
-			customerModel.setCustomerImageName(customerImageName);
-			customerModel.setCustomerImagePath(savePath);
+			
 			customerModel.setCustomerZipcode(customerZipcode);
-			
-			
-			
 		
 			db.saveCustomer(customerModel);
 			
@@ -200,8 +207,8 @@ public class CustomerServlet extends HttpServlet {
 		else if (action.equals("login")) {
 			CustomerModel customerModel = new CustomerModel();
 			
-			String customerPhone = request.getParameter("customerPhone");
-			String customerPassword = request.getParameter("customerPassword");
+			String customerPhone = EscapeString.EscapePassword(request.getParameter("customerPhone"));
+			String customerPassword = EscapeString.EscapePassword(request.getParameter("customerPassword"));
 			
 			customerModel =db.getCustomerPasswordByPhone(customerPhone);
 			
@@ -248,18 +255,6 @@ public class CustomerServlet extends HttpServlet {
 				request.getRequestDispatcher("/CustomerLogin.jsp").forward(request, response);
 			}
 		}
-	}
-	
-	private String getImageFileName(Part part) {
-		String contentDisp = part.getHeader("content-disposition");
-        System.out.println("content-disposition header= "+contentDisp);
-        String[] tokens = contentDisp.split(";");
-        for (String token : tokens) {
-            if (token.trim().startsWith("filename")) {
-                return token.substring(token.indexOf("=") + 2, token.length()-1);
-            }
-        }
-        return "";
 	}
 
 }

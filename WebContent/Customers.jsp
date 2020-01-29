@@ -104,7 +104,7 @@
 				<td>${customer.customerFirstName}</td>
 				<td>${customer.customerLastName}</td>	
 				<td>${customer.customerPhone}</td>
-				<td><img alt="" src="images/customers/${customer.customerImageName}" height="50px" width="90px"> </td>
+				<td><img alt="" src="./getimage?id=${customer.customerId}&action=customer" height="50px" width="90px"> </td>
 				<td>${customer.customerDOB}</td>
 			</tr>
 			</c:forEach>

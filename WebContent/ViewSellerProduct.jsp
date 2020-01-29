@@ -40,7 +40,7 @@
 
 				<tr>
 					<td colspan="2"><img class="product-image"
-						src="images/sellerproducts/${product.productImageName}"
+						src="./getimage?id=${product.productId}&action=sellerproduct"
 						alt="image"></td>
 				</tr>
 

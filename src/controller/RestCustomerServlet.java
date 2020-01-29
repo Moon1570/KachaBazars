@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
 
@@ -82,10 +83,12 @@ public class RestCustomerServlet extends HttpServlet {
 				SellersProduct sub = (SellersProduct) type;
 				try {
 
+					String string = Base64.getEncoder().encodeToString(sub.getImage());
+					
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());
 					JO.put("productQuantity", sub.getProductQuantity());
-					JO.put("productImageName", sub.getProductImageName());
+					JO.put("productImageName", string);
 					JO.put("productId", sub.getProductId());
 					JO.put("sellerId", sub.getSellerModel().getSellerId());
 					JO.put("sellerName",
@@ -158,11 +161,12 @@ public class RestCustomerServlet extends HttpServlet {
 
 				SellersProduct sub = (SellersProduct) type;
 				try {
+					String string = Base64.getEncoder().encodeToString(sub.getImage());
 
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());
 					JO.put("productQuantity", sub.getProductQuantity());
-					JO.put("productImageName", sub.getProductImageName());
+					JO.put("productImageName", string);
 					JO.put("productId", sub.getProductId());
 					JO.put("sellerId", sub.getSellerModel().getSellerId());
 					JO.put("sellerName",
@@ -196,11 +200,13 @@ public class RestCustomerServlet extends HttpServlet {
 
 				CategoryModel sub = (CategoryModel) type;
 				try {
-
+					
+					String string = Base64.getEncoder().encodeToString(sub.getImage());
+										
 					JO.put("categoryId", sub.getCategoryId());
 					JO.put("categoryName", sub.getCategoryName());
 					JO.put("categoryDesc", sub.getCategoryDescription());
-					JO.put("categoryImage", sub.getCategoryImageName());
+					JO.put("categoryImage", string);
 
 					jsonArray.put(JO);
 
@@ -234,13 +240,16 @@ public class RestCustomerServlet extends HttpServlet {
 				ProductModel sub = (ProductModel) type;
 				try {
 
+					String string = Base64.getEncoder().encodeToString(sub.getImage());
+					
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());
-					JO.put("productQuantity", sub.getProductQuantity());
-					JO.put("productImageName", sub.getProductImageName());
+					JO.put("productQuantity", sub.getProductStock());
+					JO.put("productImageName", string);
 					JO.put("productId", sub.getProductId());
 					JO.put("productPrice", sub.getProductPrice());
 					JO.put("govtPrice", sub.getProductSubcategory().getGovtPrice());
+					JO.put("stock", sub.getProductStock());
 
 					jsonArray.put(JO);
 
@@ -281,6 +290,9 @@ public class RestCustomerServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 
 		String phone = request.getParameter("k1");
 		String pass = request.getParameter("k2");

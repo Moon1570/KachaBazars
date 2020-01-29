@@ -100,6 +100,7 @@ public class ParameterBuilder {
 	//	String baseUrl = "http://localhost:9090/ecommerce/";
 
         String baseUrl = "http://103.28.121.29:8080/ecommerce/";//Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/";
+
         Map<String, String> postData = new HashMap<String, String>();
         postData.put("total_amount", total + "");
         postData.put("tran_id", tranId);

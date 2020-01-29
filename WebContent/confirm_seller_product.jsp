@@ -8,7 +8,6 @@
 <%@page import="dao.AreaDao"%>
 <%@page import="model.DistrictModel"%>
 <%@page import="model.DivisionModel"%>
-<%@page import="model.AreaModel"%>
 <%@page import="model.CustomerModel"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.DBData"%>
@@ -180,7 +179,7 @@
 			<div class="current-info">
 			<h3>Use your current Information to buy</h3>
 			<div class="customer-image">
-				<img src="images/customers/${customers.customerImageName}">
+				<img src="./getimage?id=${customers.customerId}&action=customer">
 			</div>
 				<form
 					action="./orders?action=confirmsellerproductcurrentinfo&cid=${customers.customerId}&pid=${product.productId}&qty=${qty}"

@@ -16,7 +16,6 @@ import controller.OrderFromSeller;
 import dao.Connection;
 import javassist.bytecode.Descriptor.Iterator;
 import model.AdminModel;
-import model.AreaModel;
 import model.BidModel;
 import model.CartDetailsModel;
 import model.CartModel;
@@ -63,7 +62,6 @@ public class DBData {
 		Query queryExecuteable = session.createQuery(query);
 		CategoryModel categoryModel = (CategoryModel) queryExecuteable.list().get(0);
 		
-		con.closeSessionFactory();
 		session.flush();
 		session.close();
 		con.closeSessionFactory();
@@ -256,37 +254,8 @@ public class DBData {
 		con.closeSessionFactory();
 		return deliveryPersonModels;
 	}
-
-	public List<AreaModel> getAllAreas() {
-		// TODO Auto-generated method stub
-		List<AreaModel> areaModels = new ArrayList<>();
-		String query = "from AreaModel areaModels";
-		Connection con = new Connection();
-		Session session = con.getSessionFactory().openSession();
-
-		Query queryExecuteable = session.createQuery("from AreaModel areaModels");
-		areaModels = queryExecuteable.list();
-		session.flush();
-		session.close();
-		con.closeSessionFactory();
-		return areaModels;
-	}
 	
 	
-	public void saveArea(AreaModel areaModel) {
-		// TODO Auto-generated method stub
-		Connection con = new Connection();
-
-		Session session = con.getSessionFactory().openSession();
-
-		Transaction transaction = session.beginTransaction();
-		session.save(areaModel);
-		transaction.commit();
-		session.flush();
-		session.close();
-		con.closeSessionFactory();
-		System.out.println("Inserted...");
-	}
 
 	public List<OrdersModel> getAllOrders() {
 		// TODO Auto-generated method stub
@@ -594,19 +563,7 @@ public class DBData {
 		return seller;
 	}
 
-	public AreaModel getAreaById(int id) {
-		// TODO Auto-generated method stub
-		String query = "from AreaModel area where area.id=" + id;
-		Connection con = new Connection();
-		Session session = con.getSessionFactory().openSession();
-		
-		Query queryExecuteable = session.createQuery(query);
-		AreaModel area = (AreaModel) queryExecuteable.list().get(0);
-		session.flush();
-		session.close();
-		con.closeSessionFactory();
-		return area;
-	}
+	
 
 	public void saveDeliveryPerson(DeliveryPersonModel deliveryPersonModel) {
 		// TODO Auto-generated method stub
@@ -1415,5 +1372,62 @@ public class DBData {
 		session.close();
 		con.closeSessionFactory();
 		return ordersModel;
+	}
+
+	public void updateSellerProduct(SellersProduct sellersProduct) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+		Session session = con.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		session.update(sellersProduct);
+		transaction.commit();
+		System.out.println("Updated...");
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+	}
+
+	public void updateDeliveryPerson(DeliveryPersonModel deliveryPersonModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+		Session session = con.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		session.update(deliveryPersonModel);
+		transaction.commit();
+		System.out.println("Updated...");
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+	}
+
+	public void deleteDeliveryPerson(DeliveryPersonModel deliveryPersonModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.delete(deliveryPersonModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Deleted...");
+		
+	}
+
+	public void deleteProduct(ProductModel productModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.delete(productModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Deleted...");
 	}
 }

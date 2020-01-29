@@ -23,9 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import customs.EscapeString;
 import dao.AreaDao;
 import dao.DBData;
-import model.AreaModel;
 import model.CartDetailsModel;
 import model.CartModel;
 import model.CustomerModel;
@@ -121,7 +121,6 @@ public class OrdersServlet extends HttpServlet {
 
 			ordersModel.setDeliveryPersonModel(db.getDeliveryPersonById(did));
 			
-			System.out.println(" line 106 area " + db.getAreaById(aid));
 			
 			db.updateOrder(ordersModel);
 			
@@ -181,12 +180,12 @@ public class OrdersServlet extends HttpServlet {
 			ProductModel productModel = db.getProductById(pid);
 			OrdersModel ordersModel = new OrdersModel();
 
-			String careOfContact = request.getParameter("careOfContact");
-			String deliveryPhone = request.getParameter("deliveryPhone");
-			String deliveryVillage = request.getParameter("deliveryVillage");
+			String careOfContact = EscapeString.Escape(request.getParameter("careOfContact"));
+			String deliveryPhone = EscapeString.EscapePassword(request.getParameter("deliveryPhone"));
+			String deliveryVillage = EscapeString.Escape(request.getParameter("deliveryVillage"));
 
-			String deliveryStreet = request.getParameter("deliveryStreet");
-			String deliveryZipCode = request.getParameter("deliveryZipCode");
+			String deliveryStreet = EscapeString.Escape(request.getParameter("deliveryStreet"));
+			String deliveryZipCode = EscapeString.EscapePassword(request.getParameter("deliveryZipCode"));
 			String orderStatus = "Unallocated";
 
 			
@@ -260,11 +259,7 @@ public class OrdersServlet extends HttpServlet {
 			
 			TransactionInitiator trans = new TransactionInitiator();
 			
-			
-			String response1 = trans.initTrnxnRequest(ordersModel);
-			
-			
-			
+			String response1 = trans.initTrnxnRequest(ordersModel);		
 			
 			
 			response.sendRedirect(response1);
@@ -279,10 +274,10 @@ public class OrdersServlet extends HttpServlet {
 			int oid = Integer.parseInt(request.getParameter("oid").toString());
 
 			ordersModel.setOrderId(oid);
-			ordersModel.setCareOfContact(request.getParameter("careOfContact").toString());
-			ordersModel.setPhoneNumber(request.getParameter("deliveryPhone").toString());
-			ordersModel.setOrderQuantity(Double.parseDouble(request.getParameter("deliveryQuantity").toString()));
-			ordersModel.setOrderVillage(request.getParameter("deliveryVillage").toString());
+			ordersModel.setCareOfContact(EscapeString.Escape(request.getParameter("careOfContact")));
+			ordersModel.setPhoneNumber(EscapeString.EscapePassword(request.getParameter("deliveryPhone")));
+			ordersModel.setOrderQuantity(Double.parseDouble(EscapeString.EscapePassword(request.getParameter("deliveryQuantity"))));
+			ordersModel.setOrderVillage(EscapeString.Escape(request.getParameter("deliveryVillage")));
 			int divId = Integer.parseInt(request.getParameter("deliveryDivision"));
 			DivisionModel divisionModel = aDao.getDivisionById(divId);
 			
@@ -329,13 +324,11 @@ public class OrdersServlet extends HttpServlet {
 			OrdersModel ordersModel = new OrdersModel();
 			CustomerModel customerModel = db.getCustomerById(cid);
 							
-			String careOfContact = request.getParameter("careOfContact");
-			String deliveryPhone = request.getParameter("deliveryPhone");
-			String deliveryVillage = request.getParameter("deliveryVillage");
-			String deliveryUpazilla = request.getParameter("deliveryUpazilla");
-			String deliveryDistrict = request.getParameter("deliveryDistrict");
-			String deliveryStreet = request.getParameter("deliveryStreet");
-			String deliveryZipCode = request.getParameter("deliveryZipCode");
+			String careOfContact = EscapeString.Escape(request.getParameter("careOfContact"));
+			String deliveryPhone = EscapeString.EscapePassword(request.getParameter("deliveryPhone"));
+			String deliveryVillage = EscapeString.Escape(request.getParameter("deliveryVillage"));
+			String deliveryStreet = EscapeString.Escape(request.getParameter("deliveryStreet"));
+			String deliveryZipCode = EscapeString.EscapePassword(request.getParameter("deliveryZipCode"));
 			String orderStatus = "Unallocated";
 			
 			int divId = Integer.parseInt(request.getParameter("deliveryDivision"));
@@ -450,14 +443,14 @@ public class OrdersServlet extends HttpServlet {
 			SellerModel sellerModel = db.getSellerById(sellersProduct.getSellerModel().getSellerId());
 			OrderSellerProductModel ordersModel = new OrderSellerProductModel();
 
-			String careOfContact = request.getParameter("careOfContact");
-			String deliveryPhone = request.getParameter("deliveryPhone");
-			String deliveryVillage = request.getParameter("deliveryVillage");
-			String deliveryStreet = request.getParameter("deliveryStreet");
-			String deliveryZipCode = request.getParameter("deliveryZipCode");
+			String careOfContact = EscapeString.Escape(request.getParameter("careOfContact"));
+			String deliveryPhone = EscapeString.EscapePassword(request.getParameter("deliveryPhone"));
+			String deliveryVillage = EscapeString.Escape(request.getParameter("deliveryVillage"));
+			String deliveryStreet = EscapeString.Escape(request.getParameter("deliveryStreet"));
+			String deliveryZipCode = EscapeString.EscapePassword(request.getParameter("deliveryZipCode"));
 			String orderStatus = "Unallocated";
 
-			double orderQuantity = Double.parseDouble(request.getParameter("qty"));
+			double orderQuantity = Double.parseDouble(EscapeString.EscapePassword(request.getParameter("qty")));
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDateTime now = LocalDateTime.now();
 
@@ -537,7 +530,7 @@ public class OrdersServlet extends HttpServlet {
 			String deliveryZipCode = customerModel.getCustomerZipcode();
 			String orderStatus = "Unallocated";
 
-			double orderQuantity = Double.parseDouble(request.getParameter("qty"));
+			double orderQuantity = Double.parseDouble(EscapeString.EscapePassword(request.getParameter("qty")));
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDateTime now = LocalDateTime.now();
 
@@ -611,7 +604,7 @@ public class OrdersServlet extends HttpServlet {
 
 			String orderStatus = "Unallocated";
 			
-			double orderQuantity = Double.parseDouble(request.getParameter("qty"));
+			double orderQuantity = Double.parseDouble(EscapeString.EscapePassword(request.getParameter("qty")));
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDateTime now = LocalDateTime.now();
 

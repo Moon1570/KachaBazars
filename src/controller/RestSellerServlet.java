@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Iterator;
 
 import javax.servlet.ServletException;
@@ -29,6 +30,8 @@ public class RestSellerServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		
 		String action = request.getParameter("action");
 		
@@ -58,11 +61,12 @@ public class RestSellerServlet extends HttpServlet {
 				
 				SellersProduct sub =  (SellersProduct) type;
 				try {
+					String string = Base64.getEncoder().encodeToString(sub.getImage());
 					
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());
 					JO.put("productQuantity", sub.getProductQuantity());
-					JO.put("productImageName", sub.getProductImageName());
+					JO.put("productImageName", string);
 					JO.put("productId", sub.getProductId());
 					JO.put("sellerId", sub.getSellerModel().getSellerId());
 					JO.put("sellerName", sub.getSellerModel().getSellerFirstName()+ " " + sub.getSellerModel().getSellerLastName());
@@ -90,6 +94,9 @@ public class RestSellerServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		
 		String action = request.getParameter("action");
 		System.out.println("Post seler");

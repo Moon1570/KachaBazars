@@ -36,6 +36,9 @@ public class RestSellerProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		
 		String action = request.getParameter("action");
 
 		if (action == null) {
@@ -96,6 +99,9 @@ public class RestSellerProductServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		
 		String action = request.getParameter("action");
 
 		if (action == null) {
@@ -134,25 +140,12 @@ public class RestSellerProductServlet extends HttpServlet {
 			
 			
 			byte[] decodedBytes = Base64.getMimeDecoder().decode(encoded);
-			
-			String upload = "C:\\Users\\HP\\Desktop\\Backups\\7_10\\ecommerce\\WebContent\\images\\sellerproducts\\";
-			
-			String savePath=("C:\\Users\\HP\\Desktop\\Backups\\7_10\\ecommerce\\WebContent\\images\\sellerproducts"+File.separator+productImageName);
-			//	String savePath=("http:\\localhost:9090\\ecommerce\\images\\sellerproducts"+File.separator+productImageName);
-				//http://localhost:9090/ecommerce/images/products/20190923144614_pic11.jpg
-				File fileSaveDirectory = new File(savePath);
-			
-
-				
-				FileOutputStream fileOuputStream = new FileOutputStream(savePath);
-				fileOuputStream.write(decodedBytes);
-				fileOuputStream.close();
 				
 				SellersProduct sellersProduct = new SellersProduct();
 				
 				sellersProduct.setProductName(productName);
-				sellersProduct.setProductImageName(productImageName);
-				sellersProduct.setProductImagePath(savePath);
+	//			sellersProduct.setProductImageName(productImageName);
+	//			sellersProduct.setProductImagePath(savePath);
 				sellersProduct.setCategoryModel(categoryModel);
 				sellersProduct.setProductDescription(productDescription);
 				sellersProduct.setProductPrice(productPrice);
@@ -160,6 +153,7 @@ public class RestSellerProductServlet extends HttpServlet {
 				sellersProduct.setSellerModel(sellerModel);
 				sellersProduct.setSubcategoryModel(subcategoryModel);
 				sellersProduct.setUnitModel(unitModel);
+				sellersProduct.setImage(decodedBytes);
 				
 				db.saveSellerProduct(sellersProduct);
 				//	part.write(savePath+File.separator);

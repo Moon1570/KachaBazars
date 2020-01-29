@@ -175,7 +175,6 @@ public class SSLCommerz {
                           Map<String, String> requestParameters) throws IOException, NoSuchAlgorithmException {
         boolean hash_verified = this.ipnHashVerify(requestParameters);
         
-        System.out.println("hsaa " + hash_verified);
         
         if (hash_verified) {
 

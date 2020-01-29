@@ -105,6 +105,16 @@ public class ViewProductServlet extends HttpServlet {
 
 				ProductModel productModel = new ProductModel();
 				productModel = db.getProductById(pid);
+				
+				double qty = Double.parseDouble(productQuantity);
+				System.out.println(productModel.getProductStock());
+			
+				
+				if (qty> productModel.getProductStock()) {
+					request.setAttribute("product", productModel);
+					request.setAttribute("message", "Please see the stock");
+					request.getRequestDispatcher("/ViewProduct.jsp").forward(request, response);
+				}
 
 				CartDetailsModel cartDetailsModel = new CartDetailsModel();
 
@@ -143,6 +153,14 @@ public class ViewProductServlet extends HttpServlet {
 			String productQuantity = request.getParameter("productQuantity");
 			ProductModel productModel = new DBData().getProductById(pid);
 
+			double qty = Double.parseDouble(productQuantity);
+			
+			if (qty> productModel.getProductStock()) {
+				request.setAttribute("qty", productQuantity);
+				request.setAttribute("product", productModel);
+				request.setAttribute("message", "Please see the stock");
+				request.getRequestDispatcher("/ViewProduct.jsp").forward(request, response);
+			}
 			
 			request.setAttribute("qty", productQuantity);
 			request.setAttribute("product", productModel);

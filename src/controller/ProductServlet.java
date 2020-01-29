@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -13,6 +14,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.text.StringEscapeUtils;
+
+import customs.EscapeString;
 import dao.DBData;
 import model.CategoryModel;
 import model.ProductModel;
@@ -57,6 +63,12 @@ public class ProductServlet extends HttpServlet {
 			
 			
 			rd = request.getRequestDispatcher("/newproduct.jsp");
+		}else if (action.equals("delete")) {
+			int pid = Integer.parseInt(request.getParameter("pid").toString());
+			ProductModel productModel = db.getProductById(pid);
+			db.deleteProduct(productModel);
+			rd = request.getRequestDispatcher("/product.jsp");
+			
 		}
 		rd.forward(request, response);
 	}
@@ -64,6 +76,8 @@ public class ProductServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		
 		String action = request.getParameter("action");
 		System.out.println("line 50 "+action);
@@ -72,29 +86,38 @@ public class ProductServlet extends HttpServlet {
 			String productName = request.getParameter("productName");
 			String productDescription = request.getParameter("productDescription");
 			Part part = request.getPart("productImage");
-			String productImageName = getImageFileName(part);
 			String productPrice = request.getParameter("productPrice");
-	//		String productCategory = request.getParameter("dropdownProductCategory").toString();
-	//		String productSubcategory = request.getParameter("dropdownProductSubcategory").toString();
 			String governmentPrice = request.getParameter("governmentPrice");;
-	//		String productUnit = request.getParameter("unit").toString();
 			String productType = request.getParameter("productType");
-			
+			double productStock = Double.parseDouble(request.getParameter("productStock"));
 			
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
 			LocalDateTime now = LocalDateTime.now();  
 			String time = (dtf.format(now));  
 			
-			productImageName = time + "_" +  productImageName;
-			
-			
+			productName = EscapeString.Escape(productName);
+			productDescription = EscapeString.Escape(productDescription);
+			productPrice = EscapeString.EscapePassword(productPrice);
+			governmentPrice = EscapeString.EscapePassword(governmentPrice);
+
+		
 		//	String savePath=("C:\\Users\\HP\\git\\test\\ecommerce\\WebContent\\images\\products"+File.separator+productImageName);
 			
-			String savePath=("C:\\Users\\HP\\Desktop\\Backups\\7_10\\ecommerce\\WebContent\\images\\products"+File.separator+productImageName);
+
+			InputStream inputStream = null;
+
+			// prints out some information for debugging
+			System.out.println(part.getName());
+			System.out.println(part.getSize());
+			System.out.println(part.getContentType());
+
+			// obtains input stream of the upload file
 
 			
-			File fileSaveDirectory = new File(savePath);
-			part.write(savePath+File.separator);
+			
+			
+			inputStream = part.getInputStream();
+			byte[] bytes = IOUtils.toByteArray(inputStream);
 			
 			
 			
@@ -116,47 +139,54 @@ public class ProductServlet extends HttpServlet {
 			
 			ProductModel productModel = new ProductModel();
 			
+			productModel.setProductStock(productStock);
 			productModel.setProductName(productName);
 			productModel.setProductDescription(productDescription);
 			productModel.setProductCategory(categoryModel);
 			productModel.setProductSubcategory(subcategoryModel);
-			productModel.setProductImageName(productImageName);
-			productModel.setProductImagePath(savePath);
+			productModel.setImage(bytes);
 			productModel.setProductPrice(productPrice);
 			productModel.setGovernmentPrice(governmentPrice);
 			productModel.setProductUnit(unitModel);
 			productModel.setType(productType);
 			
 			db.saveProduct(productModel);
-			rd = request.getRequestDispatcher("/product.jsp");
+			rd = request.getRequestDispatcher("/product.jsp"); 
 
 		}
 		
 		else if(action.equals("addmore")) {
-			String productName = request.getParameter("productName");
-			String productDescription = request.getParameter("productDescription");
+			String productName = EscapeString.Escape(request.getParameter("productName"));
+			String productDescription = EscapeString.Escape(request.getParameter("productDescription"));
 			Part part = request.getPart("productImage");
-			String productImageName = getImageFileName(part);
-			String productPrice = request.getParameter("productPrice");
+			String productPrice = EscapeString.EscapePassword(request.getParameter("productPrice"));
 			//String productCategory = request.getParameter("dropdownProductCategory").toString();
 			String productSubcategory = request.getParameter("dropdownProductSubcategory").toString();
-			String governmentPrice = request.getParameter("governmentPrice");;
+			String governmentPrice = EscapeString.EscapePassword(request.getParameter("governmentPrice"));
 			String productType = request.getParameter("productType");
+			double productStock = Double.parseDouble(EscapeString.Escape(request.getParameter("productStock")));
 
-			System.out.println(productPrice);
 			
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
 			LocalDateTime now = LocalDateTime.now();  
 			String time = (dtf.format(now));  
 			
-			productImageName = time + "_" +  productImageName;
 			
 			
-			String savePath=("C:\\Users\\HP\\git\\test\\ecommerce\\WebContent\\images\\products"+File.separator+productImageName);
+			InputStream inputStream = null;
+
+			// prints out some information for debugging
+			System.out.println(part.getName());
+			System.out.println(part.getSize());
+			System.out.println(part.getContentType());
+
+			// obtains input stream of the upload file
+
 			
-			File fileSaveDirectory = new File(savePath);
-			part.write(savePath+File.separator);
 			
+			
+			inputStream = part.getInputStream();
+			byte[] bytes = IOUtils.toByteArray(inputStream);
 			
 			
 			CategoryModel categoryModel = new CategoryModel();
@@ -177,68 +207,64 @@ public class ProductServlet extends HttpServlet {
 			
 			ProductModel productModel = new ProductModel();
 			
+			productModel.setProductStock(productStock);
 			productModel.setProductName(productName);
 			productModel.setProductDescription(productDescription);
 			productModel.setProductCategory(categoryModel);
 			productModel.setProductSubcategory(subcategoryModel);
-			productModel.setProductImageName(productImageName);
-			productModel.setProductImagePath(savePath);
+			productModel.setImage(bytes);
 			productModel.setProductPrice(productPrice);
 			productModel.setGovernmentPrice(governmentPrice);
 			productModel.setProductUnit(unitModel);
 			productModel.setType(productType);
 			
 			db.saveProduct(productModel);
-			System.out.println("sgdsjabjsabdsabkdbsajkdbjksabdkjsbakjdbjksabdjksabjkdbsjkadjksakj");
 			request.setAttribute("action", "addmore");
 			rd = request.getRequestDispatcher("/newproduct.jsp");
 		}
 		else if (action.equals("update")) {
 			String productImageName = null;
-			String productName = request.getParameter("productName");
-			String productDescription = request.getParameter("productDescription");
+			String productName = EscapeString.Escape(request.getParameter("productName"));
+			String productDescription = EscapeString.Escape(request.getParameter("productDescription"));
 			Part part;
 			ProductModel productModel = new ProductModel();
 			ProductModel productModel2 = new ProductModel();
-			System.out.println("line 184 " + request.getPart("productImage"));
 			int pid = Integer.parseInt(request.getParameter("pid").toString());
 			productModel2 = db.getProductById(pid);
-			if(request.getPart("productImage").equals("org.apache.catalina.core.ApplicationPart@808f7dc")) {
-				productModel.setProductImageName(productModel2.getProductImageName());
-				productModel.setProductImagePath(productModel2.getProductImagePath());
-				System.out.println(" line 209 " + productModel2.getProductImagePath());
-			}
 			
-			else {
+				
+			
 				part = request.getPart("productImage");
-				productImageName = getImageFileName(part);
+				
+				System.out.println(part.getSize() + " heree");
+				
+				if (part.getSize() == 0) {
+					productModel.setImage(productModel2.getImage());
+				} else {
+					InputStream inputStream = null;
+
+					// prints out some information for debugging
+					System.out.println(part.getName());
+					System.out.println(part.getSize());
+					System.out.println(part.getContentType());
+
+					// obtains input stream of the upload file
+
+					inputStream = part.getInputStream();
+					byte[] bytes = IOUtils.toByteArray(inputStream);
+					productModel.setImage(bytes);
+				}
 				
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
 				LocalDateTime now = LocalDateTime.now();  
 				String time = (dtf.format(now));  
-				
-				productImageName = time + "_" +  productImageName;
-				String savePath=("C:\\Users\\HP\\Desktop\\Backups\\7_10\\ecommerce\\WebContent\\images\\products"+File.separator+productImageName);
-
-				File fileSaveDirectory = new File(savePath);
-				part.write(savePath+File.separator);
-				productModel.setProductImageName(productImageName);
-				productModel.setProductImagePath(savePath);
-				
-				System.out.println("line 201" + savePath);
-				
-			}
+		
 			
-			if (productImageName == null) {
-				productModel.setProductImageName(productModel2.getProductImageName());
-				productModel.setProductImagePath(productModel2.getProductImagePath());
-				System.out.println("line 228 " + productModel2.getProductImagePath());
-			}
-			
-			String productPrice = request.getParameter("productPrice");
+			double productStock = Double.parseDouble(EscapeString.EscapePassword(request.getParameter("productStock")));
+			String productPrice = EscapeString.EscapePassword(request.getParameter("productPrice"));
 			//String productCategory = request.getParameter("dropdownProductCategory").toString();
 			String productSubcategory = request.getParameter("dropdownProductSubcategory").toString();
-			String governmentPrice = request.getParameter("governmentPrice");;
+			String governmentPrice = EscapeString.EscapePassword(request.getParameter("governmentPrice"));
 			String productType = request.getParameter("productType");
 
 			
@@ -265,28 +291,19 @@ public class ProductServlet extends HttpServlet {
 			productModel.setProductPrice(productPrice);
 			productModel.setGovernmentPrice(governmentPrice);
 			productModel.setType(productType);
+	
+			productModel.setProductStock(productStock);
 			
 			db.updateProduct(productModel);
 			rd = request.getRequestDispatcher("/product.jsp");
+			
+			
 		}
 		
 		
 		rd.forward(request, response);
 		
 		
-	}
-
-
-	private String getImageFileName(Part part) {
-		String contentDisp = part.getHeader("content-disposition");
-        System.out.println("content-disposition header= "+contentDisp);
-        String[] tokens = contentDisp.split(";");
-        for (String token : tokens) {
-            if (token.trim().startsWith("filename")) {
-                return token.substring(token.indexOf("=") + 2, token.length()-1);
-            }
-        }
-        return "";
 	}
 
 }

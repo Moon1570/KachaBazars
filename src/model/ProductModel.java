@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,12 +26,7 @@ public class ProductModel {
 	
 	@Column(name = "product_description")
 	private String productDescription;
-	
-	@Column(name = "product_image_path")
-	private String productImagePath;
-	
-	@Column(name = "product_image_name")
-	private String productImageName;
+
 	
 	@Column(name = "product_price")
 	private String productPrice;
@@ -38,7 +34,8 @@ public class ProductModel {
 	@Column(name = "government_price")
 	private String governmentPrice;
 	
-	private int productQuantity;
+	@Column(name = "stock")
+	private double productStock;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private UnitModel productUnit;
@@ -46,19 +43,26 @@ public class ProductModel {
 	@Column(name = "product_type")
 	private String type;
 	
-	@Column(name = "stock")
-
+	@Lob
+    @Column(name="product_image", nullable=false, columnDefinition="mediumblob")
+    private byte[] image;
+	
+	
 	public UnitModel getProductUnit() {
 		return productUnit;
 	}
 	public void setProductUnit(UnitModel productUnit) {
 		this.productUnit = productUnit;
 	}
-	public int getProductQuantity() {
-		return productQuantity;
+	
+	
+	
+	
+	public double getProductStock() {
+		return productStock;
 	}
-	public void setProductQuantity(int productQuantity) {
-		this.productQuantity = productQuantity;
+	public void setProductStock(double productStock) {
+		this.productStock = productStock;
 	}
 	public String getGovernmentPrice() {
 		return governmentPrice;
@@ -72,18 +76,14 @@ public class ProductModel {
 	public void setProductPrice(String productPrice) {
 		this.productPrice = productPrice;
 	}
-	public String getProductImagePath() {
-		return productImagePath;
+	
+	public byte[] getImage() {
+		return image;
 	}
-	public void setProductImagePath(String productImagePath) {
-		this.productImagePath = productImagePath;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
-	public String getProductImageName() {
-		return productImageName;
-	}
-	public void setProductImageName(String productImageName) {
-		this.productImageName = productImageName;
-	}
+
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private CategoryModel productCategory;
 	

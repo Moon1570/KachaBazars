@@ -8,7 +8,6 @@
 <%@page import="dao.AreaDao"%>
 <%@page import="model.DistrictModel"%>
 <%@page import="model.DivisionModel"%>
-<%@page import="model.AreaModel"%>
 <%@page import="model.CustomerModel"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.DBData"%>
@@ -65,7 +64,7 @@
 			<h2>Basic Information</h2>
 		</div>
 		<div class="image-holder">
-			<img src="images/customers/${customer.customerImageName }">
+			<img src="./getimage?id=${customer.customerId}&action=customer">
 		</div>
 		<div class="basic-info">
 			<table class="basic-info-table">

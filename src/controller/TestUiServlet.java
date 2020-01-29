@@ -16,7 +16,6 @@ import com.google.gson.annotations.Until;
 import dao.AreaDao;
 import dao.DBData;
 import javassist.runtime.Inner;
-import model.AreaModel;
 import model.CustomerModel;
 import model.SellersProduct;
 import model.UnionModel;

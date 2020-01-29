@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import org.apache.commons.io.IOUtils;
 
 import dao.DBData;
 import model.CategoryModel;
@@ -63,14 +66,20 @@ public class SellersShopServlet extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();  
 			String time = (dtf.format(now));  
 			
-			productImageName = time + "_" +  productImageName;
+			InputStream inputStream = null;
+
+			// prints out some information for debugging
+			System.out.println(part.getName());
+			System.out.println(part.getSize());
+			System.out.println(part.getContentType());
+
+			// obtains input stream of the upload file
+
 			
 			
-			String savePath=("C:\\Users\\HP\\Desktop\\Backups\\7_10\\ecommerce\\WebContent\\images\\sellerproducts"+File.separator+productImageName);
-		//	String savePath=("http:\\localhost:9090\\ecommerce\\images\\sellerproducts"+File.separator+productImageName);
-			//http://localhost:9090/ecommerce/images/products/20190923144614_pic11.jpg
-			File fileSaveDirectory = new File(savePath);
-			part.write(savePath+File.separator);
+			
+			inputStream = part.getInputStream();
+			byte[] bytes = IOUtils.toByteArray(inputStream);
 			
 			
 			
@@ -98,8 +107,7 @@ public class SellersShopServlet extends HttpServlet {
 			sellersProduct.setProductDescription(productDescription);
 			sellersProduct.setCategoryModel(categoryModel);
 			sellersProduct.setSubcategoryModel(subcategoryModel);
-			sellersProduct.setProductImageName(productImageName);
-			sellersProduct.setProductImagePath(savePath);
+			sellersProduct.setImage(bytes);
 			sellersProduct.setProductPrice(productPrice);
 			sellersProduct.setUnitModel(unitModel);
 			sellersProduct.setProductQuantity(productQuantity);

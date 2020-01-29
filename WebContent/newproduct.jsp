@@ -187,6 +187,13 @@
 					<td class="name-label">Product Price</td>
 					<td><input type="text" name="productPrice" placeholder="BDT /=" value="${product.productPrice}" required="required"></td>
 				</tr>
+				
+				<tr>
+					<td class="name-label">Stock</td>
+					<td><input type="text" name="productStock" placeholder="Stock" value="${product.productStock}" required="required"></td>
+				</tr>
+				
+				
 				<tr>
 					<td class="name-label">Government Price</td>
 					<td><input type="text" name="governmentPrice" placeholder="BDT /=" value="${product.governmentPrice}" required="required"></td>

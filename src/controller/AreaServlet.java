@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.DBData;
-import model.AreaModel;
 import model.CategoryModel;
 
 public class AreaServlet extends HttpServlet {
@@ -25,19 +24,9 @@ public class AreaServlet extends HttpServlet {
 		String action = request.getParameter("action").toString();
 		System.out.println(action);
 		
-		if (action.equals("view")) {
-			List<AreaModel> areaModels = db.getAllAreas();
-			request.setAttribute("areas", areaModels);
-			rd = request.getRequestDispatcher("/Area.jsp");
-		}
-		else if (action.equals("new")) {
-			AreaModel areaModel = new AreaModel();
-			request.setAttribute("areas", areaModel);
-			request.setAttribute("action", "new");
-			
-			rd = request.getRequestDispatcher("/newarea.jsp");
-		}
-		else if (action.equals("viewdiv")) {
+		
+		
+		if (action.equals("viewdiv")) {
 			int divId = Integer.parseInt(request.getParameter("divisionId"));
 			request.setAttribute("divId", divId);
 			request.setAttribute("action", "viewdiv");
@@ -69,12 +58,7 @@ public class AreaServlet extends HttpServlet {
 		RequestDispatcher rd = null;
 		String action = request.getParameter("action").toString();
 		
-		if (action.equals("new")) {
-			AreaModel areaModel = new AreaModel();
-			
-			System.out.println(request.getParameter("areaName").toString());
-			db.saveArea(areaModel);
-		}
+		
 	}
 
 }

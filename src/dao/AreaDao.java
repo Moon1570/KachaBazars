@@ -14,7 +14,6 @@ import org.ietf.jgss.Oid;
 
 import dao.Connection;
 import javassist.bytecode.Descriptor.Iterator;
-import model.AreaModel;
 import model.BidModel;
 import model.CartDetailsModel;
 import model.CartModel;

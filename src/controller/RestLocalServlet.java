@@ -41,6 +41,9 @@ public class RestLocalServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
 		if (action == null) {
@@ -76,11 +79,14 @@ public class RestLocalServlet extends HttpServlet {
 
 				SellersProduct sub = (SellersProduct) type;
 				try {
+					
+					String string = Base64.getEncoder().encodeToString(sub.getImage());
+					
 					JO.put("govtPrice", sub.getSubcategoryModel().getGovtPrice());
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());
 					JO.put("productQuantity", sub.getProductQuantity());
-					JO.put("productImageName", sub.getProductImageName());
+					JO.put("productImageName", string);
 					JO.put("productId", sub.getProductId());
 					JO.put("sellerId", sub.getSellerModel().getSellerId());
 					JO.put("sellerName",
@@ -109,7 +115,7 @@ public class RestLocalServlet extends HttpServlet {
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());
 					JO.put("productQuantity", sub.getProductQuantity());
-					JO.put("productImageName", sub.getProductImageName());
+		//			JO.put("productImageName", sub.getProductImageName());
 					JO.put("productId", sub.getProductId());
 					JO.put("sellerId", sub.getSellerModel().getSellerId());
 					JO.put("sellerName",
@@ -138,7 +144,7 @@ public class RestLocalServlet extends HttpServlet {
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());
 					JO.put("productQuantity", sub.getProductQuantity());
-					JO.put("productImageName", sub.getProductImageName());
+				//	JO.put("productImageName", sub.getProductImageName());
 					JO.put("productId", sub.getProductId());
 					JO.put("sellerId", sub.getSellerModel().getSellerId());
 					JO.put("sellerName",
@@ -170,6 +176,9 @@ public class RestLocalServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
 		if (action.equalsIgnoreCase("reg")) {
@@ -217,11 +226,7 @@ public class RestLocalServlet extends HttpServlet {
 			// String
 			// savePath=("http:\\localhost:9090\\ecommerce\\images\\sellerproducts"+File.separator+productImageName);
 			// http://localhost:9090/ecommerce/images/products/20190923144614_pic11.jpg
-			File fileSaveDirectory = new File(savePath);
-
-			FileOutputStream fileOuputStream = new FileOutputStream(savePath);
-			fileOuputStream.write(decodedBytes);
-			fileOuputStream.close();
+			
 			
 			
 			
@@ -239,8 +244,7 @@ public class RestLocalServlet extends HttpServlet {
 			customerModel.setCustomerFirstName(fname);
 			customerModel.setCustomerLastName(lname);
 			customerModel.setCustomerHoldingNumber(hnum);
-			customerModel.setCustomerImageName(imageName);
-			customerModel.setCustomerImagePath(savePath);
+			customerModel.setImage(decodedBytes);
 			customerModel.setCustomerPassword(pass);
 			customerModel.setCustomerPhone(phone);
 			customerModel.setCustomerStreet(street);

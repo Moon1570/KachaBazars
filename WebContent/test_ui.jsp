@@ -1,7 +1,6 @@
 <%@page import="dao.AreaDao"%>
 <%@page import="model.DistrictModel"%>
 <%@page import="model.DivisionModel"%>
-<%@page import="model.AreaModel"%>
 <%@page import="model.CustomerModel"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.DBData"%>
@@ -33,7 +32,7 @@
 		<span>
 			<c:forEach items="${Unionproducts}" var="unionproduct">
 			<p style="display: inline;">	${unionproduct.productName }
-			<img alt="" src="images/sellerproducts/${unionproduct.productImageName }" height="200px" width="200px">
+			<img alt="" src="./getimage?id=${unionproduct.productId}&action=sellerproduct" height="200px" width="200px">
 				${unionproduct.productPrice }
 				Uploaded by ${unionproduct.sellerModel.sellerFirstName }
 				<a href="./viewproducts?action=sellerorder&productid=${unionproduct.productId }"> View Product</a>
@@ -47,7 +46,7 @@
 		<span>
 			<c:forEach items="${Upazillaproduct}" var="Upazillaproduct">
 			<p style="display: inline;">	${Upazillaproduct.productName }
-			<img alt="" src="images/sellerproducts/${Upazillaproduct.productImageName }" height="200px" width="200px">
+			<img alt="" src="./getimage?id=${Upazillaproduct.productId}&action=sellerproduct" height="200px" width="200px">
 				${Upazillaproduct.productPrice }
 				Uploaded by ${Upazillaproduct.sellerModel.sellerFirstName }</p>
 			</c:forEach>
@@ -59,7 +58,7 @@
 		<span>
 			<c:forEach items="${Districtproduct}" var="Districtproduct">
 			<p style="display: inline;">	${Districtproduct.productName }
-			<img alt="" src="images/sellerproducts/${Districtproduct.productImageName }" height="200px" width="200px">
+			<img alt="" src="./getimage?id=${Districtproduct.productId}&action=sellerproduct" height="200px" width="200px">
 				${Districtproduct.productPrice }
 				Uploaded by ${Districtproduct.sellerModel.sellerFirstName }</p>
 			</c:forEach>
@@ -71,7 +70,7 @@
 		<span>
 			<c:forEach items="${Divisionproduct}" var="Divisionproduct">
 			<p style="display: inline;">	${Divisionproduct.productName }
-			<img alt="" src="images/sellerproducts/${Divisionproduct.productImageName }" height="200px" width="200px">
+			<img alt="" src="./getimage?id=${Divisionproduct.productId}&action=sellerproduct" height="200px" width="200px">
 				${Divisionproduct.productPrice }
 				Uploaded by ${Divisionproduct.sellerModel.sellerFirstName }</p>
 			</c:forEach>

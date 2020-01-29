@@ -8,7 +8,6 @@
 <%@page import="dao.AreaDao"%>
 <%@page import="model.DistrictModel"%>
 <%@page import="model.DivisionModel"%>
-<%@page import="model.AreaModel"%>
 <%@page import="model.CustomerModel"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.DBData"%>
@@ -53,7 +52,7 @@
 
 					<div class="image-holder">
 						<img calss="product-image"
-							src="images/products/${product.productImageName }" alt="Image">
+							src="./getimage?id=${product.productId}&action=product" alt="Image">
 
 						<div class="product-options">
 							<div class="option">
@@ -86,7 +85,7 @@
 				<li class="product-card">
 					<div class="image-holder">
 						<img calss="product-image"
-							src="images/sellerproducts/${product.productImageName }"
+							src="./getimage?id=${product.productId}&action=product"
 							alt="Image">
 
 						<div class="product-options">

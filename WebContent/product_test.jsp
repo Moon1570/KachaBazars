@@ -1,5 +1,4 @@
 <%@page import="model.ProductModel"%>
-<%@page import="model.AreaModel"%>
 <%@page import="model.OrdersModel"%>
 <%@page import="model.DeliveryPersonModel"%>
 <%@page import="model.SellerModel"%>

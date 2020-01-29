@@ -1,10 +1,13 @@
 package model;
 
+import java.io.InputStream;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -24,11 +27,10 @@ public class CategoryModel {
 	@Column(name = "category_description")
 	private String categoryDescription;
 	
-	@Column(name = "category_image_path")
-	private String categoryImagePath;
+	@Lob
+    @Column(name="category_image", nullable=false, columnDefinition="LONGBLOB")
+    private byte[] image;
 	
-	@Column(name = "category_image_name")
-	private String categoryImageName;
 	
 	public int getCategoryId() {
 		return categoryId;
@@ -48,17 +50,11 @@ public class CategoryModel {
 	public void setCategoryDescription(String categoryDescription) {
 		this.categoryDescription = categoryDescription;
 	}
-	public String getCategoryImagePath() {
-		return categoryImagePath;
+	public byte[] getImage() {
+		return image;
 	}
-	public void setCategoryImagePath(String categoryImagePath) {
-		this.categoryImagePath = categoryImagePath;
-	}
-	public String getCategoryImageName() {
-		return categoryImageName;
-	}
-	public void setCategoryImageName(String categoryImageName) {
-		this.categoryImageName = categoryImageName;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 	
 }

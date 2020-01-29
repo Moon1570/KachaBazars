@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,13 +43,13 @@ public class DeliveryPersonModel {
 	private UnionModel unionModel;
 	
 	@Column(name = "village")
-	private String customerVillage;
+	private String deliveryVillage;
 	
 	@Column(name = "street")
-	private String customerStreet;
+	private String delieryStreet;
 	
 	@Column(name = "holding_number")
-	private String customerHoldingNumber;
+	private String deliveryHoldingNumber;
 	
 	@Column(name = "delivery_person_phone")
 	private String deliveryPersonPhone;
@@ -57,11 +58,9 @@ public class DeliveryPersonModel {
 	@Column(name = "delivery_person_dob")
 	private Date deliveryPersonDOB;
 	
-	@Column(name = "delivery_person_image_path")
-	private String deliveryPersonImagePath;
-	
-	@Column(name = "delivery_person_image_name")
-	private String deliveryPersonImageName;
+	@Lob
+    @Column(name="delivery_image", nullable=false, columnDefinition="mediumblob")
+    private byte[] image;
 	
 	@Column(name = "delivery_person_nid")
 	private String deliveryPersonNID;
@@ -147,28 +146,30 @@ public class DeliveryPersonModel {
 		this.unionModel = unionModel;
 	}
 
-	public String getCustomerVillage() {
-		return customerVillage;
+	
+
+	public String getDeliveryVillage() {
+		return deliveryVillage;
 	}
 
-	public void setCustomerVillage(String customerVillage) {
-		this.customerVillage = customerVillage;
+	public void setDeliveryVillage(String deliveryVillage) {
+		this.deliveryVillage = deliveryVillage;
 	}
 
-	public String getCustomerStreet() {
-		return customerStreet;
+	public String getDelieryStreet() {
+		return delieryStreet;
 	}
 
-	public void setCustomerStreet(String customerStreet) {
-		this.customerStreet = customerStreet;
+	public void setDelieryStreet(String delieryStreet) {
+		this.delieryStreet = delieryStreet;
 	}
 
-	public String getCustomerHoldingNumber() {
-		return customerHoldingNumber;
+	public String getDeliveryHoldingNumber() {
+		return deliveryHoldingNumber;
 	}
 
-	public void setCustomerHoldingNumber(String customerHoldingNumber) {
-		this.customerHoldingNumber = customerHoldingNumber;
+	public void setDeliveryHoldingNumber(String deliveryHoldingNumber) {
+		this.deliveryHoldingNumber = deliveryHoldingNumber;
 	}
 
 	public String getDeliveryPersonPhone() {
@@ -189,20 +190,14 @@ public class DeliveryPersonModel {
 		this.deliveryPersonDOB = deliveryPersonDOB;
 	}
 
-	public String getDeliveryPersonImagePath() {
-		return deliveryPersonImagePath;
+	
+
+	public byte[] getImage() {
+		return image;
 	}
 
-	public void setDeliveryPersonImagePath(String deliveryPersonImagePath) {
-		this.deliveryPersonImagePath = deliveryPersonImagePath;
-	}
-
-	public String getDeliveryPersonImageName() {
-		return deliveryPersonImageName;
-	}
-
-	public void setDeliveryPersonImageName(String deliveryPersonImageName) {
-		this.deliveryPersonImageName = deliveryPersonImageName;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	public String getDeliveryPersonPassword() {
