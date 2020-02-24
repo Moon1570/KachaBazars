@@ -93,10 +93,10 @@ public class DeliveryPersonServlet extends HttpServlet {
 			deliveryPersonModel.setDeliveryPersonNID(EscapeString.EscapePassword(request.getParameter("deliveryPersonNID")));
 			deliveryPersonModel
 					.setDeliveryPersonGender(EscapeString.Escape(request.getParameter("deliveryPersonGender")));
-			deliveryPersonModel.setDeliveryVillage(EscapeString.Escape(request.getParameter("deliveryVillage")));
-			deliveryPersonModel.setDelieryStreet(EscapeString.Escape(request.getParameter("deliveryStreet")));
+			deliveryPersonModel.setDeliveryVillage(request.getParameter("deliveryVillage"));
+			deliveryPersonModel.setDelieryStreet(request.getParameter("deliveryStreet"));
 			deliveryPersonModel
-					.setDeliveryHoldingNumber(EscapeString.EscapePassword(request.getParameter("deliveryHoldingNumber")));
+					.setDeliveryHoldingNumber(request.getParameter("deliveryHoldingNumber"));
 			deliveryPersonModel.setDeliveryPersonPhone(EscapeString.EscapePassword(request.getParameter("deliveryPersonPhone")));
 			deliveryPersonModel.setDeliveryPersonPassword(EscapeString.EscapePassword(request.getParameter("deliveryPassword")));
 

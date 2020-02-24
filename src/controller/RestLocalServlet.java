@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Iterator;
+import java.util.zip.Deflater;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -80,7 +82,34 @@ public class RestLocalServlet extends HttpServlet {
 				SellersProduct sub = (SellersProduct) type;
 				try {
 					
-					String string = Base64.getEncoder().encodeToString(sub.getImage());
+					byte[] a = sub.getImage();
+					Deflater compressor = new Deflater();
+					compressor.setLevel(Deflater.BEST_COMPRESSION);
+					
+					  compressor.setInput(a);
+					  compressor.finish();
+					   
+					  // Create an expandable byte array to hold the compressed data.
+					  // It is not necessary that the compressed data will be smaller than
+					  // the uncompressed data.
+					  ByteArrayOutputStream bos = new ByteArrayOutputStream(a.length);
+					   
+					  // Compress the data
+					  byte[] buf = new byte[1024];
+					  while (!compressor.finished()) {
+					      int count = compressor.deflate(buf);
+					      bos.write(buf, 0, count);
+					  }
+					  try {
+					      bos.close();
+					  } catch (IOException e) {
+					  }
+					   
+					  // Get the compressed data
+					  byte[] compressedData = bos.toByteArray();
+					
+					
+					String string = Base64.getEncoder().encodeToString(compressedData);
 					
 					JO.put("govtPrice", sub.getSubcategoryModel().getGovtPrice());
 					JO.put("productName", sub.getProductName());
@@ -111,11 +140,40 @@ public class RestLocalServlet extends HttpServlet {
 
 				SellersProduct sub = (SellersProduct) type;
 				try {
+					
+					byte[] a1 = sub.getImage();
+					Deflater compressor1 = new Deflater();
+					compressor1.setLevel(Deflater.BEST_COMPRESSION);
+					
+					  compressor1.setInput(a1);
+					  compressor1.finish();
+					   
+					  // Create an expandable byte array to hold the compressed data.
+					  // It is not necessary that the compressed data will be smaller than
+					  // the uncompressed data.
+					  ByteArrayOutputStream bos1 = new ByteArrayOutputStream(a1.length);
+					   
+					  // Compress the data
+					  byte[] buf1 = new byte[1024];
+					  while (!compressor1.finished()) {
+					      int count1 = compressor1.deflate(buf1);
+					      bos1.write(buf1, 0, count1);
+					  }
+					  try {
+					      bos1.close();
+					  } catch (IOException e) {
+					  }
+					   
+					  // Get the compressed data
+					  byte[] compressedData1 = bos1.toByteArray();
+					
+					
+					String string1 = Base64.getEncoder().encodeToString(compressedData1);
 
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());
 					JO.put("productQuantity", sub.getProductQuantity());
-		//			JO.put("productImageName", sub.getProductImageName());
+					JO.put("productImageName", string1);
 					JO.put("productId", sub.getProductId());
 					JO.put("sellerId", sub.getSellerModel().getSellerId());
 					JO.put("sellerName",
@@ -141,10 +199,42 @@ public class RestLocalServlet extends HttpServlet {
 				SellersProduct sub = (SellersProduct) type;
 				try {
 
+					byte[] a2 = sub.getImage();
+					Deflater compressor2 = new Deflater();
+					compressor2.setLevel(Deflater.BEST_COMPRESSION);
+					
+					  compressor2.setInput(a2);
+					  compressor2.finish();
+					   
+					  // Create an expandable byte array to hold the compressed data.
+					  // It is not necessary that the compressed data will be smaller than
+					  // the uncompressed data.
+					  ByteArrayOutputStream bos2 = new ByteArrayOutputStream(a2.length);
+					   
+					  // Compress the data
+					  byte[] buf2 = new byte[1024];
+					  while (!compressor2.finished()) {
+					      int count2 = compressor2.deflate(buf2);
+					      bos2.write(buf2, 0, count2);
+					  }
+					  try {
+					      bos2.close();
+					  } catch (IOException e) {
+					  }
+					   
+					  // Get the compressed data
+					  byte[] compressedData2 = bos2.toByteArray();
+					
+					
+					String string2 = Base64.getEncoder().encodeToString(compressedData2);
+					
+					
+					
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());
 					JO.put("productQuantity", sub.getProductQuantity());
-				//	JO.put("productImageName", sub.getProductImageName());
+					JO.put("productImageName", string2);					
+					
 					JO.put("productId", sub.getProductId());
 					JO.put("sellerId", sub.getSellerModel().getSellerId());
 					JO.put("sellerName",

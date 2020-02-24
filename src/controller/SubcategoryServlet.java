@@ -24,10 +24,7 @@ public class SubcategoryServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SubcategoryServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+    
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

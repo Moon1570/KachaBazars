@@ -49,7 +49,6 @@
 				<tr>
 					<td colspan="2"><h1>
 							<u>${product.productName}</u><br>
-							<u>${message }</u>
 						</h1></td>
 				</tr>
 
@@ -79,7 +78,7 @@
 
 				<tr>
 					<td class="section"><h4>Government Price :</td>
-					<td><h4>${product.governmentPrice}/=</td>
+					<td><h4>${product.productSubcategory.govtPrice} /=</td>
 				</tr>
 
 				<tr>

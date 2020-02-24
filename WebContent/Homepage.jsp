@@ -414,7 +414,7 @@
 					
 					<li class="product-card">
 					<div class="image-holder">
-						<img class="product-image" src="./getimage?id=${District.productId}&action=sellerproduct" alt="Image">
+						<img class="product-image" src="./getimage?id=${Districtproduct.productId}&action=sellerproduct" alt="Image">
 						<div class="product-options">
 							
 							<div class="option">

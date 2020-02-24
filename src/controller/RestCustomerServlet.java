@@ -1,11 +1,13 @@
 package controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
+import java.util.zip.Deflater;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -240,7 +242,35 @@ public class RestCustomerServlet extends HttpServlet {
 				ProductModel sub = (ProductModel) type;
 				try {
 
-					String string = Base64.getEncoder().encodeToString(sub.getImage());
+					byte[] a = sub.getImage();
+					Deflater compressor = new Deflater();
+					compressor.setLevel(Deflater.BEST_COMPRESSION);
+					
+					  compressor.setInput(a);
+					  compressor.finish();
+					   
+					  // Create an expandable byte array to hold the compressed data.
+					  // It is not necessary that the compressed data will be smaller than
+					  // the uncompressed data.
+					  ByteArrayOutputStream bos = new ByteArrayOutputStream(a.length);
+					   
+					  // Compress the data
+					  byte[] buf = new byte[1024];
+					  while (!compressor.finished()) {
+					      int count = compressor.deflate(buf);
+					      bos.write(buf, 0, count);
+					  }
+					  try {
+					      bos.close();
+					  } catch (IOException e) {
+					  }
+					   
+					  // Get the compressed data
+					  byte[] compressedData = bos.toByteArray();
+					
+					
+					String string = Base64.getEncoder().encodeToString(compressedData);
+					
 					
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());
@@ -285,6 +315,81 @@ public class RestCustomerServlet extends HttpServlet {
 
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray.toString());
+		}else if (action.equalsIgnoreCase("getSellerProductByCategoryId")) {
+
+			JSONArray jsonArray = new JSONArray();
+	
+			int catId = Integer.parseInt(request.getParameter("catId"));
+
+			CategoryModel categoryModel = db.getCategoryById(catId);
+
+			ArrayList<SellersProduct> sellersProducts = (ArrayList<SellersProduct>) db
+					.getSellerProductByCategoryName(categoryModel.getCategoryName());
+
+			Iterator<SellersProduct> it = sellersProducts.iterator();
+
+			while (it.hasNext()) {
+				Object type = (Object) it.next();
+
+				JSONObject JO = new JSONObject();
+
+				SellersProduct sub = (SellersProduct) type;
+				try {
+
+					byte[] a = sub.getImage();
+					Deflater compressor = new Deflater();
+					compressor.setLevel(Deflater.BEST_COMPRESSION);
+					
+					  compressor.setInput(a);
+					  compressor.finish();
+					   
+					  // Create an expandable byte array to hold the compressed data.
+					  // It is not necessary that the compressed data will be smaller than
+					  // the uncompressed data.
+					  ByteArrayOutputStream bos = new ByteArrayOutputStream(a.length);
+					   
+					  // Compress the data
+					  byte[] buf = new byte[1024];
+					  while (!compressor.finished()) {
+					      int count = compressor.deflate(buf);
+					      bos.write(buf, 0, count);
+					  }
+					  try {
+					      bos.close();
+					  } catch (IOException e) {
+					  }
+					   
+					  // Get the compressed data
+					  byte[] compressedData = bos.toByteArray();
+					
+					
+					String string = Base64.getEncoder().encodeToString(compressedData);
+					
+					
+					
+					JO.put("productName", sub.getProductName());
+					JO.put("productDescription", sub.getProductDescription());
+					JO.put("productQuantity", sub.getProductQuantity());
+					JO.put("productImageName", string);
+					JO.put("productId", sub.getProductId());
+					JO.put("productPrice", sub.getProductPrice());
+					JO.put("govtPrice", sub.getSubcategoryModel().getGovtPrice());
+					JO.put("stock", sub.getProductQuantity());
+					JO.put("sellerName", sub.getSellerModel().getSellerFirstName());
+
+					jsonArray.put(JO);
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			System.out.println(jsonArray.toString());
+
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonArray.toString());
+
 		}
 	}
 

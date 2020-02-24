@@ -5,8 +5,9 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost/ecommerce?useSSL=false</property>
-		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.url">jdbc:mysql://103.28.121.29/ecommerce?useSSL=false</property>
+		<property name="hibernate.connection.username">kachabazars</property>
+		<property name="hibernate.connection.password">kachabazars123!@#</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.current_session_context_class">thread</property>
 

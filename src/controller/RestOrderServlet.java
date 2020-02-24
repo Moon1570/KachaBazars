@@ -246,6 +246,89 @@ public class RestOrderServlet extends HttpServlet {
 			
 			JSONArray jsonArray = new JSONArray();
 			pWriter.write(jsonArray.toString());
+		}else if (action.equalsIgnoreCase("orderfrominventoryCOD")) {
+			String coc, phone, expectedDate, street, village, zip, transId;
+			int cid, quantity, pid;
+			
+			coc = request.getParameter("coc");
+			phone = request.getParameter("phone");
+			transId = request.getParameter("transId");
+			expectedDate = request.getParameter("date");
+			street = request.getParameter("street");
+			village = request.getParameter("village");
+			zip = request.getParameter("zip");
+			
+			cid = Integer.parseInt(request.getParameter("cid"));
+			quantity = Integer.parseInt(request.getParameter("quantity"));
+			pid = Integer.parseInt(request.getParameter("pid"));
+			
+			ProductModel productModel = db.getProductById(pid);
+			
+			int divId = Integer.parseInt(request.getParameter("divId"));
+			int a = Integer.parseInt(request.getParameter("disId"));
+			int b = Integer.parseInt(request.getParameter("upaId"));
+			int c = Integer.parseInt(request.getParameter("uniId"));
+			
+			ArrayList<DistrictModel> districtModels = (ArrayList<DistrictModel>) ad.getDistrictByDivisionId(divId);
+			int disId = districtModels.get(a).getDistrictId();
+			ArrayList<UpazillaModel> upazillaModels = (ArrayList<UpazillaModel>) ad.getUpazillaByDistrictId(disId);
+			int upaId = upazillaModels.get(b).getUpazillaId();
+			ArrayList<UnionModel> unionModels = (ArrayList<UnionModel>) ad.getUnionByUpazillaId(upaId);
+			
+			CustomerModel customerModel = db.getCustomerById(cid);
+			OrdersModel ordersModel = new OrdersModel();
+			DivisionModel divisionModel = ad.getDivisionById(divId);
+
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDateTime now = LocalDateTime.now();
+			String orderingTime = (dtf.format(now));
+			
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			
+			try {
+				System.out.println(expectedDate + " line 89");
+				ordersModel.setExpectedDeliveryDate(simpleDateFormat.parse(expectedDate));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+			ordersModel.setTranId(transId);
+			ordersModel.setCareOfContact(coc);
+			ordersModel.setCustomerModel(customerModel);
+			ordersModel.setDistrictModel(districtModels.get(a));
+			ordersModel.setDivisionModel(divisionModel);
+			ordersModel.setOrderDate(orderingTime);
+			ordersModel.setOrderQuantity(quantity);
+			ordersModel.setOrderStatus("unallocated");
+			ordersModel.setOrderStreet(street);
+			ordersModel.setOrderVillage(village);
+			ordersModel.setOrderZipCode(zip);
+			ordersModel.setPhoneNumber(phone);
+			ordersModel.setUpazillaModel(upazillaModels.get(b));
+			ordersModel.setUnionModel(unionModels.get(c));
+			ordersModel.setProductModel(productModel);
+			ordersModel.setPaymentStatus(false);
+			
+			double qty = ordersModel.getOrderQuantity();
+			double stock = productModel.getProductStock();
+			
+			stock = stock-qty;
+			
+			productModel.setProductStock(stock);
+			
+			db.updateProduct(productModel);
+			
+			db.saveOrder(ordersModel);
+			
+			PrintWriter pw = response.getWriter();
+			
+			JSONArray jsonArray = new JSONArray();
+			
+				
+			pw.write(jsonArray.toString());
+				
+			
 		}
 	
 	}
