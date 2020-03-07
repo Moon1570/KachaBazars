@@ -269,7 +269,7 @@ public class RestCustomerServlet extends HttpServlet {
 					  byte[] compressedData = bos.toByteArray();
 					
 					
-					String string = Base64.getEncoder().encodeToString(compressedData);
+						String string = Base64.getEncoder().encodeToString(compressedData);
 					
 					
 					JO.put("productName", sub.getProductName());
@@ -280,6 +280,7 @@ public class RestCustomerServlet extends HttpServlet {
 					JO.put("productPrice", sub.getProductPrice());
 					JO.put("govtPrice", sub.getProductSubcategory().getGovtPrice());
 					JO.put("stock", sub.getProductStock());
+					JO.put("unit", sub.getProductUnit().getUnit());
 
 					jsonArray.put(JO);
 
@@ -376,6 +377,7 @@ public class RestCustomerServlet extends HttpServlet {
 					JO.put("govtPrice", sub.getSubcategoryModel().getGovtPrice());
 					JO.put("stock", sub.getProductQuantity());
 					JO.put("sellerName", sub.getSellerModel().getSellerFirstName());
+					JO.put("unit", sub.getUnitModel().getUnit());
 
 					jsonArray.put(JO);
 

@@ -54,12 +54,7 @@
 						<a href="./categories?action=new">Add Category</a> <a
 							href="Category.jsp">View Category</a>
 					</div></li>
-				<li class="options-div" id="area"><a class="options"
-					href="#area">Areas</a>
-					<div class="sub-menu">
-						<a href="./areas?action=new">Add Areas</a> <a
-							href="./areas?action=view">View Areas</a>
-					</div></li>
+				
 				<li class="options-div" id="sellers"><a class="options"
 					href="#sellers">Sellers</a>
 					<div class="sub-menu">

@@ -306,17 +306,8 @@ public class RestLocalServlet extends HttpServlet {
 			LocalDateTime now = LocalDateTime.now();
 			String time = (dtf.format(now));
 
-			imageName = time + fname + ".jpg";
 
 			byte[] decodedBytes = Base64.getMimeDecoder().decode(encoded);
-
-			String upload = "C:\\Users\\HP\\Desktop\\Backups\\7_10\\ecommerce\\WebContent\\images\\customers\\";
-
-			String savePath = ("C:\\Users\\HP\\Desktop\\Backups\\7_10\\ecommerce\\WebContent\\images\\customers\\" + imageName);
-			// String
-			// savePath=("http:\\localhost:9090\\ecommerce\\images\\sellerproducts"+File.separator+productImageName);
-			// http://localhost:9090/ecommerce/images/products/20190923144614_pic11.jpg
-			
 			
 			
 			

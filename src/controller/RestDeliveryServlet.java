@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import dao.DBData;
 import dao.OrderDao;
 import model.DeliveryPersonModel;
+import model.OrderSellerProductModel;
 import model.OrdersModel;
 
 
@@ -42,6 +43,7 @@ public class RestDeliveryServlet extends HttpServlet {
 			System.out.println("No action is GIVEN");
 		}
 		else if (action.equals("getorders")) {
+			double qty = 0;
 			
 			int delId = Integer.parseInt(request.getParameter("delId"));
 			
@@ -58,6 +60,7 @@ public class RestDeliveryServlet extends HttpServlet {
 				
 				JSONObject JO = new JSONObject();
 
+				qty = sub.getOrderQuantity() * Double.parseDouble(sub.getProductModel().getProductPrice());
 				
 				try {
 					JO.put("orderId", sub.getOrderId());
@@ -78,6 +81,14 @@ public class RestDeliveryServlet extends HttpServlet {
 					JO.put("union", sub.getUnionModel().getUnionBanglaName());
 					JO.put("orderingDate", sub.getOrderDate());
 					
+					 
+					if(sub.isPaymentStatus()) {
+						JO.put("payment", "complete");
+					}
+					else {
+						JO.put("payment", "due " + qty + " tk");
+					}
+					
 					jsonArray.put(JO);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -91,7 +102,6 @@ public class RestDeliveryServlet extends HttpServlet {
 			PrintWriter printWriter = response.getWriter();
 			printWriter.write(jsonArray.toString());
 			
-			System.out.println(jsonArray.toString());
 						
 		}
 		else if (action.equals("markAsComplete")) {
@@ -103,6 +113,82 @@ public class RestDeliveryServlet extends HttpServlet {
 			ordersModel.setOrderId(oid);
 			
 			db.updateOrder(ordersModel);
+			
+			JSONArray jsonArray = new JSONArray();
+			PrintWriter pw = response.getWriter();
+			
+			pw.write(jsonArray.toString());
+		}
+		else if (action.equals("getsellerorders")) {
+			double qty = 0;
+			
+			int delId = Integer.parseInt(request.getParameter("delId"));
+			
+			ArrayList<OrderSellerProductModel> ordersModels = od.getNewOrdersFromSellerForDeliveryManByDelId(delId);
+			JSONArray jsonArray = new JSONArray();
+		
+			
+			Iterator<OrderSellerProductModel> it = ordersModels.iterator();
+			
+			while (it.hasNext()) {
+				Object type = (Object) it.next();
+
+				OrderSellerProductModel sub =  (OrderSellerProductModel) type;
+				
+				JSONObject JO = new JSONObject();
+
+				qty = sub.getOrderQuantity() * sub.getSellersProduct().getProductPrice();
+				
+				try {
+					JO.put("orderId", sub.getOrderId());
+					JO.put("name", sub.getCareOfContact());
+					JO.put("customer", sub.getCustomerModel().getCustomerId());
+					JO.put("customerName", sub.getCustomerModel().getCustomerFirstName() + " " + sub.getCustomerModel().getCustomerLastName());
+					JO.put("date", sub.getExpectedDeliveryDate());
+					JO.put("quantity", sub.getOrderQuantity());
+					JO.put("status", sub.getOrderStatus());
+					JO.put("orderVillage", sub.getOrderVillage());
+					JO.put("orderSteet", sub.getOrderStreet());
+					JO.put("productName", sub.getSellersProduct().getProductName());
+					JO.put("productId", sub.getSellersProduct().getProductId());
+					JO.put("orderPhone", sub.getPhoneNumber());
+					JO.put("division", sub.getDivisionModel().getDivisionName());
+					JO.put("district", sub.getDistrictModel().getDistrictName());
+					JO.put("upazilla", sub.getUpazillaModel().getUpazillaName());
+					JO.put("union", sub.getUnionModel().getUnionBanglaName());
+					JO.put("orderingDate", sub.getOrderDate());
+					JO.put("sellerName", sub.getSellerModel().getSellerFirstName()+sub.getSellerModel().getSellerLastName());
+					JO.put(("sellerAddress"), sub.getUnionModel().getUnionBanglaName()+", "+sub.getUpazillaModel().getUpazillaBangaName()+", "+sub.getDistrictModel().getDistrictBanglaName()+", "+sub.getDivisionModel().getDivisionBanglaName());
+					
+					 
+					if(sub.isPaymentStatus()) {
+						JO.put("payment", "complete");
+					}
+					else {
+						JO.put("payment", "due " + qty + " tk");
+					}
+					
+					jsonArray.put(JO);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				
+			}
+			
+			PrintWriter printWriter = response.getWriter();
+			printWriter.write(jsonArray.toString());
+		}else if (action.equals("markAsCompletesellerOrder")) {
+			
+
+			int oid = Integer.parseInt(request.getParameter("orderId"));
+			OrderSellerProductModel ordersModel = db.getOrderSellerProductById(oid);
+			ordersModel.setOrderStatus("completed");
+			ordersModel.setOrderId(oid);
+			
+			db.updateOrderSellerProduct(ordersModel);;
 			
 			JSONArray jsonArray = new JSONArray();
 			PrintWriter pw = response.getWriter();

@@ -122,5 +122,40 @@ public class OrderDao {
 		con.closeSessionFactory();
 		return ordersModels;
 	}
+
+	public ArrayList<OrderSellerProductModel> getNewOrdersFromSellerForDeliveryManByDelId(int delId) {
+		// TODO Auto-generated method stub
+		String query = "from OrderSellerProductModel ordersModel";
+		Connection con = new Connection();
+		Session session = con.getSessionFactory().openSession();
+
+		Query queryExecuteable = session.createQuery(query);
+		List<OrderSellerProductModel> ordersModels=new ArrayList<>();
+		ordersModels = queryExecuteable.list();
+
+		java.util.Iterator<OrderSellerProductModel> it = ordersModels.iterator();
+
+		List<OrderSellerProductModel> ordersModels2 = new ArrayList<OrderSellerProductModel>();
+		
+		while (it.hasNext()) {
+			Object type = (Object) it.next();
+
+			OrderSellerProductModel sub =  (OrderSellerProductModel) type;
+			
+			if (sub.getDeliveryPersonModel() != null) {
+				if (sub.getDeliveryPersonModel().getDeliveryPersonId() == delId) {
+					ordersModels2.add(sub);
+					
+				}
+			}
+
+		}
+		
+
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		return (ArrayList<OrderSellerProductModel>) ordersModels2;
+	}
 		
 }

@@ -207,8 +207,8 @@ public class CustomerServlet extends HttpServlet {
 		else if (action.equals("login")) {
 			CustomerModel customerModel = new CustomerModel();
 			
-			String customerPhone = EscapeString.EscapePassword(request.getParameter("customerPhone"));
-			String customerPassword = EscapeString.EscapePassword(request.getParameter("customerPassword"));
+			String customerPhone = request.getParameter("customerPhone");
+			String customerPassword = request.getParameter("customerPassword");
 			
 			customerModel =db.getCustomerPasswordByPhone(customerPhone);
 			
