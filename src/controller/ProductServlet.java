@@ -35,9 +35,9 @@ public class ProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		RequestDispatcher rd= null;
 		String action=request.getParameter("action");
-		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 
 	//	System.out.println("jhm"+action);
 		if(action.equals("new"))
@@ -52,7 +52,7 @@ public class ProductServlet extends HttpServlet {
 			request.setAttribute("products", productModel);
 			request.setAttribute("action", "view");
 			
-			rd = request.getRequestDispatcher("/product.jsp");
+			request.getRequestDispatcher("/product.jsp").forward(request, response);
 		}
 		else if (action.equals("update")) {
 			int pid = Integer.parseInt(request.getParameter("pid").toString());
@@ -62,20 +62,18 @@ public class ProductServlet extends HttpServlet {
 			request.setAttribute("action", "update");
 			
 			
-			rd = request.getRequestDispatcher("/newproduct.jsp");
+			request.getRequestDispatcher("/newproduct.jsp").forward(request, response);
 		}else if (action.equals("delete")) {
 			int pid = Integer.parseInt(request.getParameter("pid").toString());
 			ProductModel productModel = db.getProductById(pid);
 			db.deleteProduct(productModel);
-			rd = request.getRequestDispatcher("/product.jsp");
+			request.getRequestDispatcher("/product.jsp").forward(request, response);
 			
 		}
-		rd.forward(request, response);
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = null;
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		
@@ -151,7 +149,7 @@ public class ProductServlet extends HttpServlet {
 			productModel.setType(productType);
 			
 			db.saveProduct(productModel);
-			rd = request.getRequestDispatcher("/product.jsp"); 
+			request.getRequestDispatcher("/product.jsp").forward(request, response);
 
 		}
 		
@@ -220,7 +218,7 @@ public class ProductServlet extends HttpServlet {
 			
 			db.saveProduct(productModel);
 			request.setAttribute("action", "addmore");
-			rd = request.getRequestDispatcher("/newproduct.jsp");
+			request.getRequestDispatcher("/newproduct.jsp").forward(request, response);
 		}
 		else if (action.equals("update")) {
 			String productImageName = null;
@@ -295,13 +293,12 @@ public class ProductServlet extends HttpServlet {
 			productModel.setProductStock(productStock);
 			
 			db.updateProduct(productModel);
-			rd = request.getRequestDispatcher("/product.jsp");
+			request.getRequestDispatcher("/product.jsp").forward(request, response);
 			
 			
 		}
 		
 		
-		rd.forward(request, response);
 		
 		
 	}

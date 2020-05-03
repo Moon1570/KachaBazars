@@ -20,8 +20,8 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
-		RequestDispatcher rd= null;
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		
 		String action=request.getParameter("action");
 		
@@ -36,9 +36,8 @@ public class HomeServlet extends HttpServlet {
 			request.setAttribute("action", "view");
 			request.setAttribute("cid", cid);
 			System.out.println("home : " + cid);
-			rd=request.getRequestDispatcher("/Homepage.jsp");
+			request.getRequestDispatcher("/Homepage.jsp").forward(request, response);
 		}
-		rd.forward(request, response);
 	}
 
 	

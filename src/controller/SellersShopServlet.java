@@ -37,7 +37,8 @@ public class SellersShopServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		String action = request.getParameter("action");
-		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		if (action.equals("add")) {
 			request.setAttribute("action", "add");
 			request.getRequestDispatcher("new_sellers_product.jsp").forward(request, response);
@@ -50,7 +51,8 @@ public class SellersShopServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String action = request.getParameter("action").toString();
 		int sid = Integer.parseInt(session.getAttribute("sid").toString());
-		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		if (action.equals("submit")) {
 			String productName = request.getParameter("productName");
 			String productDescription = request.getParameter("productDescription");

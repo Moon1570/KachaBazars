@@ -55,6 +55,7 @@ public class RestOrderServlet extends HttpServlet {
 			String coc, phone, expectedDate, street, village, zip, transId;
 			int cid, quantity, pid;
 			
+			
 			coc = request.getParameter("coc");
 			phone = request.getParameter("phone");
 			transId = request.getParameter("transId");
@@ -114,6 +115,7 @@ public class RestOrderServlet extends HttpServlet {
 			ordersModel.setUnionModel(unionModels.get(c));
 			ordersModel.setProductModel(productModel);
 			ordersModel.setPaymentStatus(true);
+			ordersModel.setPaymentType(request.getParameter("paymentType"));
 			
 			double qty = ordersModel.getOrderQuantity();
 			double stock = productModel.getProductStock();
@@ -209,6 +211,7 @@ public class RestOrderServlet extends HttpServlet {
 			orderSellerProductModel.setUnionModel(unionModels.get(c));
 			orderSellerProductModel.setPaymentStatus(false);
 			orderSellerProductModel.setTranId(tranId);
+			orderSellerProductModel.setPaymentType(request.getParameter("paymentType"));
 			
 			db.saveSellerProductOrder(orderSellerProductModel);
 			
@@ -309,6 +312,7 @@ public class RestOrderServlet extends HttpServlet {
 			ordersModel.setUnionModel(unionModels.get(c));
 			ordersModel.setProductModel(productModel);
 			ordersModel.setPaymentStatus(false);
+			ordersModel.setPaymentType(request.getParameter("paymentType"));
 			
 			double qty = ordersModel.getOrderQuantity();
 			double stock = productModel.getProductStock();
@@ -400,6 +404,7 @@ public class RestOrderServlet extends HttpServlet {
 			orderSellerProductModel.setUnionModel(unionModels.get(c));
 			orderSellerProductModel.setPaymentStatus(false);
 			orderSellerProductModel.setTranId(tranId);
+			orderSellerProductModel.setPaymentType(request.getParameter("paymentType"));
 			
 			db.saveSellerProductOrder(orderSellerProductModel);
 			

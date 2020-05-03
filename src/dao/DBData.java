@@ -202,6 +202,7 @@ public class DBData {
 		Connection con = new Connection();
 		Session session = con.getSessionFactory().openSession();
 
+		System.out.println(id);
 		Query queryExecuteable = session.createQuery(query);
 		ProductModel productModel = (ProductModel) queryExecuteable.list().get(0);
 		session.flush();
@@ -1429,5 +1430,41 @@ public class DBData {
 		session.close();
 		con.closeSessionFactory();
 		System.out.println("Deleted...");
+	}
+
+	public void updateCustomer(CustomerModel customerModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.update(customerModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Updated...");
+	}
+
+	public List<OrdersModel> getOrderforReport(String month, String year) {
+		// TODO Auto-generated method stub
+	//	select so from SomeObject so where TO_CHAR(order.orderDate, 'MM') = :month_as_string
+				
+				
+		String query = "from OrdersModel order where to_char(order.orderDate,'YYYY-MM')="+year+"-"+month;
+		Connection con = new Connection();
+		Session session = con.getSessionFactory().openSession();
+
+		Query queryExecuteable = session.createQuery(query);
+		ArrayList<OrdersModel> OrdersModel=new ArrayList<>();
+		OrdersModel = (ArrayList<OrdersModel>) queryExecuteable.list();
+
+
+		
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		return OrdersModel;
 	}
 }

@@ -33,7 +33,8 @@ public class CategoryServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		RequestDispatcher rd = null;
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
 		System.out.println("Value of Action" + action);
@@ -45,7 +46,7 @@ public class CategoryServlet extends HttpServlet {
 				request.setAttribute("categories", categoryModel);
 				request.setAttribute("action", "new");
 
-				rd = request.getRequestDispatcher("/newcategory.jsp");
+				request.getRequestDispatcher("/newcategory.jsp").forward(request, response);
 				System.out.println("In new page..");
 
 			}
@@ -57,7 +58,7 @@ public class CategoryServlet extends HttpServlet {
 				request.setAttribute("categories", categoryModel);
 				request.setAttribute("action", "update");
 
-				rd = request.getRequestDispatcher("/newcategory.jsp");
+				request.getRequestDispatcher("/newcategory.jsp").forward(request, response);
 			}
 
 			else if (action.equals("delete")) {
@@ -68,23 +69,20 @@ public class CategoryServlet extends HttpServlet {
 				db.deleteCategory(categoryModel);
 				List<CategoryModel> categoryModel1 = db.getAllCategories();
 				request.setAttribute("categories", categoryModel1);
-				rd = request.getRequestDispatcher("/Category.jsp");
+				request.getRequestDispatcher("/Category.jsp").forward(request, response);
 			}
 		} else {
 
 			List<CategoryModel> categoryModel = db.getAllCategories();
 			request.setAttribute("categories", categoryModel);
-			rd = request.getRequestDispatcher("/Category.jsp");
+			request.getRequestDispatcher("/Category.jsp").forward(request, response);
 		}
-		System.out.println("doGet is working");
 
-		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		RequestDispatcher rd = null;
 		String action = request.getParameter("action").toString();
 
 		if (action.equals("new")) {
@@ -119,7 +117,7 @@ public class CategoryServlet extends HttpServlet {
 			List<CategoryModel> categoryModels = db.getAllCategories();
 			request.setAttribute("categories", categoryModels);
 
-			rd = request.getRequestDispatcher("/Category.jsp");
+			request.getRequestDispatcher("/Category.jsp").forward(request, response);
 		}
 
 		else if (action.equals("update")) {
@@ -134,10 +132,9 @@ public class CategoryServlet extends HttpServlet {
 			List<CategoryModel> categoryModels = db.getAllCategories();
 			request.setAttribute("categories", categoryModels);
 
-			rd = request.getRequestDispatcher("/index.jsp");
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
 
 		}
 
-		rd.forward(request, response);
 	}
 }

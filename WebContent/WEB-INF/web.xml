@@ -336,6 +336,25 @@
 		<servlet-name>ImageGetterServlet</servlet-name>
 		<url-pattern>/getimage</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>OrderTableServlet</servlet-name>
+		<servlet-class>controller.OrderTableServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrderTableServlet</servlet-name>
+		<url-pattern>/ordertable</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>SubAdminServlet</servlet-name>
+		<servlet-class>controller.SubAdminServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SubAdminServlet</servlet-name>
+		<url-pattern>/subadmins</url-pattern>
+	</servlet-mapping>
+
 
 
 	<jsp-config>

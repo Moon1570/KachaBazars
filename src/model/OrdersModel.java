@@ -76,6 +76,9 @@ public class OrdersModel {
 	@Column(name = "tran_id")
 	private String tranId;
 	
+	@Column(name = "payment_type")
+	private String paymentType;
+	
 	@Column(name = "payment_status")
 	private boolean paymentStatus;
 	
@@ -237,5 +240,11 @@ public class OrdersModel {
 		this.paymentStatus = paymentStatus;
 	}
 	
-	
+	public String getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
 }

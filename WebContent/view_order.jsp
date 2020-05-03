@@ -123,7 +123,6 @@
 	function loadDelivery(str) {
 		var xhttp = new XMLHttpRequest();
 
-		alert(str);
 		
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
@@ -228,6 +227,7 @@
 		
 		<form action="./orderoperations?soid=${order.orderId}&action=editordersellerproduct" method="post">
 			<div class="box">
+			<input type="hidden" name="page" value="${page }">
 			<table>
 				<tr>
 					<th colspan="2" rowsapn="2">
@@ -241,13 +241,19 @@
 					<td><input type="text" name="careOfContact" value="${order.careOfContact}"></td>
 				</tr>
 				
-				<tr>
+					<tr>
 						<td>Phone Number</td>
 						<td><input type="text" name="deliveryPhone" value="${order.phoneNumber}"></td>
 					</tr>
+					
+					<tr>
+						<td>Product</td>
+						<td>${order.sellersProduct.productName}</td>
+					</tr>
+					
 					<tr>
 						<td>Quantity</td>
-						<td><input type="text" name="deliveryQuantity" value="${order.orderQuantity}"></td>
+						<td><input type="text" name="deliveryQuantity" value="${order.orderQuantity}">  ${order.sellersProduct.unitModel.unit }</td>
 					</tr>
 					
 					<%
@@ -279,10 +285,7 @@
 					</td>
 				</tr>
 				
-				<%
-					List<UpazillaModel> upazillaModels = ad.getAllUpazillas();
-					request.setAttribute("upazillas", upazillaModels);
-				%>				
+						
 								
 				<tr>
 					<td>Customer Upazilla</td>
@@ -329,24 +332,7 @@
 						<td>Zip Code</td>
 						<td><input type="text" name="deliveryZipCode" value="${order.orderZipCode}"></td>
 					</tr>
-					
-					<%
-					
-					List<DeliveryPersonModel> deliveryPersonModels = db.getAllDeliveryPersons();
-					request.setAttribute("delivery", deliveryPersonModels);
-				%>
 				
-				<tr>
-					<td>Delivery Person</td>
-					<td>
-						<select name="deliveryPerson" required="required">
-							<option value="${order.deliveryPersonModel.deliveryPersonId}">${order.deliveryPersonModel.deliveryPersonFirstName} ${order.deliveryPersonModel.deliveryPersonLastName}</option>
-							<c:forEach items="${delivery}" var="delivery">
-								<option value="${delivery.deliveryPersonId }">${delivery.deliveryPersonFirstName} ${delivery.deliveryPersonLastName}</option>
-							</c:forEach>
-						</select>
-					</td>
-				</tr>	
 					
 					<tr>
 						<td>Expected Delivery Date</td>

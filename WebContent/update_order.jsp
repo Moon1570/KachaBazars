@@ -111,9 +111,15 @@
 						<td>Phone Number</td>
 						<td><input type="text" name="deliveryPhone" value="${order.phoneNumber}"></td>
 					</tr>
+					
+				<tr>
+						<td>Product</td>
+						<td><input type="text" name="" value="${order.productModel.productName}"></td>
+					</tr>
+					
 					<tr>
 						<td>Quantity</td>
-						<td><input type="text" name="deliveryQuantity" value="${order.orderQuantity}"></td>
+						<td><input type="text" name="deliveryQuantity" value="${order.orderQuantity}"> ${order.productModel.unitModel.unit }</td>
 					</tr>
 					<tr>
 						<td>Village</td>

@@ -1,14 +1,17 @@
 package controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.zip.Deflater;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -83,6 +86,126 @@ public class RestCartServlet extends HttpServlet {
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray.toString());
 
+		}else if(action.equals("getProfile")) {
+			int cid = Integer.parseInt(request.getParameter("cid"));
+			
+			CustomerModel customerModel= db.getCustomerById(cid);
+			
+			JSONArray jsonArray = new JSONArray();
+			JSONObject JO = new JSONObject();
+			
+			byte[] a = customerModel.getImage();
+			Deflater compressor = new Deflater();
+			compressor.setLevel(Deflater.BEST_COMPRESSION);
+			
+			  compressor.setInput(a);
+			  compressor.finish();
+			   
+			  // Create an expandable byte array to hold the compressed data.
+			  // It is not necessary that the compressed data will be smaller than
+			  // the uncompressed data.
+			  ByteArrayOutputStream bos = new ByteArrayOutputStream(a.length);
+			   
+			  // Compress the data
+			  byte[] buf = new byte[1024];
+			  while (!compressor.finished()) {
+			      int count = compressor.deflate(buf);
+			      bos.write(buf, 0, count);
+			  }
+			  try {
+			      bos.close();
+			  } catch (IOException e) {
+			  }
+			   
+			  // Get the compressed data
+			  byte[] compressedData = bos.toByteArray();
+			
+			
+			String string = Base64.getEncoder().encodeToString(compressedData);
+			
+			
+			try {
+				
+				JO.put("name", customerModel.getCustomerFirstName() + " "+ customerModel.getCustomerLastName());
+				JO.put("address", customerModel.getUnionModel().getUnionBanglaName()
+						+", "+customerModel.getUpazillaModel().getUpazillaBangaName()
+						+", "+customerModel.getDistrictModel().getDistrictBanglaName()
+						+", "+customerModel.getDivisionmodel().getDivisionBanglaName());
+				JO.put("home", customerModel.getCustomerVillage()+", "+customerModel.getCustomerStreet()+", "+
+						customerModel.getCustomerHoldingNumber());
+				JO.put("dob", customerModel.getCustomerDOB());
+				JO.put("phone", customerModel.getCustomerPhone());
+				JO.put("image", string);
+				
+				
+				jsonArray.put(JO);
+				
+				PrintWriter pw = response.getWriter();
+				pw.write(jsonArray.toString());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(action.equals("getProfileseparated")) {
+			int cid = Integer.parseInt(request.getParameter("cid"));
+			
+			CustomerModel customerModel= db.getCustomerById(cid);
+			
+			JSONArray jsonArray = new JSONArray();
+			JSONObject JO = new JSONObject();
+			
+			byte[] a = customerModel.getImage();
+			Deflater compressor = new Deflater();
+			compressor.setLevel(Deflater.BEST_COMPRESSION);
+			
+			  compressor.setInput(a);
+			  compressor.finish();
+			   
+			  // Create an expandable byte array to hold the compressed data.
+			  // It is not necessary that the compressed data will be smaller than
+			  // the uncompressed data.
+			  ByteArrayOutputStream bos = new ByteArrayOutputStream(a.length);
+			   
+			  // Compress the data
+			  byte[] buf = new byte[1024];
+			  while (!compressor.finished()) {
+			      int count = compressor.deflate(buf);
+			      bos.write(buf, 0, count);
+			  }
+			  try {
+			      bos.close();
+			  } catch (IOException e) {
+			  }
+			   
+			  // Get the compressed data
+			  byte[] compressedData = bos.toByteArray();
+			
+			
+			String string = Base64.getEncoder().encodeToString(compressedData);
+			
+			
+			try {
+				
+				JO.put("fname", customerModel.getCustomerFirstName());
+				JO.put("lname", customerModel.getCustomerLastName());
+				JO.put("village", customerModel.getCustomerVillage());
+				JO.put("street", customerModel.getCustomerStreet());
+				JO.put("holding", customerModel.getCustomerHoldingNumber());
+				JO.put("zip", customerModel.getCustomerZipcode());
+				JO.put("dob", customerModel.getCustomerDOB());
+				JO.put("phone", customerModel.getCustomerPhone());
+				JO.put("image", string);
+				
+				
+				jsonArray.put(JO);
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonArray.toString());
 		}
 
 	}
@@ -127,7 +250,7 @@ public class RestCartServlet extends HttpServlet {
 			CartModel cartModel = db.getCartByCustomerId(cid);
 			List<CartDetailsModel> cartDetailsModel = db.getCartDetailsByCartId(cartModel.getCartId());
 
-			String coc, phone, expectedDate, street, village, zip;
+			String coc, phone, expectedDate, street, village, zip, paymentType;
 
 			coc = request.getParameter("coc");
 			phone = request.getParameter("phone");
@@ -136,6 +259,7 @@ public class RestCartServlet extends HttpServlet {
 			street = request.getParameter("street");
 			village = request.getParameter("village");
 			zip = request.getParameter("zip");
+			paymentType = request.getParameter("paymentType");
 			
 			cid = Integer.parseInt(request.getParameter("cid"));			
 			
@@ -202,6 +326,7 @@ public class RestCartServlet extends HttpServlet {
 				ordersModel.setOrderZipCode(zip);
 				ordersModel.setPhoneNumber(phone);
 				ordersModel.setProductModel(cdm.getProductModel());
+				ordersModel.setPaymentType(paymentType);
 
 				total = total
 						+ (cdm.getCartProductQuantity() * Double.parseDouble(cdm.getProductModel().getProductPrice()));

@@ -44,16 +44,21 @@
 
 
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="description" content="">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="javascript/jquery.js"></script>
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-<link rel="stylesheet" href="./css/admin.css">
 <link rel="stylesheet" href="./css/menubar.css">
-<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+
+
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.20/b-1.6.1/b-flash-1.6.1/datatables.min.js"></script>
 <title>Admin</title>
+
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins&display=swap"
+	rel="stylesheet">
 </head>
 <body>
 
@@ -73,13 +78,20 @@
 		<div class="logo">
 			KachaBazar.com <a href="./Homepage.jsp">View Page</a>
 		</div>
-		<div class="search">
-			<input class="search-box" placeholder="Type to search"> <input
-				type="submit" class="search-button" value="Search">
-		</div>
+		
+		
+<select onChange="window.location.href=this.value" class="form-control float-right" style="width: 10%">
+	<option value="#">sub-site</option>
+	<option value="./customers?action=login">Customer site</option>
+	<option value="./sellers?action=login">Seller site</option>
+	<option value="./deliveries?action=view">Delivery site</option>
+	<option value="sub-admin-login.jsp">sub-admin site</option>
+</select>
+
+
 		<div class="menu-items">
-			<a class="active" href="index.jsp">Home</a> <a
-				href="./admin?action=viewprofile">Profile</a> <a
+
+			<a href="./admin?action=viewprofile">Profile</a> <a
 				href="./admin?action=adminlogout">Logout</a>
 		</div>
 	</div>
@@ -90,8 +102,12 @@
 		<div class="side-bar">
 			<h2>Menu</h2>
 			<ul>
-				<li class="options-div"><a class="options"
-					href="./orders?action=view">Dashboard</a></li>
+				<li class="options-div" id="order"><a class="options"
+					href="#order">Orders</a>
+					<div class="sub-menu">
+						<a href="./orders?action=view">Inventory Orders</a> <a
+							href="seller_orders.jsp">Seller Orders</a>
+					</div></li>
 				<li class="options-div" id="product"><a class="options"
 					href="#product">Products</a>
 					<div class="sub-menu">
@@ -105,23 +121,36 @@
 							href="Category.jsp">View Category</a> <a class="options"
 							href="./subcategories?action=new">Add Sub-category</a>
 					</div></li>
-				
+
 				<li class="options-div" id="sellers"><a class="options"
 					href="#sellers">Sellers</a>
 					<div class="sub-menu">
-						<a href="./sellers?action=new">Add Sellers</a> <a
-							href="./sellers?action=view">View Sellers</a>
+						<a href="./sellers?action=new&page=admin">Add Sellers</a> <a
+							href="./sellers?action=view&page=admin">View Sellers</a>
 					</div></li>
 				<li class="options-div"><a class="options"
-					href="./customers?action=view">Customers</a></li>
+					href="./customers?action=view&page=admin">Customers</a></li>
 				<li class="options-div" id="deliverer"><a class="options"
 					href="#deliverer">Delivery Persons</a>
 					<div class="sub-menu">
-						<a href="./deliveries?action=add">Add Deliverers</a> <a
-							href="./deliveries?action=view">View Deliverers</a>
+						<a href="./deliveries?action=add&page=admin">Add Deliverers</a> <a
+							href="./deliveries?action=view&page=admin">View Deliverers</a>
 					</div></li>
-				<li class="options-div"><a class="options"
-					href="./demands?action=view">Explore Demands</a></li>
+
+				<li class="options-div" id="area"><a class="options"
+					href="#area">Areas</a>
+					<div class="sub-menu">
+						<a href="./areas?action=divPage&page=admin">Division</a> <a
+							href="./areas?action=disPage&page=admin">District</a> <a
+							href="./areas?action=upaPage&page=admin">Upazilla</a> <a
+							href="./areas?action=uniPage&page=admin">Union</a>
+					</div></li>
+					
+				<li class="options-div" id="subadmin"><a class="options"
+					href="view-sub-admin.jsp">Sub Admin</a>
+					
+					</li>
+
 			</ul>
 		</div>
 	</div>
@@ -138,85 +167,83 @@
 	%>
 
 
-	<form action="./orders" method="get">
-		<div class="container-box">
-			<table align="center">
-				<tr>
-					<th>Order ID</th>
-					<th>Care of</th>
-					<th>Order Date</th>
-					<th>Product</th>
-					<th>Customer</th>
-					<th>Delivery Person</th>
-					<th>Order Status</th>
-					<th>Order Expected Date</th>
-					<th>Action</th>
-				</tr>
-				<c:forEach items="${orders}" var="order">
+
+	<div class="container float-right my-5"
+		style="z-index: -1; position: relative;">
+
+		<div class="table-responsive my-3">
+
+			<table id="myTable"
+				class="table table-striped table-bordered table-hover text-center">
+				<thead class="thead-dark">
 					<tr>
-						<td>${order.orderId }</td>
-						<td>${order.careOfContact}</td>
-						<td>${order.orderDate}</td>
-						<td>${order.productModel.productName}</td>
-						<td>${order.customerModel.customerFirstName}</td>
-						<td>${order.deliveryPersonModel.deliveryPersonFirstName}</td>
-						<td>${order.orderStatus}</td>
-						<td>${order.expectedDeliveryDate}</td>
-						<td><a
-							href="./orderoperations?action=vieworder&oid=${order.orderId}">View</a>
-						</td>
+						<th scope="col">Order ID</th>
+						<th scope="col">Order Date</th>
+						<th scope="col">Delivery Person</th>
+						<th scope="col">Order Status</th>
+						<th scope="col">Order Expected Date</th>
+						<th scope="col">Payment Type</th>
+						<th scope="col">Action</th>
 					</tr>
-				</c:forEach>
+				</thead>
+				<tbody>
+
+				</tbody>
 			</table>
-	</form>
+
+		</div>
 	</div>
-	<div align="center">
-		<a href="./customers?action=login"> Customer Login</a> <a
-			href="./sellers?action=login"> Seller Login</a> <a
-			href="./deliveries?action=view"> Delivery view</a>
-	</div>
-	<hr style="size: 10px">
-
-	<%
-		List<OrderSellerProductModel> orderSellerProductModels = db.getAllOrderFromSeller();
-			request.setAttribute("ordersellerproducts", orderSellerProductModels);
-	%>
 
 
-	<form action="./orders" method="get">
-		<div class="container-box">
-			<h2>Orders From Seller</h2>
-			<table>
-				<tr>
-					<th>Order ID</th>
-					<th>Care of</th>
-					<th>Order Date</th>
-					<th>Product</th>
-					<th>Customer</th>
-					<th>Delivery Person</th>
-					<th>Order Status</th>
-					<th>Order Expected Date</th>
-					<th>Seller</th>
-					<th>Action</th>
-				</tr>
-				<c:forEach items="${ordersellerproducts}" var="order">
-					<tr>
-						<td>${order.orderId }</td>
-						<td>${order.careOfContact}</td>
-						<td>${order.orderDate}</td>
-						<td>${order.sellersProduct.productName}</td>
-						<td>${order.customerModel.customerFirstName}</td>
-						<td>${order.deliveryPersonModel.deliveryPersonFirstName}</td>
-						<td>${order.orderStatus}</td>
-						<td>${order.expectedDeliveryDate}</td>
-						<td>${order.sellerModel.sellerFirstName}</td>
-						<td><a
-							href="./orderoperations?action=viewsellerorder&soid=${order.orderId}">View</a>
-						</td>
-					</tr>
-				</c:forEach>
-			</table>
-	</form>
+
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							var table = $('#myTable')
+									.DataTable(
+											{
+
+												ajax : {
+													method : "GET",
+													url : "./ordertable?action=getInventoryOrders",
+													dataSrc : "demo"
+												},
+												columns : [
+														{
+															"data" : "count"
+														},
+														{
+															"data" : "odate"
+														},
+														{
+															"data" : "edate"
+														},
+														{
+															"data" : "delivery"
+														},
+														{
+															"data" : "status"
+														},
+														{
+															"data" : "paytype"
+														},
+														{
+															"data" : null,
+															"mRender" : function(
+																	data, type,
+																	full) {
+																return '<a class="btn btn-outline-info btn-md" href=./orderoperations?action=vieworder&page=admin&oid='
+																		+ data.id
+																		+ '>'
+																		+ 'View'
+																		+ '</a>'
+															}
+														} ]
+											});
+						});
+	</script>
 
 	<%
 		}

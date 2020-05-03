@@ -53,16 +53,21 @@ public class OrdersServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		session = request.getSession();
-		RequestDispatcher rd = null;
 		String action = request.getParameter("action");
 		System.out.println("line : "+action);
 		
 		if (action.equals("view")) {
-			List<OrdersModel> ordersModels = db.getAllOrders();
-			request.setAttribute("orders", ordersModels);
+			
 			request.setAttribute("action", "view");
-			rd = request.getRequestDispatcher("/index.jsp");
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			
+		} else if(action.equalsIgnoreCase("viewsad")) {
+			
+			request.getRequestDispatcher("/sad-index.jsp").forward(request, response);
+			
 		} else if (action.equals("confirm")) {
 			OrdersModel ordersModel = new OrdersModel();
 
@@ -77,7 +82,7 @@ public class OrdersServlet extends HttpServlet {
 			request.setAttribute("orders", ordersModel);
 			request.setAttribute("action", "confirm");
 
-			rd = request.getRequestDispatcher("/Confirmation.jsp");
+			request.getRequestDispatcher("/Confirmation.jsp").forward(request, response);
 			// db.saveOrder(ordersModel);
 		}
 		else if (action.equals("edit")) {
@@ -88,7 +93,7 @@ public class OrdersServlet extends HttpServlet {
 			request.setAttribute("order", ordersModel);
 			request.setAttribute("action", "update");
 			
-			rd = request.getRequestDispatcher("/update_order.jsp");
+			request.getRequestDispatcher("/update_order.jsp").forward(request, response);
 		}
 		else if (action.equals("done")) {
 			
@@ -124,7 +129,7 @@ public class OrdersServlet extends HttpServlet {
 			
 			db.updateOrder(ordersModel);
 			
-			rd = request.getRequestDispatcher("/index.jsp");
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
 			
 		}
 		else if (action.equals("addtocart")) {
@@ -141,7 +146,7 @@ public class OrdersServlet extends HttpServlet {
 			request.setAttribute("product", productModel);
 			request.setAttribute("action", "order");
 
-			rd = request.getRequestDispatcher("/ViewProduct.jsp");
+			request.getRequestDispatcher("/ViewProduct.jsp").forward(request, response);
 			
 		}
 		else if (action.equals("confirmsellerproduct")) {
@@ -158,19 +163,18 @@ public class OrdersServlet extends HttpServlet {
 			request.setAttribute("orders", ordersModel);
 			request.setAttribute("action", "confirm");
 
-			rd = request.getRequestDispatcher("/confirm_seller_product.jsp");
+			request.getRequestDispatcher("/confirm_seller_product.jsp").forward(request, response);
 			// db.saveOrder(ordersModel);
 		}
 		
-		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		DBData db = new DBData();
-
-		RequestDispatcher rd = null;
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 		if (action.equals("confirm")) {
 			int cid = Integer.parseInt(request.getParameter("cid"));

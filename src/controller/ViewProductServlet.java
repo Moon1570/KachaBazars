@@ -23,11 +23,12 @@ public class ViewProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	HttpSession session;
 	DBData db = new DBData();
-	RequestDispatcher rd = null;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		request.getSession();
 		String action = request.getParameter("action");
 		session = request.getSession();
@@ -47,7 +48,7 @@ public class ViewProductServlet extends HttpServlet {
 			request.setAttribute("product", productModel);
 			request.setAttribute("action", "order");
 
-			rd = request.getRequestDispatcher("/ViewProduct.jsp");
+			request.getRequestDispatcher("/ViewProduct.jsp").forward(request, response);
 		} else if (action.equals("addtocart")) {
 			// System.out.println("Add To cart");
 			Integer pid = Integer.parseInt(request.getParameter("pid").toString());
@@ -56,7 +57,7 @@ public class ViewProductServlet extends HttpServlet {
 			productModel = db.getProductById(pid);
 			request.setAttribute("product", productModel);
 			request.setAttribute("action", "addtocart");
-			rd = request.getRequestDispatcher("/ViewProduct.jsp");
+			request.getRequestDispatcher("/ViewProduct.jsp").forward(request, response);
 			System.out.println("new page");
 		} else if (action.equals("sellerorder")) {
 			Integer spid = Integer.parseInt(request.getParameter("productid").toString());
@@ -72,10 +73,9 @@ public class ViewProductServlet extends HttpServlet {
 			request.setAttribute("product", sellersProduct);
 			request.setAttribute("action", "sellerorder");
 
-			rd = request.getRequestDispatcher("/ViewSellerProduct.jsp");
+			request.getRequestDispatcher("/ViewSellerProduct.jsp").forward(request, response);
 
 		}
-		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -83,7 +83,8 @@ public class ViewProductServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		session = request.getSession();
-
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
 		int pid = Integer.parseInt(request.getParameter("pid"));

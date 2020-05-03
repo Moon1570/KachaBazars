@@ -163,7 +163,34 @@ public class RestCustomerServlet extends HttpServlet {
 
 				SellersProduct sub = (SellersProduct) type;
 				try {
-					String string = Base64.getEncoder().encodeToString(sub.getImage());
+					byte[] a = sub.getImage();
+					Deflater compressor = new Deflater();
+					compressor.setLevel(Deflater.BEST_COMPRESSION);
+					
+					  compressor.setInput(a);
+					  compressor.finish();
+					   
+					  // Create an expandable byte array to hold the compressed data.
+					  // It is not necessary that the compressed data will be smaller than
+					  // the uncompressed data.
+					  ByteArrayOutputStream bos = new ByteArrayOutputStream(a.length);
+					   
+					  // Compress the data
+					  byte[] buf = new byte[1024];
+					  while (!compressor.finished()) {
+					      int count = compressor.deflate(buf);
+					      bos.write(buf, 0, count);
+					  }
+					  try {
+					      bos.close();
+					  } catch (IOException e) {
+					  }
+					   
+					  // Get the compressed data
+					  byte[] compressedData = bos.toByteArray();
+					
+					
+					String string = Base64.getEncoder().encodeToString(compressedData);
 
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());

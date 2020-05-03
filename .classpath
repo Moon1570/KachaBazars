@@ -70,5 +70,8 @@
 	<classpathentry exported="true" kind="lib" path="/root/git/KachaBazars/WebContent/WEB-INF/lib/reactive-streams-1.0.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="/root/git/KachaBazars/WebContent/WEB-INF/lib/rhq-pluginAnnotations-3.0.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="/root/git/KachaBazars/WebContent/WEB-INF/lib/slf4j-api-1.7.21.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/datatable-1.0.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/datatable-dependencies-1.0.3.jar"/>
+	<classpathentry kind="lib" path="/root/git/KachaBazars/WebContent/WEB-INF/lib/joda-time-2.9.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

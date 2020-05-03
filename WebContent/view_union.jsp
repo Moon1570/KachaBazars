@@ -1,27 +1,34 @@
-<%@page import="model.DivisionModel"%>
-<%@page import="dao.AreaDao"%>
-<%@page import="java.util.List"%>
 <%@page import="dao.DBData"%>
+<%@page import="model.DivisionModel"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    
-<!DOCTYPE html>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <html>
 <head>
-	<meta charset="UTF-8">
-<link rel="stylesheet" href="./css/admin.css">
 <link rel="stylesheet" href="./css/menubar.css">
-	<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
-	<title>Add Delivery Person</title>
-	
-	<script type="text/javascript">
-	
 
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+
+
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.20/b-1.6.1/b-flash-1.6.1/datatables.min.js"></script>
+
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins&display=swap"
+	rel="stylesheet">
+
+
+<script type="text/javascript">
 	function loadDistricts(str) {
 		var xhttp = new XMLHttpRequest();
-		
+
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 
@@ -29,19 +36,18 @@
 				json = JSON.stringify(o)
 
 				var ele = document.getElementById('districtsDropDown');
-				ele.innerHTML="";
+				ele.innerHTML = "";
 				for (x in o) {
-				
+
 					ele.innerHTML = ele.innerHTML
-							+ '<option value="' + x + '">'
-							+ o[x] + '</option>';
+							+ '<option value="' + x + '">' + o[x] + '</option>';
 				}
 				/*
 				for (x in o) {
 					document.getElementById("divisions").innerHTML += x + o[x]
 							+ "</br>";
 				}
-*/
+				 */
 			}
 
 		};
@@ -54,8 +60,7 @@
 
 	function loadUpazillas(str) {
 		var xhttp = new XMLHttpRequest();
-		
-		
+
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 
@@ -63,71 +68,48 @@
 				json = JSON.stringify(o)
 
 				var ele = document.getElementById('upazillasDropDown');
-				ele.innerHTML="";
+				ele.innerHTML = "";
 				for (x in o) {
-				
+
 					ele.innerHTML = ele.innerHTML
-							+ '<option value="' + x + '">'
-							+ o[x] + '</option>';
+							+ '<option value="' + x + '">' + o[x] + '</option>';
 				}
 			}
 
 		};
-		xhttp.open("GET",
-				"./dropdown?districtId="+str+"&action=districts", true);
-		xhttp.send();
-		//alert("Hello...")
-
-	}
-
-	function loadUnions(str) {
-		var xhttp = new XMLHttpRequest();
-		
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-
-				var o = JSON.parse(this.responseText); // is a javascript object
-				json = JSON.stringify(o)
-
-				var ele = document.getElementById('unionsDropDown');
-				ele.innerHTML="";
-				for (x in o) {
-					ele.innerHTML = ele.innerHTML
-							+ '<option value="' + x + '">'
-							+ o[x] + '</option>';
-				}
-
-
-			}
-
-		};
-		xhttp.open("GET",
-				"./dropdown?upazillasId="+str+"&action=unions", true);
+		xhttp.open("GET", "./dropdown?districtId=" + str + "&action=districts",
+				true);
 		xhttp.send();
 		//alert("Hello...")
 
 	}
 </script>
 </head>
-<body>
 
+<body>
+	<%
+		
+			DBData db = new DBData();
+			List<DivisionModel> divis = db.getAllDivision();
+			request.setAttribute("divis", divis);
+	%>
 	<div id="navbar">
-	
-	<div class="logo">
-		KachaBazar.com
-	</div>
+
+		<div class="logo">
+			KachaBazar.com <a href="./Homepage.jsp">View Page</a>
+		</div>
 		<div class="search">
 			<input class="search-box" placeholder="Type to search"> <input
 				type="submit" class="search-button" value="Search">
 		</div>
 		<div class="menu-items">
-			<a class="active" href="javascript:void(0)">Home</a> 
-			<a href="">Profile</a> 
-			<a href="">Notification</a>
+			<a class="active" href="index.jsp">Home</a> <a
+				href="./admin?action=viewprofile">Profile</a> <a
+				href="./admin?action=adminlogout">Logout</a>
 		</div>
 	</div>
-	
-	
+
+
 
 	<c:choose>
 		<c:when test="${page == 'sad'}">
@@ -240,142 +222,129 @@
 		
  		</c:otherwise>
 	</c:choose>
-	
-	
-	<div class="header">
-		<h2>Add New Delivery Person</h2>
-		</div>
-	
-	
-	<div class="container">
-		<form enctype="multipart/form-data" action="./deliveries" method="post">
-		<input type="hidden" name="page" value="${page }">
-		<div class="box">
-			
-			<table>
-				<tr>
-					<td>First Name</td>
-					<td><input type="text" name="deliveryPersonFirstName" required="required"></td>
-				</tr>
-				
-				<tr>
-					<td>Last Name</td>
-					<td><input type="text" name="deliveryPersonLastName" required="required"></td>
-				</tr>
-				
-				<tr>
-					<td>Phone Number</td>
-					<td><input type="text" name="deliveryPersonPhone" required="required"></td>
-				</tr>
-				
-				<tr>
-					<td>Date of Birth</td>
-					<td><input type="date" name="deliveryPersonDOB" required="required"></td>
-				</tr>
-				
-				<tr>
-					<td>Image</td>
-					<td><input type="file" name="deliveryImage" required="required"></td>
-				</tr>
-				
-				<tr>
-					<td>NID</td>
-					<td><input type="text" name="deliveryPersonNID" required="required"></td>
-				</tr>
-				
-				<tr>
-					<td>Gender</td>
-					<td><select name="deliveryPersonGender" required="required">
-					
-						<option value="male">Male</option>
-						<option value="female">Female</option>
-						<option value="other">Other</option>
-						</select></td>
-				</tr>
-				
-				<%
-						DBData db = new DBData();
-						AreaDao ad = new AreaDao();
 
-						List<DivisionModel> divisionModels = db.getAllDivision();
-						request.setAttribute("divisions", divisionModels);
-					%>
 
-					<tr>
-						<td>Delivery Division</td>
-						<td><select class="input-field" id="divisionsDropDown" onchange="loadDistricts(this.value)"  name="deliveryDivision" required="required">
-								<c:forEach items="${divisions}" var="division">
-									<option value="${division.divisionId }">${division.divisionBanglaName}</option>
+	<div class="container float-right mt-5"
+		style="z-index: 5; position: relative;">
+		<div class="table-responsive my-5">
+			<form class="form-inline" method="post"
+				action="./areas?action=adduni" id="form">
+				<div class="form-group mx-sm-3 mb-2">
+					<label for="exampleInputEmail1">
+						<h4>Add Union</h4> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+					</label>
+					<div class="form-group row">
+						<div class="col-xs-2">
+							<select name="divdd" class="form-control" required="required" id="divisionsDropDown" onchange="loadDistricts(this.value)">
+								<c:forEach items="${divis }" var="divis">
+									<option value="${divis.divisionId }"
+										data-tokens="ketchup mustard">${divis.divisionBanglaName}</option>
 								</c:forEach>
-						</select></td>
-					</tr>
+							</select>
+						</div>
 
-					<tr>
-						<td>Delivery District</td>
-						<td><select class="input-field" id="districtsDropDown" onchange="loadUpazillas(this.value)" name="deliveryDistrict" required="required">
-						
-						</select></td>
-					</tr>
+						<div class="col-xs-2 ml-4">
+							<select name="disdd" class="form-control" required="required" id="districtsDropDown" onchange="loadUpazillas(this.value)">
+							<option>Select division first</option>
+								
+							</select>
+						</div>
+						<div class="col-xs-2 ml-4">
+							<select name="upadd" class="form-control" required="required" id="upazillasDropDown">
+							<option>Select district first</option>
+								
+							</select>
+						</div>
+						<div class="col-xs-2 ml-4">
+							<input type="text" class="form-control" name="uniName" required="Hell yeah"
+								placeholder="Enter Union name">
+						</div>
+						<div class="col-xs-2 ml-4">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+
+					</div>
+				</div>
 
 
-					<tr>
-						<td>Delivery Upazilla</td>
-						<td><select class="input-field" name="deliveryUpazilla" id="upazillasDropDown" onchange="loadUnions(this.value)" required="required">
-								
-						</select></td>
-					</tr>
+			</form>
 
-
-
-					<tr>
-						<td>Delivery Union</td>
-						<td><select class="input-field" id="unionsDropDown" name="deliveryUnion" required="required">
-								
-						</select></td>
-					</tr>
-					
-					<tr>
-						<td>Delivery Village</td>
-						<td><input type="text" class="input-field" name="deliveryVillage" required="required">
-								
-						</td>
-					</tr>
-					<tr>
-						<td>Delivery Street</td>
-						<td><input type="text" class="input-field"  name="deliveryStreet" required="required">
-								
-						</td>
-					</tr>
-					
-					<tr>
-						<td>Delivery Holding Number</td>
-						<td><input type="text" class="input-field"  name="deliveryHoldingNumber" required="required">
-								
-						</td>
-					</tr>
-					
-					<tr>
-						<td>Password</td>
-						<td><input type="password" class="input-field"  name="deliveryPassword" required="required">
-								
-						</td>
-					</tr>
-	
-				
-			</table>
-			<c:if test="${action=='update'}">
-				<input type="hidden" value="update" name="action">	
-			</c:if>
-						
-			<c:if test="${action=='add'}">
-				<input type="hidden" value="add" name="action">
-			</c:if>
-			
-			<div class="submit-button" align="center">
-				<input type="submit" value="Submit">
-			</div>
 		</div>
-	</form>
+		<hr
+			style="-moz-border-bottom-colors: none; -moz-border-image: none; -moz-border-left-colors: none; -moz-border-right-colors: none; -moz-border-top-colors: none; border-color: #EEEEEE -moz-use-text-color #FFFFFF; border-style: solid none; border-width: 3px 0; margin: 10px 0;">
+
+		<div class="text-center">
+			<h2 class="d-inline">Union List</h2>
+			<hr
+				style="-moz-border-bottom-colors: none; -moz-border-image: none; -moz-border-left-colors: none; -moz-border-right-colors: none; -moz-border-top-colors: none; border-color: #EEEEEE -moz-use-text-color #FFFFFF; border-style: solid none; border-width: 3px 0; margin: 18px 0;">
+		</div>
 	</div>
+
+	<div class="container float-right "
+		style="z-index: 5; position: relative;">
+		<div class="table-responsive ">
+			<table id="myTable"
+				class="table table-striped table-bordered table-hover">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">Union ID</th>
+						<th scope="col">Union Name</th>
+						<th scope="col">Upazilla ID & Name</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							var table = $('#myTable')
+									.DataTable(
+											{
+
+												ajax : {
+													method : "GET",
+													url : "./areas?action=uni",
+													dataSrc : "demo"
+												},
+												columns : [
+														{
+															"data" : "count"
+														},
+														{
+															"data" : "name"
+														},
+														{
+															"data" : "upa"
+														},
+														{
+															"data" : null,
+															"mRender" : function(
+																	data, type,
+																	full) {
+																return '<a class="btn btn-outline-info btn-md" href=./areas?action=updateUni&uniId='
+																		+ data.id
+																		+ '>'
+																		+ 'Edit'
+																		+ '</a>   <a class="btn btn-outline-danger btn-md" href=./areas?action=deleteUni&uniId='
+																		+ data.id
+																		+ '>'
+																		+ 'Delete'
+																		+ '</a>';
+															}
+														} ]
+											});
+						});
+	</script>
+
+
 </body>
 </html>

@@ -31,19 +31,36 @@ public class OrderOperationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action = request.getParameter("action");
-		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		System.out.println(action);
 		
 		if (action.equals("viewsellerorder")) {
-			System.out.println( request.getParameter("action")+ " " + request.getParameter("soid"));
+
+			String page = request.getParameter("page");
 			int soid = Integer.parseInt(request.getParameter("soid"));
 			OrderSellerProductModel orderSellerProductModel = db.getOrderSellerProductById(soid);
 			request.setAttribute("order", orderSellerProductModel);
+			
+			if (page.equalsIgnoreCase("sad")) {
+				request.setAttribute("page", "/sad-seller-orders.jsp");
+			} else {
+				request.setAttribute("page", "/seller_orders.jsp");
+			}
+			
 			request.getRequestDispatcher("view_order.jsp").forward(request, response);;
 		}
 		else if (action.equals("vieworder")) {
 			int oid = Integer.parseInt(request.getParameter("oid"));
+			String page = request.getParameter("page");
 			OrdersModel ordersModel = db.getOrderById(oid);
+			
+			if (page.equalsIgnoreCase("sad")) {
+				request.setAttribute("page", "/sad-index.jsp");
+			} else {
+				request.setAttribute("page", "/index.jsp");
+			}
+			
 			request.setAttribute("order", ordersModel);
 			request.getRequestDispatcher("view_order_inventory.jsp").forward(request, response);;
 		}
@@ -54,17 +71,17 @@ public class OrderOperationServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		String action = request.getParameter("action");
-		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		if (action.equals("editordersellerproduct")) {
-			OrderSellerProductModel orderSellerProductModel = new OrderSellerProductModel();
 			
+			String page = request.getParameter("page");
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("UTF-8");
 			
 			int soid = Integer.parseInt(request.getParameter("soid").toString());
 			
-			OrderSellerProductModel orderSellerProductModel2 = db.getOrderSellerProductById(soid);
-
+			OrderSellerProductModel orderSellerProductModel =  db.getOrderSellerProductById(soid);
 			int delId = Integer.parseInt(request.getParameter("deliveryPerson"));
 			orderSellerProductModel.setDeliveryPersonModel(db.getDeliveryPersonById(delId));
 			
@@ -96,9 +113,6 @@ public class OrderOperationServlet extends HttpServlet {
 			orderSellerProductModel.setUpazillaModel(upazillaModel);
 			orderSellerProductModel.setUnionModel(unionModel);
 			
-			SellersProduct sellersProduct = orderSellerProductModel2.getSellersProduct();
-			orderSellerProductModel.setSellersProduct(sellersProduct);
-			orderSellerProductModel.setSellerModel(sellersProduct.getSellerModel());
 			
 			CustomerModel customerModel = db.getCustomerById(Integer.parseInt(request.getParameter("customerModel")));
 			orderSellerProductModel.setCustomerModel(customerModel);
@@ -116,19 +130,18 @@ public class OrderOperationServlet extends HttpServlet {
 			
 			db.updateOrderSellerProduct(orderSellerProductModel);
 			
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			request.getRequestDispatcher(page).forward(request, response);
 		}
 		else if (action.equals("orderinventory")) {
-			OrdersModel ordersModel = new OrdersModel();
 			
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("UTF-8");
 			int oid = Integer.parseInt(request.getParameter("oid").toString());
+			OrdersModel ordersModel = db.getOrderById(oid);
 			
-			OrdersModel ordersModel2 = db.getOrderById(oid);
 			
 
-			ordersModel.setOrderId(oid);
+			String page = request.getParameter("page");
 			ordersModel.setCareOfContact(request.getParameter("careOfContact").toString());
 			ordersModel.setPhoneNumber(request.getParameter("deliveryPhone").toString());
 			ordersModel.setOrderQuantity(Double.parseDouble(request.getParameter("deliveryQuantity").toString()));
@@ -158,8 +171,6 @@ public class OrderOperationServlet extends HttpServlet {
 			ordersModel.setUpazillaModel(upazillaModel);
 			ordersModel.setUnionModel(unionModel);
 			
-			ordersModel.setProductModel(ordersModel2.getProductModel());
-			ordersModel.setCustomerModel(ordersModel2.getCustomerModel());
 			
 	/*		AreaModel areaModel = db.getAreaById(Integer.parseInt(request.getParameter("areaModel")));
 			ordersModel.setAreaModel(areaModel);*/
@@ -174,7 +185,7 @@ public class OrderOperationServlet extends HttpServlet {
 			
 			db.updateOrder(ordersModel);
 			
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			request.getRequestDispatcher(page).forward(request, response);
 		}
 	}
 

@@ -43,8 +43,8 @@ public class CustomerServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher rd = null;
-		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");		
 		HttpSession session = request.getSession();
 		
 		
@@ -56,7 +56,8 @@ public class CustomerServlet extends HttpServlet {
 		if (action.equals("view")) {
 			List<CustomerModel> customerModels = db.getAllCustomers();
 			request.setAttribute("customers", customerModels);
-			rd = request.getRequestDispatcher("/Customers.jsp");
+			request.setAttribute("page", request.getParameter("page"));
+			request.getRequestDispatcher("/Customers.jsp").forward(request, response);
 		}
 		else if (action.equals("reg")) {
 			CustomerModel customerModel = new CustomerModel();
@@ -64,7 +65,7 @@ public class CustomerServlet extends HttpServlet {
 			request.setAttribute("registration", customerModel);
 			request.setAttribute("action", "reg");
 			
-			rd = request.getRequestDispatcher("/CustomerRegistration.jsp");
+			request.getRequestDispatcher("/CustomerRegistration.jsp").forward(request, response);
 		}
 		else if (action.equals("login")) {
 			
@@ -84,7 +85,7 @@ public class CustomerServlet extends HttpServlet {
 				url = null;
 			}
 
-			rd = request.getRequestDispatcher("/CustomerLogin.jsp");
+			request.getRequestDispatcher("/CustomerLogin.jsp").forward(request, response);
 		}
 		else if (action.equals("logout")) {
 		
@@ -96,17 +97,16 @@ public class CustomerServlet extends HttpServlet {
 			session.removeAttribute("name");
 			
 			request.setAttribute("action", "login");
-			rd = request.getRequestDispatcher("/Homepage.jsp");
+			request.getRequestDispatcher("/Homepage.jsp").forward(request, response);
 		}
-		rd.forward(request, response);
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher rd = null;
 		String action = request.getParameter("action");
-		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		if (action.equals("reg")) {
 			CustomerModel customerModel = new CustomerModel();
 			

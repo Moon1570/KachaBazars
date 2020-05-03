@@ -34,28 +34,32 @@ public class DeliveryPersonServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
 		if (action.equals("view")) {
 			List<DeliveryPersonModel> deliveryPersonModels = db.getAllDeliveryPersons();
 			request.setAttribute("delivery", deliveryPersonModels);
+			request.setAttribute("page", request.getParameter("page"));
 			request.getRequestDispatcher("/delivery_person.jsp").forward(request, response);
 		} else if (action.equals("add")) {
 
 			request.setAttribute("action", "add");
+			request.setAttribute("page", request.getParameter("page"));
 			request.getRequestDispatcher("/new_delivery_person.jsp").forward(request, response);
 			
 		}else if (action.equals("update")) {
 			int dpid = Integer.parseInt(request.getParameter("dpid"));
 			DeliveryPersonModel deliveryPersonModel = db.getDeliveryPersonById(dpid);
 			
+			request.setAttribute("page", request.getParameter("page"));
 			request.setAttribute("delivery", deliveryPersonModel);
 			request.getRequestDispatcher("/new_delivery_person.jsp").forward(request, response);
 		}else if (action.equals("delete")) {
 			int dpid = Integer.parseInt(request.getParameter("dpid"));
 			DeliveryPersonModel deliveryPersonModel = db.getDeliveryPersonById(dpid);
-			
+			request.setAttribute("page", request.getParameter("page"));
 			db.deleteDeliveryPerson(deliveryPersonModel);
 			request.getRequestDispatcher("/delivery_person.jsp").forward(request, response);
 		}
@@ -64,7 +68,8 @@ public class DeliveryPersonServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 		AreaDao ad = new AreaDao();
 		DBData db = new DBData();

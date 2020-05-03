@@ -55,5 +55,7 @@
 		<mapping class="model.SellersProduct" />
 		<mapping class="model.OrderSellerProductModel" />
 		<mapping class="model.AdminModel" />
+		<mapping class="model.SubAdminModel" />
+		
 	</session-factory>
 </hibernate-configuration>

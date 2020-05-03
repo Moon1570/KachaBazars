@@ -23,7 +23,8 @@ public class CartServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher rd = null;
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		
 		String action = request.getParameter("action");
 		System.out.println(action);
@@ -43,9 +44,8 @@ public class CartServlet extends HttpServlet {
 			request.setAttribute("cartId", cartId);
 			request.setAttribute("action", "view");
 			
-			rd = request.getRequestDispatcher("/Cart.jsp");
+			request.getRequestDispatcher("/Cart.jsp").forward(request, response);
 		}
-		rd.forward(request, response);
 	}
 
 

@@ -227,6 +227,8 @@
 		
 		<form action="./orderoperations?oid=${order.orderId}&action=orderinventory" method="post">
 			<div class="box">
+			
+			<input type="hidden" name="page" value="${page }">
 			<table>
 				<tr>
 					<th colspan="2" rowsapn="2">

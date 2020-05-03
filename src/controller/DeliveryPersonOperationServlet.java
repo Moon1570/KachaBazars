@@ -24,7 +24,8 @@ public class DeliveryPersonOperationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
 		if (action.equalsIgnoreCase("inventoryorderview")) {
@@ -74,7 +75,8 @@ public class DeliveryPersonOperationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
 		if (action.equalsIgnoreCase("dlogin")) {

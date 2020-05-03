@@ -224,16 +224,237 @@ public class AreaDao {
 
 	public UnionModel getUnionById(int uniId) {
 		// TODO Auto-generated method stub
-		String query = "from UnionModel union where union.id=" + uniId;
+		String query = "from UnionModel upazilla where upazilla.id=" + uniId;
 		Connection con = new Connection();
 		Session session = con.getSessionFactory().openSession();
 
 		Query queryExecuteable = session.createQuery(query);
-		UnionModel unionModel = (UnionModel) queryExecuteable.list().get(0);
+		UnionModel upazillaModel = (UnionModel) queryExecuteable.list().get(0);
 
 		session.flush();
 		session.close();
 		con.closeSessionFactory();
-		return unionModel;
+		return upazillaModel;
+	}
+
+	public int countDivision() {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+		Session session = con.getSessionFactory().openSession();
+
+		int count = ((Long)session.createQuery("select count(*) from DivisionModel").uniqueResult()).intValue();
+		
+		System.out.println(count);
+
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		return count;
+	}
+
+	public void saveDivision(DivisionModel divisionModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.save(divisionModel);
+		transaction.commit();
+		
+		session.flush();
+		session.close();
+		
+		con.closeSessionFactory();
+		System.out.println("Inserted...");
+	}
+
+	public int getLastDivId() {
+		// TODO Auto-generated method stub
+		
+		
+		
+		Connection con = new Connection();
+		Session session = con.getSessionFactory().openSession();
+
+		Query query = session.createQuery("from DivisionModel ORDER BY divisionId DESC");
+		query.setMaxResults(1);
+		DivisionModel last = (DivisionModel) query.uniqueResult();
+
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		return last.getDivisionId();
+	}
+
+	public void deleteDivision(DivisionModel divisionModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.delete(divisionModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Deleted...");
+	}
+
+	public void updateDivision(DivisionModel divisionModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.update(divisionModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Updated...");
+	}
+
+	public void deleteDistrict(DistrictModel districtModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.delete(districtModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Deleted...");
+	}
+
+	public void saveDistrict(DistrictModel districtModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.save(districtModel);
+		transaction.commit();
+		
+		session.flush();
+		session.close();
+		
+		con.closeSessionFactory();
+		System.out.println("Inserted...");
+	}
+
+	public void updateDistrict(DistrictModel districtModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.update(districtModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Updated...");
+	}
+
+	public void saveUpazilla(UpazillaModel upazillaModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.save(upazillaModel);
+		transaction.commit();
+		
+		session.flush();
+		session.close();
+		
+		con.closeSessionFactory();
+		System.out.println("Inserted...");
+	}
+
+	public void deleteUpazilla(UpazillaModel upazillaModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.delete(upazillaModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Deleted...");
+	}
+
+	public void updateUpazilla(UpazillaModel upazillaModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.update(upazillaModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Updated...");
+	}
+
+	public void saveUnion(UnionModel unionModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.save(unionModel);
+		transaction.commit();
+		
+		session.flush();
+		session.close();
+		
+		con.closeSessionFactory();
+		System.out.println("Inserted...");
+	}
+
+	public void deleteUnion(UnionModel unionModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.delete(unionModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Deleted...");
+	}
+
+	public void updateUnion(UnionModel unionModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.update(unionModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Updated...");
 	}
 }

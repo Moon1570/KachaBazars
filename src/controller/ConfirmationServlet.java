@@ -23,13 +23,13 @@ public class ConfirmationServlet extends HttpServlet {
 
 	HttpSession session;
 	DBData db = new DBData();
-	RequestDispatcher rd = null;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		session = request.getSession();
-
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
 		if (action.equals("confirm")) {

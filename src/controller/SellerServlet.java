@@ -43,9 +43,9 @@ public class SellerServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		
-		
-		RequestDispatcher rd = null;
 		HttpSession session = request.getSession();
 		
 		String action = request.getParameter("action");
@@ -53,15 +53,18 @@ public class SellerServlet extends HttpServlet {
 		if (action.equals("view")) {
 			List<SellerModel> sellerModels = db.getAllSellers();
 			request.setAttribute("customers", sellerModels);
-			rd = request.getRequestDispatcher("/Sellers.jsp");
+			request.setAttribute("page", request.getParameter("page"));
+			
+			request.getRequestDispatcher("/Sellers.jsp").forward(request, response);
 		}
 		else if(action.equals("new")) {
 			SellerModel sellerModel = new SellerModel();
-
+			
+			request.setAttribute("page", request.getParameter("page"));
 			request.setAttribute("sellers", sellerModel);
 			request.setAttribute("action", "reg");
 
-			rd = request.getRequestDispatcher("/SellerRegistration.jsp");
+			request.getRequestDispatcher("/SellerRegistration.jsp").forward(request, response);
 		}
 		else if (action.equals("login")) {
 			SellerModel sellerModel = new SellerModel();
@@ -69,21 +72,21 @@ public class SellerServlet extends HttpServlet {
 			request.setAttribute("sellers", sellerModel);
 			request.setAttribute("action", "login");
 
-			rd = request.getRequestDispatcher("/sellers_login.jsp");
+			request.getRequestDispatcher("/sellers_login.jsp").forward(request, response);
 		}
 		else if (action.equals("logout")) {
 			session.invalidate();
 			request.setAttribute("action", "login");
-			rd = request.getRequestDispatcher("/sellers_login.jsp");
+			request.getRequestDispatcher("/sellers_login.jsp").forward(request, response);
 		}
-		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher rd = null;
 		String action = request.getParameter("action");
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		System.out.println("action = " + action);
 		if (action.equals("reg")) {
 			SellerModel sellerModel = new SellerModel();

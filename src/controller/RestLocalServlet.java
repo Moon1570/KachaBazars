@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.zip.Deflater;
 
@@ -43,7 +44,7 @@ public class RestLocalServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
@@ -64,8 +65,6 @@ public class RestLocalServlet extends HttpServlet {
 					.getProductByUpazilla(upaId);
 			ArrayList<SellersProduct> sellersProductsDistrict = (ArrayList<SellersProduct>) db
 					.getProductByDistrict(disId);
-			ArrayList<SellersProduct> sellersProductsDivision = (ArrayList<SellersProduct>) db
-					.getProductByDivision(divId);
 
 			JSONArray jsonArray = new JSONArray();
 			JSONArray jsonArray2 = new JSONArray();
@@ -81,36 +80,35 @@ public class RestLocalServlet extends HttpServlet {
 
 				SellersProduct sub = (SellersProduct) type;
 				try {
-					
+
 					byte[] a = sub.getImage();
 					Deflater compressor = new Deflater();
 					compressor.setLevel(Deflater.BEST_COMPRESSION);
-					
-					  compressor.setInput(a);
-					  compressor.finish();
-					   
-					  // Create an expandable byte array to hold the compressed data.
-					  // It is not necessary that the compressed data will be smaller than
-					  // the uncompressed data.
-					  ByteArrayOutputStream bos = new ByteArrayOutputStream(a.length);
-					   
-					  // Compress the data
-					  byte[] buf = new byte[1024];
-					  while (!compressor.finished()) {
-					      int count = compressor.deflate(buf);
-					      bos.write(buf, 0, count);
-					  }
-					  try {
-					      bos.close();
-					  } catch (IOException e) {
-					  }
-					   
-					  // Get the compressed data
-					  byte[] compressedData = bos.toByteArray();
-					
-					
+
+					compressor.setInput(a);
+					compressor.finish();
+
+					// Create an expandable byte array to hold the compressed data.
+					// It is not necessary that the compressed data will be smaller than
+					// the uncompressed data.
+					ByteArrayOutputStream bos = new ByteArrayOutputStream(a.length);
+
+					// Compress the data
+					byte[] buf = new byte[1024];
+					while (!compressor.finished()) {
+						int count = compressor.deflate(buf);
+						bos.write(buf, 0, count);
+					}
+					try {
+						bos.close();
+					} catch (IOException e) {
+					}
+
+					// Get the compressed data
+					byte[] compressedData = bos.toByteArray();
+
 					String string = Base64.getEncoder().encodeToString(compressedData);
-					
+
 					JO.put("govtPrice", sub.getSubcategoryModel().getGovtPrice());
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());
@@ -140,34 +138,33 @@ public class RestLocalServlet extends HttpServlet {
 
 				SellersProduct sub = (SellersProduct) type;
 				try {
-					
-					byte[] a1 = sub.getImage();
-					Deflater compressor1 = new Deflater();
-					compressor1.setLevel(Deflater.BEST_COMPRESSION);
-					
-					  compressor1.setInput(a1);
-					  compressor1.finish();
-					   
-					  // Create an expandable byte array to hold the compressed data.
-					  // It is not necessary that the compressed data will be smaller than
-					  // the uncompressed data.
-					  ByteArrayOutputStream bos1 = new ByteArrayOutputStream(a1.length);
-					   
-					  // Compress the data
-					  byte[] buf1 = new byte[1024];
-					  while (!compressor1.finished()) {
-					      int count1 = compressor1.deflate(buf1);
-					      bos1.write(buf1, 0, count1);
-					  }
-					  try {
-					      bos1.close();
-					  } catch (IOException e) {
-					  }
-					   
-					  // Get the compressed data
-					  byte[] compressedData1 = bos1.toByteArray();
-					
-					
+
+					byte[] a = sub.getImage();
+					Deflater compressor = new Deflater();
+					compressor.setLevel(Deflater.BEST_COMPRESSION);
+
+					compressor.setInput(a);
+					compressor.finish();
+
+					// Create an expandable byte array to hold the compressed data.
+					// It is not necessary that the compressed data will be smaller than
+					// the uncompressed data.
+					ByteArrayOutputStream bos = new ByteArrayOutputStream(a.length);
+
+					// Compress the data
+					byte[] buf = new byte[1024];
+					while (!compressor.finished()) {
+						int count = compressor.deflate(buf);
+						bos.write(buf, 0, count);
+					}
+					try {
+						bos.close();
+					} catch (IOException e) {
+					}
+
+					// Get the compressed data
+					byte[] compressedData1 = bos.toByteArray();
+
 					String string1 = Base64.getEncoder().encodeToString(compressedData1);
 
 					JO.put("productName", sub.getProductName());
@@ -199,42 +196,39 @@ public class RestLocalServlet extends HttpServlet {
 				SellersProduct sub = (SellersProduct) type;
 				try {
 
-					byte[] a2 = sub.getImage();
-					Deflater compressor2 = new Deflater();
-					compressor2.setLevel(Deflater.BEST_COMPRESSION);
-					
-					  compressor2.setInput(a2);
-					  compressor2.finish();
-					   
-					  // Create an expandable byte array to hold the compressed data.
-					  // It is not necessary that the compressed data will be smaller than
-					  // the uncompressed data.
-					  ByteArrayOutputStream bos2 = new ByteArrayOutputStream(a2.length);
-					   
-					  // Compress the data
-					  byte[] buf2 = new byte[1024];
-					  while (!compressor2.finished()) {
-					      int count2 = compressor2.deflate(buf2);
-					      bos2.write(buf2, 0, count2);
-					  }
-					  try {
-					      bos2.close();
-					  } catch (IOException e) {
-					  }
-					   
-					  // Get the compressed data
-					  byte[] compressedData2 = bos2.toByteArray();
-					
-					
-					String string2 = Base64.getEncoder().encodeToString(compressedData2);
-					
-					
-					
+					byte[] a = sub.getImage();
+					Deflater compressor = new Deflater();
+					compressor.setLevel(Deflater.BEST_COMPRESSION);
+
+					compressor.setInput(a);
+					compressor.finish();
+
+					// Create an expandable byte array to hold the compressed data.
+					// It is not necessary that the compressed data will be smaller than
+					// the uncompressed data.
+					ByteArrayOutputStream bos = new ByteArrayOutputStream(a.length);
+
+					// Compress the data
+					byte[] buf = new byte[1024];
+					while (!compressor.finished()) {
+						int count = compressor.deflate(buf);
+						bos.write(buf, 0, count);
+					}
+					try {
+						bos.close();
+					} catch (IOException e) {
+					}
+
+					// Get the compressed data
+					byte[] compressedData1 = bos.toByteArray();
+
+					String string1 = Base64.getEncoder().encodeToString(compressedData1);
+
 					JO.put("productName", sub.getProductName());
 					JO.put("productDescription", sub.getProductDescription());
 					JO.put("productQuantity", sub.getProductQuantity());
-					JO.put("productImageName", string2);					
-					
+					JO.put("productImageName", string1);
+
 					JO.put("productId", sub.getProductId());
 					JO.put("sellerId", sub.getSellerModel().getSellerId());
 					JO.put("sellerName",
@@ -266,7 +260,7 @@ public class RestLocalServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
@@ -295,33 +289,29 @@ public class RestLocalServlet extends HttpServlet {
 			ArrayList<UpazillaModel> upazillaModels = (ArrayList<UpazillaModel>) areaDao.getUpazillaByDistrictId(disId);
 			int upaId = upazillaModels.get(b).getUpazillaId();
 			ArrayList<UnionModel> unionModels = (ArrayList<UnionModel>) areaDao.getUnionByUpazillaId(upaId);
-			int uniId = unionModels.get(c).getUnionId();
 
 			DivisionModel divisionModel = areaDao.getDivisionById(divId);
-			DistrictModel districtModel = areaDao.getDistrictById(disId);
-			UpazillaModel upazillaModel = areaDao.getUpazillaById(upaId);
-			UnionModel unionModel = areaDao.getUnionById(uniId);
+			DistrictModel districtModel = districtModels.get(a);
+			UpazillaModel upazillaModel = upazillaModels.get(b);
+			UnionModel unionModel = unionModels.get(c);
 
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 			LocalDateTime now = LocalDateTime.now();
 			String time = (dtf.format(now));
 
-
 			byte[] decodedBytes = Base64.getMimeDecoder().decode(encoded);
-			
-			
-			
+
 			CustomerModel customerModel = new CustomerModel();
-			
+
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
-			
+
 			try {
 				customerModel.setCustomerDOB(simpleDateFormat.parse(date));
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
-			
+
 			customerModel.setCustomerFirstName(fname);
 			customerModel.setCustomerLastName(lname);
 			customerModel.setCustomerHoldingNumber(hnum);
@@ -335,26 +325,104 @@ public class RestLocalServlet extends HttpServlet {
 			customerModel.setDivisionmodel(divisionModel);
 			customerModel.setUnionModel(unionModel);
 			customerModel.setUpazillaModel(upazillaModel);
-			
+
 			db.saveCustomer(customerModel);
-			
-			customerModel = db.getCustomerByphone(phone);
-			
-			
+
 			CartModel cartModel = new CartModel();
-			
-			cartModel.setCustomerModel(customerModel);						
+			CustomerModel customerModel2 = new CustomerModel();
+
+			customerModel2 = db.getCustomerPasswordByPhone(phone);
+			cartModel.setCustomerModel(customerModel2);
+
+			request.setAttribute("cid", customerModel2.getCustomerId());
+
 			db.saveCart(cartModel);
-			
-			
+
 			PrintWriter pWriter = response.getWriter();
-			
+
 			JSONArray jsonArray = new JSONArray();
 			JSONObject jsonObject = new JSONObject(customerModel);
-			
+
 			jsonArray.put(jsonObject);
 			pWriter.write(jsonArray.toString());
 
+		} else if (action.equals("updateprofile")) {
+
+			int cid = Integer.parseInt(request.getParameter("cid"));
+
+			CustomerModel customerModel = db.getCustomerById(cid);
+
+			String passchange = request.getParameter("passchange");
+			String addchange = request.getParameter("addchange");
+
+			if (addchange.equals("true")) {
+				int divId = Integer.parseInt(request.getParameter("divId"));
+				int a = Integer.parseInt(request.getParameter("disId"));
+				int b = Integer.parseInt(request.getParameter("upaId"));
+				int c = Integer.parseInt(request.getParameter("uniId"));
+
+				String village, street, zip, hnum;
+
+				village = request.getParameter("village");
+				street = request.getParameter("street");
+				zip = request.getParameter("zip");
+				hnum = request.getParameter("holding");
+
+				ArrayList<DistrictModel> districtModels = (ArrayList<DistrictModel>) areaDao
+						.getDistrictByDivisionId(divId);
+				int disId = districtModels.get(a).getDistrictId();
+				ArrayList<UpazillaModel> upazillaModels = (ArrayList<UpazillaModel>) areaDao
+						.getUpazillaByDistrictId(disId);
+				int upaId = upazillaModels.get(b).getUpazillaId();
+				ArrayList<UnionModel> unionModels = (ArrayList<UnionModel>) areaDao.getUnionByUpazillaId(upaId);
+
+				DivisionModel divisionModel = areaDao.getDivisionById(divId);
+				DistrictModel districtModel = districtModels.get(a);
+				UpazillaModel upazillaModel = upazillaModels.get(b);
+				UnionModel unionModel = unionModels.get(c);
+
+				customerModel.setDivisionmodel(divisionModel);
+				customerModel.setDistrictModel(districtModel);
+				customerModel.setUpazillaModel(upazillaModel);
+				customerModel.setUnionModel(unionModel);
+				customerModel.setCustomerStreet(street);
+				customerModel.setCustomerHoldingNumber(hnum);
+				customerModel.setCustomerVillage(village);
+				customerModel.setCustomerZipcode(zip);
+			}
+			if (passchange.contentEquals("true")) {
+				String pass = request.getParameter("pass");
+				customerModel.setCustomerPassword(pass);
+			}
+
+			String fname, lname, dob, phone;
+			String encoded = request.getParameter("img");
+			byte[] decodedBytes = Base64.getMimeDecoder().decode(encoded);
+
+			fname = request.getParameter("fname");
+			lname = request.getParameter("lname");
+			phone = request.getParameter("phone");
+			dob = request.getParameter("dob");
+
+			customerModel.setImage(decodedBytes);
+
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+
+			try {
+				customerModel.setCustomerDOB(simpleDateFormat.parse(dob));
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			customerModel.setCustomerFirstName(fname);
+			customerModel.setCustomerLastName(lname);
+			customerModel.setCustomerPhone(phone);
+			
+			db.updateCustomer(customerModel);
+
+			JSONArray jsonArray = new JSONArray();
+			PrintWriter pw = response.getWriter();
+			pw.write(jsonArray.toString());
 		}
 	}
 

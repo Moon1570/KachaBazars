@@ -29,22 +29,21 @@ public class SubcategoryServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher rd = null;
 		String action = request.getParameter("action");
 
-		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		if (action.equals("new")) {
 			SubcategoryModel categoryModel = new SubcategoryModel();
 			request.setAttribute("subcategories", categoryModel);
 			request.setAttribute("action", "new");
 			
-			rd = request.getRequestDispatcher("/newsubcategory.jsp");
-			System.out.println("In new page..");
+			request.getRequestDispatcher("/newsubcategory.jsp").forward(request, response);
 			
 		}
 		else if (action.equals("view")) {
 			request.setAttribute("action", "view");
-			rd = request.getRequestDispatcher("/subcategory.jsp");
+			request.getRequestDispatcher("/subcategory.jsp").forward(request, response);
 		}
 		else if (action.equals("delete")) {
 			int id = Integer.parseInt(request.getParameter("id").toString());
@@ -54,16 +53,14 @@ public class SubcategoryServlet extends HttpServlet {
 			db.deleteSubcategoryById(subcategoryModel);
 			List<SubcategoryModel> subcategoryModels = db.getAllSubcategories();
 			request.setAttribute("subcategries", subcategoryModel);
-			rd = request.getRequestDispatcher("/Category.jsp");	
+			request.getRequestDispatcher("/Category.jsp").forward(request, response);
 		}
-		System.out.println("Get Method..."+ action);
-		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		RequestDispatcher rd = null;
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action").toString();
 		System.out.println(action);
 		if (action.equals("new")) {
@@ -83,10 +80,8 @@ public class SubcategoryServlet extends HttpServlet {
 			db.saveSubcategory(subcategory);
 
 			
-			rd = request.getRequestDispatcher("/subcategory.jsp");
-			System.out.println();
+			request.getRequestDispatcher("/subcategory.jsp").forward(request, response);;
 		}
-		rd.forward(request, response);
 	}
 
 }

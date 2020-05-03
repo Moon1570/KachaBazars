@@ -23,10 +23,11 @@ import model.UpazillaModel;
 
 public class DropDownServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	RequestDispatcher rd = null;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		System.out.println("Hello World...");
 		RequestDispatcher rd = null;
 		int divisionsId = 0;
