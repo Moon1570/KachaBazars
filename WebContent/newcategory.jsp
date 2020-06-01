@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="./css/admin.css">
 <link rel="stylesheet" href="./css/menubar.css">
 	<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
-	<title>Add New Area</title>
+	<title>Category</title>
 </head>
 <body>
 
@@ -119,10 +119,12 @@
 						<td class="name-label">Description</td>
 						<td><input type="text" name="description" value="${categories.categoryDescription}" required="required"></td>
 					</tr>
+					<c:if test="${action=='new'}">
 					<tr>
 						<td class="name-label"> Common Image</td>
 						<td><input type="file" name="categoryImage"  required="required"></td>
 					</tr>
+					</c:if>
 				
 					<tr>
 				

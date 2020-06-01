@@ -78,6 +78,16 @@ public class SellerServlet extends HttpServlet {
 			session.invalidate();
 			request.setAttribute("action", "login");
 			request.getRequestDispatcher("/sellers_login.jsp").forward(request, response);
+		} else if(action.equals("delete")) {
+			String page = request.getParameter("page");
+			int sid = Integer.parseInt(request.getParameter("sid"));
+			
+			SellerModel sellerModel = db.getSellerById(sid);
+			db.deleteSeller(sellerModel);
+			
+			request.setAttribute("page", request.getParameter("page"));
+			request.getRequestDispatcher("/Sellers.jsp").forward(request, response);
+			
 		}
 	}
 

@@ -1528,4 +1528,79 @@ public class DBData {
 		con.closeSessionFactory();
 		System.out.println("Updated...");
 	}
+
+	public void deleteSeller(SellerModel sellerModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.delete(sellerModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Deleted...");
+	}
+
+	public void deleteCustomer(CustomerModel customerModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.delete(customerModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Deleted...");
+	}
+
+	public void deleteCartDetailsByCartId(int cartId) {
+		// TODO Auto-generated method stub
+		List<CartDetailsModel> cdm = new ArrayList<>();
+		String query = "from CartDetailsModel cdm";
+		Connection con = new Connection();
+		Session session = con.getSessionFactory().openSession();
+
+		Query queryExecuteable = session.createQuery(query);
+		cdm = queryExecuteable.list();
+		
+		java.util.Iterator<CartDetailsModel> it = cdm.iterator();
+
+		
+		while (it.hasNext()) {
+			Object type = (Object) it.next();
+
+			CartDetailsModel sub =  (CartDetailsModel) type;
+			if (sub.getCartId().getCartId() == cartId) {
+				
+				deleteCartDetailsByCartId(sub);
+			}
+
+		}
+		
+		
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+	}
+
+	public void deleteCartBycartId(CartModel cartModel) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.delete(cartModel);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Deleted...");
+	}
 }

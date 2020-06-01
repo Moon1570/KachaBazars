@@ -178,6 +178,7 @@
 					<th>Sellers Phone</th>
 					<th>Sellers Image</th>
 					<th>Sellers DOB</th>
+					<th>Action</th>
 				</tr>
 
 				<c:forEach items="${sellers}" var="seller">
@@ -194,6 +195,7 @@
 							src="./getimage?id=${seller.sellerId}&action=seller"
 							height="50px" width="90px"></td>
 						<td>${seller.sellerDOB}</td>
+						<td> <a href="./sellers?action=delete&page=${page }&sid=${seller.sellerId}">delete</a> </td>
 					</tr>
 				</c:forEach>
 			</table>

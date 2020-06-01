@@ -24,6 +24,7 @@ import org.apache.commons.io.IOUtils;
 import customs.EscapeString;
 import dao.AreaDao;
 import dao.DBData;
+import model.CartDetailsModel;
 import model.CartModel;
 import model.CategoryModel;
 import model.CustomerModel;
@@ -98,7 +99,7 @@ public class CustomerServlet extends HttpServlet {
 			
 			request.setAttribute("action", "login");
 			request.getRequestDispatcher("/Homepage.jsp").forward(request, response);
-		}
+		} 
 	}
 
 	

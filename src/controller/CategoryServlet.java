@@ -63,9 +63,8 @@ public class CategoryServlet extends HttpServlet {
 
 			else if (action.equals("delete")) {
 				int id = Integer.parseInt(request.getParameter("id").toString());
-				CategoryModel categoryModel = new CategoryModel();
-				categoryModel.setCategoryId(id);
-
+				CategoryModel categoryModel = db.getCategoryById(id);
+								
 				db.deleteCategory(categoryModel);
 				List<CategoryModel> categoryModel1 = db.getAllCategories();
 				request.setAttribute("categories", categoryModel1);
@@ -88,8 +87,8 @@ public class CategoryServlet extends HttpServlet {
 		if (action.equals("new")) {
 			CategoryModel category = new CategoryModel();
 
-			category.setCategoryName(EscapeString.Escape(request.getParameter("name")));
-			category.setCategoryDescription(EscapeString.Escape(request.getParameter("description")));
+			category.setCategoryName(request.getParameter("name"));
+			category.setCategoryDescription(request.getParameter("description"));
 			Part part = request.getPart("categoryImage");
 
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
@@ -121,18 +120,18 @@ public class CategoryServlet extends HttpServlet {
 		}
 
 		else if (action.equals("update")) {
-			CategoryModel category = new CategoryModel();
-			category.setCategoryName(EscapeString.Escape(request.getParameter("name")));
-			category.setCategoryDescription(EscapeString.Escape(request.getParameter("description")));
+			int catId = Integer.parseInt(request.getParameter("categoryId").toString());
+			CategoryModel category = db.getCategoryById(catId);
+			category.setCategoryName(request.getParameter("name"));
+			category.setCategoryDescription(request.getParameter("description"));
 
-			category.setCategoryId(Integer.parseInt(request.getParameter("categoryId").toString()));
 
 			db.updateCategory(category);
 
 			List<CategoryModel> categoryModels = db.getAllCategories();
 			request.setAttribute("categories", categoryModels);
 
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			request.getRequestDispatcher("/Category.jsp").forward(request, response);
 
 		}
 
