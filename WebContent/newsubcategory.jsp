@@ -54,8 +54,15 @@
 					href="#category">Category</a>
 					<div class="sub-menu">
 						<a href="./categories?action=new">Add Category</a> <a
-							href="Category.jsp">View Category</a> <a class="options"
-							href="./subcategories?action=new">Add Sub-category</a>
+							href="Category.jsp">View Category</a> 
+					</div></li>
+
+				<li class="options-div" id="subcat"><a class="options"
+					href="#subcat">Sub-Category</a>
+					<div class="sub-menu">
+						<a class="options"
+							href="./subcategories?action=new&page=admin">Add Sub-category</a> <a
+							href="./subcategories?action=view&page=admin">View Sub-category</a>
 					</div></li>
 
 				<li class="options-div" id="sellers"><a class="options"
@@ -107,24 +114,24 @@
 			</th>
 			<tr>
 				<td class="name-label">Subcategory Name</td>
-				<td><input type="text" placeholder="Enter Subcategory Name" name="subcategory_name"  value="" required="required"></td>
+				<td><input type="text" placeholder="Enter Subcategory Name" name="subcategory_name"  value="${subcategories.subcategoryName }" required="required"></td>
 			</tr>
 			
 			<tr>
 				<td class="name-label">Description</td>
-				<td><input type="text" placeholder="Enter Subcategory Description" name="subcategory_description" value="" required="required"></td>
+				<td><input type="text" placeholder="Enter Subcategory Description" name="subcategory_description" value="${subcategories.subcategoryDescription }" required="required"></td>
 			</tr>
 			
 			<tr>
 				<td class="name-label">Government price</td>
-				<td><input type="text" placeholder="Enter Government Price Name" name="subcategory_govt_price"  value="" required="required"></td>
+				<td><input type="number" placeholder="Enter Government Price" name="subcategory_govt_price"  value="${subcategories.govtPrice }" required="required"></td>
 			</tr>
 			
 			<%
 			
 			DBData db = new DBData();
 			List<CategoryModel> categoryModel = db.getAllCategories();
-			request.setAttribute("subcategories", categoryModel);
+			request.setAttribute("categories", categoryModel);
 
 			%>
 			
@@ -132,8 +139,13 @@
 		<td class="name-label">Category ID</td>
 		<td>
 		<select class="dropdown" name="dropdownCategory" required="required">
-    <c:forEach items="${subcategories}" var="category">
-        <option value="${category.categoryId}">${category.categoryId}     ${category.categoryName}</option>
+		
+		<c:if test="${action == 'update' }">
+			<option value="${subcategories.categoryInformation.categoryId }">${subcategories.categoryInformation.categoryName }</option>
+		</c:if>
+		
+    <c:forEach items="${categories}" var="category">
+        <option value="${category.categoryId}"> ${category.categoryName}</option>
     </c:forEach>
 </select>
 		</td>
@@ -145,6 +157,7 @@
 				
 				<c:if test="${action=='update'}">
 				<input type="hidden" value="update" name="action">	
+				<input type="hidden" value="${subcategories.subcategoryId }" name="sid">	
 				</c:if>
 				
 				<c:if test="${action=='new'}">

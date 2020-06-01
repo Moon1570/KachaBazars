@@ -26,11 +26,7 @@
 			<input class="search-box" placeholder="Type to search"> <input
 				type="submit" class="search-button" value="Search">
 		</div>
-		<div class="menu-items">
-			<a class="active" href="index.jsp">Home</a> 
-			<a href="">Profile</a> 
-			<a href="">Notification</a>
-		</div>
+		
 	</div>
 	
 	
@@ -106,8 +102,15 @@
 					href="#category">Category</a>
 					<div class="sub-menu">
 						<a href="./categories?action=new">Add Category</a> <a
-							href="Category.jsp">View Category</a> <a class="options"
-							href="./subcategories?action=new">Add Sub-category</a>
+							href="Category.jsp">View Category</a> 
+					</div></li>
+
+				<li class="options-div" id="subcat"><a class="options"
+					href="#subcat">Sub-Category</a>
+					<div class="sub-menu">
+						<a class="options"
+							href="./subcategories?action=new&page=admin">Add Sub-category</a> <a
+							href="./subcategories?action=view&page=admin">View Sub-category</a>
 					</div></li>
 
 				<li class="options-div" id="sellers"><a class="options"

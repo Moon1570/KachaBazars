@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,8 +35,8 @@ public class SubcategoryServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		if (action.equals("new")) {
-			SubcategoryModel categoryModel = new SubcategoryModel();
-			request.setAttribute("subcategories", categoryModel);
+			SubcategoryModel subcategoryModel = new SubcategoryModel();
+			request.setAttribute("subcategories", subcategoryModel);
 			request.setAttribute("action", "new");
 			
 			request.getRequestDispatcher("/newsubcategory.jsp").forward(request, response);
@@ -51,9 +52,17 @@ public class SubcategoryServlet extends HttpServlet {
 			subcategoryModel.setSubcategoryId(id);
 			
 			db.deleteSubcategoryById(subcategoryModel);
-			List<SubcategoryModel> subcategoryModels = db.getAllSubcategories();
-			request.setAttribute("subcategries", subcategoryModel);
-			request.getRequestDispatcher("/Category.jsp").forward(request, response);
+			request.getRequestDispatcher("/subcategory.jsp").forward(request, response);
+		}
+		else if(action.equals("update")) {
+			int subCatId = Integer.parseInt(request.getParameter("id"));
+			SubcategoryModel subcategoryModel = db.getSubcategoryById(subCatId);
+			
+			request.setAttribute("action", "update");
+			
+			request.setAttribute("subcategories", subcategoryModel);
+			request.getRequestDispatcher("/newsubcategory.jsp").forward(request, response);
+
 		}
 	}
 
@@ -78,6 +87,27 @@ public class SubcategoryServlet extends HttpServlet {
 			subcategory.setCategoryInformation(categoryModel);
 			
 			db.saveSubcategory(subcategory);
+
+			
+			request.getRequestDispatcher("/subcategory.jsp").forward(request, response);
+		} else if(action.equals("update")) {
+			SubcategoryModel subcategory = new SubcategoryModel();
+
+			int sid = Integer.parseInt(request.getParameter("sid"));
+			
+			subcategory = db.getSubcategoryById(sid);
+			
+			subcategory.setSubcategoryName(request.getParameter("subcategory_name").toString());
+			subcategory.setSubcategoryDescription(request.getParameter("subcategory_description").toString());
+			subcategory.setGovtPrice(request.getParameter("subcategory_govt_price").toString());
+
+			int id;
+			id = Integer.parseInt(request.getParameter("dropdownCategory"));
+
+			CategoryModel categoryModel = db.getCategoryById(id);
+			subcategory.setCategoryInformation(categoryModel);
+			
+			db.updateSubcategory(subcategory);
 
 			
 			request.getRequestDispatcher("/subcategory.jsp").forward(request, response);;

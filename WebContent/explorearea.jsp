@@ -85,7 +85,7 @@
 				<li class="product-card">
 					<div class="image-holder">
 						<img calss="product-image"
-							src="./getimage?id=${product.productId}&action=product"
+							src="./getimage?id=${product.productId}&action=sellerproduct"
 							alt="Image">
 
 						<div class="product-options">

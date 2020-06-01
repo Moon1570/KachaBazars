@@ -354,6 +354,15 @@
 		<servlet-name>SubAdminServlet</servlet-name>
 		<url-pattern>/subadmins</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AndroidServlet</servlet-name>
+		<servlet-class>controller.AndroidServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AndroidServlet</servlet-name>
+		<url-pattern>/android</url-pattern>
+	</servlet-mapping>
 
 
 

@@ -92,11 +92,6 @@ public class ProductServlet extends HttpServlet {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
 			LocalDateTime now = LocalDateTime.now();  
 			String time = (dtf.format(now));  
-			
-			productName = EscapeString.Escape(productName);
-			productDescription = EscapeString.Escape(productDescription);
-			productPrice = EscapeString.EscapePassword(productPrice);
-			governmentPrice = EscapeString.EscapePassword(governmentPrice);
 
 		
 		//	String savePath=("C:\\Users\\HP\\git\\test\\ecommerce\\WebContent\\images\\products"+File.separator+productImageName);
@@ -154,13 +149,13 @@ public class ProductServlet extends HttpServlet {
 		}
 		
 		else if(action.equals("addmore")) {
-			String productName = EscapeString.Escape(request.getParameter("productName"));
-			String productDescription = EscapeString.Escape(request.getParameter("productDescription"));
+			String productName = request.getParameter("productName");
+			String productDescription = request.getParameter("productDescription");
 			Part part = request.getPart("productImage");
-			String productPrice = EscapeString.EscapePassword(request.getParameter("productPrice"));
+			String productPrice = request.getParameter("productPrice");
 			//String productCategory = request.getParameter("dropdownProductCategory").toString();
 			String productSubcategory = request.getParameter("dropdownProductSubcategory").toString();
-			String governmentPrice = EscapeString.EscapePassword(request.getParameter("governmentPrice"));
+			String governmentPrice = request.getParameter("governmentPrice");
 			String productType = request.getParameter("productType");
 			double productStock = Double.parseDouble(EscapeString.Escape(request.getParameter("productStock")));
 
@@ -222,8 +217,8 @@ public class ProductServlet extends HttpServlet {
 		}
 		else if (action.equals("update")) {
 			String productImageName = null;
-			String productName = EscapeString.Escape(request.getParameter("productName"));
-			String productDescription = EscapeString.Escape(request.getParameter("productDescription"));
+			String productName = request.getParameter("productName");
+			String productDescription = request.getParameter("productDescription");
 			Part part;
 			ProductModel productModel = new ProductModel();
 			ProductModel productModel2 = new ProductModel();
@@ -258,11 +253,11 @@ public class ProductServlet extends HttpServlet {
 				String time = (dtf.format(now));  
 		
 			
-			double productStock = Double.parseDouble(EscapeString.EscapePassword(request.getParameter("productStock")));
-			String productPrice = EscapeString.EscapePassword(request.getParameter("productPrice"));
+			double productStock = Double.parseDouble(request.getParameter("productStock"));
+			String productPrice = request.getParameter("productPrice");
 			//String productCategory = request.getParameter("dropdownProductCategory").toString();
 			String productSubcategory = request.getParameter("dropdownProductSubcategory").toString();
-			String governmentPrice = EscapeString.EscapePassword(request.getParameter("governmentPrice"));
+			String governmentPrice = request.getParameter("governmentPrice");
 			String productType = request.getParameter("productType");
 
 			

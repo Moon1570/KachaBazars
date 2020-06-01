@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.AreaDao;
 import dao.DBData;
@@ -27,6 +28,7 @@ public class OrderOperationServlet extends HttpServlet {
   
 	DBData db = new DBData();
 	AreaDao aDao = new AreaDao();
+	HttpSession session;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -43,9 +45,11 @@ public class OrderOperationServlet extends HttpServlet {
 			request.setAttribute("order", orderSellerProductModel);
 			
 			if (page.equalsIgnoreCase("sad")) {
-				request.setAttribute("page", "/sad-seller-orders.jsp");
+				request.setAttribute("dest", "/sad-seller-orders.jsp");
+				request.setAttribute("page", "sad");
 			} else {
-				request.setAttribute("page", "/seller_orders.jsp");
+				request.setAttribute("dest", "/seller_orders.jsp");
+				request.setAttribute("page", "admin");
 			}
 			
 			request.getRequestDispatcher("view_order.jsp").forward(request, response);;
@@ -55,10 +59,16 @@ public class OrderOperationServlet extends HttpServlet {
 			String page = request.getParameter("page");
 			OrdersModel ordersModel = db.getOrderById(oid);
 			
+			
+			
 			if (page.equalsIgnoreCase("sad")) {
-				request.setAttribute("page", "/sad-index.jsp");
+				request.setAttribute("dest", "/sad-index.jsp");
+				request.setAttribute("page", "sad");
+
 			} else {
-				request.setAttribute("page", "/index.jsp");
+				request.setAttribute("dest", "/index.jsp");
+				request.setAttribute("page", "admin");
+
 			}
 			
 			request.setAttribute("order", ordersModel);
@@ -69,15 +79,14 @@ public class OrderOperationServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		String action = request.getParameter("action");
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
+		String action = request.getParameter("action");
+		
 		if (action.equals("editordersellerproduct")) {
 			
-			String page = request.getParameter("page");
-			request.setCharacterEncoding("UTF-8");
-			response.setCharacterEncoding("UTF-8");
+			String dest = request.getParameter("dest");
+
 			
 			int soid = Integer.parseInt(request.getParameter("soid").toString());
 			
@@ -89,12 +98,13 @@ public class OrderOperationServlet extends HttpServlet {
 			orderSellerProductModel.setCareOfContact(request.getParameter("careOfContact").toString());
 			orderSellerProductModel.setPhoneNumber(request.getParameter("deliveryPhone").toString());
 			orderSellerProductModel.setOrderQuantity(Double.parseDouble(request.getParameter("deliveryQuantity").toString()));
-			orderSellerProductModel.setOrderVillage(request.getParameter("deliveryVillage").toString());
+			orderSellerProductModel.setOrderVillage(request.getParameter("deliveryVillage"));
 			orderSellerProductModel.setOrderStreet(request.getParameter("deliveryStreet").toString());
 			orderSellerProductModel.setOrderZipCode(request.getParameter("deliveryZipCode").toString());
 			orderSellerProductModel.setOrderDate(request.getParameter("orderDate"));
 			orderSellerProductModel.setOrderStatus(request.getParameter("orderStatus"));
 			
+			System.out.println(request.getParameter("careOfContact"));
 			
 			int divId = Integer.parseInt(request.getParameter("deliveryDivision"));
 			DivisionModel divisionModel = aDao.getDivisionById(divId);
@@ -130,7 +140,7 @@ public class OrderOperationServlet extends HttpServlet {
 			
 			db.updateOrderSellerProduct(orderSellerProductModel);
 			
-			request.getRequestDispatcher(page).forward(request, response);
+			request.getRequestDispatcher(dest).forward(request, response);
 		}
 		else if (action.equals("orderinventory")) {
 			
@@ -141,7 +151,7 @@ public class OrderOperationServlet extends HttpServlet {
 			
 			
 
-			String page = request.getParameter("page");
+			String dest = request.getParameter("dest");
 			ordersModel.setCareOfContact(request.getParameter("careOfContact").toString());
 			ordersModel.setPhoneNumber(request.getParameter("deliveryPhone").toString());
 			ordersModel.setOrderQuantity(Double.parseDouble(request.getParameter("deliveryQuantity").toString()));
@@ -185,7 +195,7 @@ public class OrderOperationServlet extends HttpServlet {
 			
 			db.updateOrder(ordersModel);
 			
-			request.getRequestDispatcher(page).forward(request, response);
+			request.getRequestDispatcher(dest).forward(request, response);
 		}
 	}
 

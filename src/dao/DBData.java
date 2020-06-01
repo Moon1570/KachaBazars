@@ -16,6 +16,7 @@ import controller.OrderFromSeller;
 import dao.Connection;
 import javassist.bytecode.Descriptor.Iterator;
 import model.AdminModel;
+import model.AndroidModel;
 import model.BidModel;
 import model.CartDetailsModel;
 import model.CartModel;
@@ -362,7 +363,7 @@ public class DBData {
 
 	public CartModel getCartByCustomerId(int id) {
 		// TODO Auto-generated method stub
-		String query = "from CartModel cart where cart.id=" + id;
+		String query = "from CartModel cart where cart.customerModel.customerId=" + id;
 		Connection con = new Connection();
 		Session session = con.getSessionFactory().openSession();
 
@@ -1466,5 +1467,65 @@ public class DBData {
 		session.close();
 		con.closeSessionFactory();
 		return OrdersModel;
+	}
+
+	public void deleteCartDetailsModelId(CartDetailsModel sub) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.delete(sub);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Deleted...");
+	}
+
+	public void updateSubcategory(SubcategoryModel subcategory) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.update(subcategory);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Updated...");
+	}
+
+	public AndroidModel getAndroidDetails() {
+		// TODO Auto-generated method stub
+		String query = "from AndroidModel android where android.androidId=" + 1;
+		Connection con = new Connection();
+		Session session = con.getSessionFactory().openSession();
+
+		Query queryExecuteable = session.createQuery(query);
+		AndroidModel android = (AndroidModel) queryExecuteable.list().get(0);
+		
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		return android;
+	}
+
+	public void updateAndroidDetails(AndroidModel android) {
+		// TODO Auto-generated method stub
+		Connection con = new Connection();
+
+		Session session = con.getSessionFactory().openSession();
+
+		Transaction transaction = session.beginTransaction();
+		session.update(android);
+		transaction.commit();
+		session.flush();
+		session.close();
+		con.closeSessionFactory();
+		System.out.println("Updated...");
 	}
 }
