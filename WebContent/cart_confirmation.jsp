@@ -31,6 +31,9 @@
 <link rel="stylesheet" type="text/css" href="css/oneclickbuy.css">
 <title>KachaBazar</title>
 
+	<!-- Loads Area info from DB -->
+
+
 <script type="text/javascript">
 	
 
@@ -217,6 +220,8 @@
 		</h2>
 	</div>
 
+	<!-- Use current Information to buy -->
+
 	<div class="detail-container">
 		<div class="current-info">
 			<h3>Use your current Information to buy</h3>
@@ -236,6 +241,9 @@
 				<button class="button medium red">Order</button>
 			</form>
 		</div>
+
+			<!-- Fill In Information to buy -->
+
 
 		<div class="new-info">
 			<h3>or add new Information</h3>

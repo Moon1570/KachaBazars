@@ -54,7 +54,7 @@
 
 
 
-
+<!--  nav bar  -->
 
 			<nav class="main-menu">
 				<ul>
@@ -119,7 +119,9 @@
 			</nav>
 		</div>
 		</div>
+<!-- end nav bar  -->
 
+<!--  search bar  -->
 		<div class="search">
 
 			<form method="post" action="./search?action=search">
@@ -144,6 +146,6 @@
 						href="./browse?action=ourshop">Explore Kachabazar Inventory</a></b></li>
 			</ul>
 		</nav>
-
+<!-- end search bar  -->
 </body>
 </html>

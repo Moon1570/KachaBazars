@@ -23,7 +23,7 @@
 <title>Home</title>
 </head>
 <body>
-
+	<!-- Navbar -->
 	<div id="navbar">
 
 		<div class="logo">KachaBazar.com</div>
@@ -36,7 +36,8 @@
 			<a href="">Notification</a>
 		</div>
 	</div>
-
+	<!-- Navbar End -->
+	<!-- Side Bar -->
 
 <div class="wrapper-box">
 		<div class="side-bar">
@@ -101,7 +102,9 @@
 			</ul>
 		</div>
 	</div>
+<!-- Side Bar End -->
 
+<!-- Category table -->
 
 	<div class="container-box big">
 		<table align="center">
@@ -142,6 +145,8 @@
 
 		</table>
 	</div>
+
+	<!-- Category table end -->
 
 </body>
 </html>

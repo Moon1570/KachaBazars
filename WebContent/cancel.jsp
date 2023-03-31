@@ -26,7 +26,8 @@
 </head>
 <body>
 
-
+	<!-- For failed transaction -->
+	
 	<div class="page-info">
 		<h2>
 			<u>Payment Status</u>

@@ -55,6 +55,7 @@
 		</h2>
 	</div>
 
+	<!-- Inventory Products Listing -->
 	<div class="product-container">
 		<ul>
 		

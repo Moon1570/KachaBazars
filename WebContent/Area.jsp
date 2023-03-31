@@ -17,6 +17,7 @@
 </head>
 <body>
 
+	<!-- Navbar -->
 	<div id="navbar">
 		
 		<div class="logo">
@@ -31,9 +32,10 @@
 			<a href="">Notification</a>
 		</div>
 	</div>
+	<!-- Navbar End -->
 	
 	
-
+	<!-- Side Bar -->
 	<div class="wrapper-box">
 		<div class="side-bar">
 			<h2>Menu</h2>
@@ -75,6 +77,10 @@
 			</ul>
 		</div>
 	</div>
+
+	<!-- Side Bar End -->
+
+	<!-- Content -->
 	<div class="header">
 		<h2>Areas</h2>
 	</div>

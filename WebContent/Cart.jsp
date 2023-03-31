@@ -55,7 +55,8 @@
 		</h2>
 	</div>
 
-
+	<!-- cart table-->
+	
 	<div class="cart-holder">
 		<table class="cart-table">
 			<tr>

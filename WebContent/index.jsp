@@ -79,6 +79,7 @@
 			KachaBazar.com <a href="./Homepage.jsp">View Page</a>
 		</div>
 		
+<!-- Dropdown subsites for admin -->
 		
 <select onChange="window.location.href=this.value" class="form-control float-right" style="width: 10%">
 	<option value="#">sub-site</option>
@@ -96,7 +97,7 @@
 		</div>
 	</div>
 
-
+<!-- Sidebar for admin -->
 
 	<div class="wrapper-box">
 		<div class="side-bar">
@@ -166,6 +167,9 @@
 		</div>
 	</div>
 
+<!-- End of sidebar -->
+
+<!-- Start of main content -->
 
 	<div class="header" align="center">
 		<h2>Orders From Inventory</h2>
@@ -177,7 +181,8 @@
 			request.setAttribute("orders", ordersModels);
 	%>
 
-
+	
+	<!-- Start of table for inventory orders -->
 
 	<div class="container float-right my-5"
 		style="z-index: -1; position: relative;">
@@ -206,7 +211,9 @@
 	</div>
 
 
+<!-- End of table for inventory orders -->
 
+<!-- Jquery data-table for auto pagination and dara parsing -->
 
 	<script type="text/javascript">
 		$(document)

@@ -29,6 +29,7 @@
 
 %>
 
+	<!-- For successful transaction -->
 
 	<div class="page-info">
 		<h2>
