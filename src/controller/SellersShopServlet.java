@@ -1,3 +1,7 @@
+/*
+ * This servlet is in charge of the sellers shop, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the sellers shop are handled here. such as adding a new product, updating a product, deleting a product, etc.
+ */
 package controller;
 
 import java.io.File;
@@ -26,6 +30,10 @@ import model.SellersProduct;
 import model.SubcategoryModel;
 import model.UnitModel;
 
+
+/*
+ * This servlet will be handling all the request and response from the url /sellers_shop
+ */
 @MultipartConfig
 public class SellersShopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,12 +41,16 @@ public class SellersShopServlet extends HttpServlet {
 	RequestDispatcher rd = null;
 	DBData db = new DBData();
 
+
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
 		String action = request.getParameter("action");
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
+
+		// If the action is add, then the user will be redirected to the new_sellers_product.jsp page
 		if (action.equals("add")) {
 			request.setAttribute("action", "add");
 			request.getRequestDispatcher("new_sellers_product.jsp").forward(request, response);
@@ -46,6 +58,7 @@ public class SellersShopServlet extends HttpServlet {
 	}
 
 	
+	// DoPost method to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
@@ -53,6 +66,8 @@ public class SellersShopServlet extends HttpServlet {
 		int sid = Integer.parseInt(session.getAttribute("sid").toString());
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
+
+		// If the action is submit, then the user will be redirected to the new_sellers_product.jsp page
 		if (action.equals("submit")) {
 			String productName = request.getParameter("productName");
 			String productDescription = request.getParameter("productDescription");
@@ -120,6 +135,8 @@ public class SellersShopServlet extends HttpServlet {
 		}
 	}
 
+
+	// This method will get the image file name
 	private String getImageFileName(Part part) {
 		String contentDisp = part.getHeader("content-disposition");
         System.out.println("content-disposition header= "+contentDisp);

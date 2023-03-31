@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the sub category table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import javax.persistence.CascadeType;
@@ -24,6 +28,7 @@ public class SubcategoryModel {
 	@Column(name = "subcategory_description")
 	private String subcategoryDescription;
 	
+	// Many subcategories can be in one category.
 	@ManyToOne(cascade = CascadeType.ALL)
 	private CategoryModel categoryInformation;
 	

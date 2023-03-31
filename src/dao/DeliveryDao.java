@@ -1,3 +1,7 @@
+/*
+ * This Model defines the functions for all the Delivery related operations to the database..
+ * The return parameters are validated and tested before returning.
+ */
 package dao;
 
 import java.util.ArrayList;
@@ -14,6 +18,7 @@ import model.OrdersModel;
 public class DeliveryDao {
 	int counter=0;
 
+	// This function is used to get the Delivery Person details by the phone number
 	public DeliveryPersonModel getDeliveryPersonPasswordByPhone(String phone) {
 		// TODO Auto-generated method stub
 		String query = "from DeliveryPersonModel deliveryPersonModel where deliveryPersonModel.deliveryPersonPhone='"+phone+"'";
@@ -37,7 +42,7 @@ public class DeliveryDao {
 	}
 	
 	
-	
+	// Returns all the orders assigned to the delivery person by the delivery person id
 	public ArrayList<OrdersModel> getOrdersByDeliveryPersonId(int delId) {
 		// TODO Auto-generated method stub
 		
@@ -77,6 +82,7 @@ public class DeliveryDao {
 	//	return cartDetailsModels;
 	}
 	
+	// Returns all the seller orders assigned to the delivery person by the delivery person id
 	public ArrayList<OrderSellerProductModel> getSellerOrdersByDeliveryPersonId(int delId) {
 		// TODO Auto-generated method stub
 		

@@ -1,3 +1,7 @@
+/*
+ * This servlet is in charge of the ViewProduct, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the ViewProduct are handled here. such as viewing the product page.
+ */
 package controller;
 
 import java.io.IOException;
@@ -19,11 +23,16 @@ import model.CustomerModel;
 import model.ProductModel;
 import model.SellersProduct;
 
+
+/*
+ * This servlet will be handling all the request and response from the url /ViewProduct
+ */
 public class ViewProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	HttpSession session;
 	DBData db = new DBData();
 
+	// This method is used to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -34,6 +43,7 @@ public class ViewProductServlet extends HttpServlet {
 		session = request.getSession();
 		// System.out.println(action);
 
+		//if the action is order, the request will be forwarded to the ViewProduct.jsp page
 		if (action.equals("order")) {
 			Integer pid = Integer.parseInt(request.getParameter("productid").toString());
 
@@ -49,7 +59,10 @@ public class ViewProductServlet extends HttpServlet {
 			request.setAttribute("action", "order");
 
 			request.getRequestDispatcher("/ViewProduct.jsp").forward(request, response);
-		} else if (action.equals("addtocart")) {
+		} 
+		
+		//if the action is addtocart, the request will be forwarded to the ViewProduct.jsp page
+		else if (action.equals("addtocart")) {
 			// System.out.println("Add To cart");
 			Integer pid = Integer.parseInt(request.getParameter("pid").toString());
 
@@ -59,7 +72,10 @@ public class ViewProductServlet extends HttpServlet {
 			request.setAttribute("action", "addtocart");
 			request.getRequestDispatcher("/ViewProduct.jsp").forward(request, response);
 			System.out.println("new page");
-		} else if (action.equals("sellerorder")) {
+		} 
+		
+		//if the action is sellerorder, the request will be forwarded to the ViewSellerProduct.jsp page
+		else if (action.equals("sellerorder")) {
 			Integer spid = Integer.parseInt(request.getParameter("productid").toString());
 
 			if (session.getAttribute("cid") != null) {
@@ -78,6 +94,7 @@ public class ViewProductServlet extends HttpServlet {
 		}
 	}
 
+	// This method is used to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -90,6 +107,8 @@ public class ViewProductServlet extends HttpServlet {
 		int pid = Integer.parseInt(request.getParameter("pid"));
 
 		System.out.println(action);
+
+		//if the action is addtocart, the product will be added to the cart
 		if (action.equals("Add to Cart")) {
 
 			if (session.getAttribute("cid") != null) {
@@ -148,7 +167,10 @@ public class ViewProductServlet extends HttpServlet {
 				response.sendRedirect(baseUrl);
 			}
 
-		} else if (action.equalsIgnoreCase("One Click Buy")) {
+		} 
+		
+		//if the action is one click buy, client will be redirected to the confirmation page
+		else if (action.equalsIgnoreCase("One Click Buy")) {
 			
 			if (session.getAttribute("cid") != null) { 
 			String productQuantity = request.getParameter("productQuantity");
@@ -178,7 +200,10 @@ public class ViewProductServlet extends HttpServlet {
 
 				response.sendRedirect(baseUrl);
 			}
-		}else if (action.equalsIgnoreCase("Buy Product")) {
+		}
+		
+		//if the action is buy product, client will be redirected to the confirmation page
+		else if (action.equalsIgnoreCase("Buy Product")) {
 			if (session.getAttribute("cid") != null) { 
 				String productQuantity = request.getParameter("productQuantity");
 				SellersProduct productModel = db.getSellerProductById(pid);

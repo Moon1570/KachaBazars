@@ -1,3 +1,8 @@
+/*
+ * This servlet is in charge of the admin, the request, response handling, and URL mapping with the get and post methods. 
+ * It controls Login, Validation, Authentication and profile management for the admin. 
+ */
+
 package controller;
 
 import java.io.IOException;
@@ -14,12 +19,17 @@ import model.AdminModel;
 import model.CustomerModel;
 
 
+/*
+ * Handles all the requests and responses for the "/admin*" URL
+ */
 public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+
+	// DBData object to access the database
 	DBData db = new DBData();
 	
-
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
@@ -29,6 +39,7 @@ public class AdminServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		
+		// If the action is adminlogin, then the admin is redirected to the admin-login.jsp page
 		if (action.equals("adminlogout")) {
 			
 			session.removeAttribute("adminlogin");
@@ -37,6 +48,8 @@ public class AdminServlet extends HttpServlet {
 			request.getRequestDispatcher("admin-login.jsp").forward(request, response);
 			
 		}
+
+		// If the action is viewprofile, then the admin is redirected to the admininfo.jsp page
 		else if (action.equalsIgnoreCase("viewprofile")) {
 			
 			if (session.getAttribute("admin") != null) {
@@ -55,6 +68,7 @@ public class AdminServlet extends HttpServlet {
 	}
 
 	
+	// DoPost method to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
@@ -62,6 +76,7 @@ public class AdminServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		
+		// If the action is adminlogin, then the admin is authenticated and redirected to the index.jsp page
 		if (action.equalsIgnoreCase("adminlogin")) {
 			
 			String name, password;
@@ -71,12 +86,15 @@ public class AdminServlet extends HttpServlet {
 			
 			AdminModel adminModel =db.getAdminPasswordByName(name);
 			
+			// If the adminModel is null, then the admin is redirected to the admin-login.jsp page with an error message
 			if(adminModel==null)
 			{
 				request.setAttribute("message", "Account id Invalid...");
 				request.setAttribute("action", "login");
 				request.getRequestDispatcher("/admin-login.jsp").forward(request, response);
 			}
+
+			// If the adminModel is not null, then the admin is authenticated and redirected to the index.jsp page
 			else if (name.equalsIgnoreCase(adminModel.getAdminName()) && password.equalsIgnoreCase(adminModel.getAdminPassword())) {
 				int aid = adminModel.getAdminId();
 				HttpSession session=request.getSession();
@@ -88,7 +106,7 @@ public class AdminServlet extends HttpServlet {
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			
 			}
-			
+			// If the adminModel is not null, then the admin is redirected to the admin-login.jsp page with an error message
 			else {
 				request.setAttribute("message", "Account id or wrong password...");
 				request.setAttribute("action", "login");

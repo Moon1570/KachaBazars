@@ -1,3 +1,7 @@
+/*
+ * This servlet is in charge of the profile, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the profile are handled here. such as viewing the profile page.
+ */
 package controller;
 
 import java.awt.color.ProfileDataException;
@@ -18,6 +22,9 @@ import model.OrderSellerProductModel;
 import model.OrdersModel;
 
 
+/*
+ * This servlet will be handling all the request and response from the url /profile
+ */
 public class ProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -25,6 +32,8 @@ public class ProfileServlet extends HttpServlet {
 	ProfileDao pd = new ProfileDao();
     DBData db = new DBData();
 	
+
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");

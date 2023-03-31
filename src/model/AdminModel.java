@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the admin table in the database.
+ * All the properties, fucntions, getters, setters and constructors are defined here.
+ */
 package model;
 
 import javax.persistence.Column;

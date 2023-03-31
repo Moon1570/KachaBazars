@@ -1,3 +1,9 @@
+
+/*
+ * This servlet is in charge of the RestSellerProduct, the request, response handling, and URL mapping with the get and post methods.
+ * This is to handle the REST API calls for the android app.
+ * All the common operations for the RestSellerProduct are handled here. such as viewing the RestSellerProduct page.
+ */
 package controller;
 
 import java.io.File;
@@ -28,11 +34,17 @@ import model.SellersProduct;
 import model.SubcategoryModel;
 import model.UnitModel;
 
+/*
+ * This servlet will be handling all the request and response from the url /restdelivery
+ */
+
 public class RestSellerProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// DBData object to access the database
 	DBData db = new DBData();
 	
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -41,9 +53,13 @@ public class RestSellerProductServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 
+		// if the action is null, then no action is given
 		if (action == null) {
 			System.out.println("No action is GIVEN");
 		}
+
+		//if athe action is getselleraddspinner, then the categories, subcategories, and units will be returned in JSON format to the android app REST client
+		
 		else if (action.equals("getselleraddspinner")) {
 			System.out.println(action);
 			
@@ -68,6 +84,8 @@ public class RestSellerProductServlet extends HttpServlet {
 			pw.write(jsonArray.toString());
 			
 		}
+
+		//if action is getGovtPrice, then the government price of the subcategory will be returned in JSON format to the android app REST client
 		else if (action.equals("getGovtPrice")) {
 			
 			int subId = Integer.parseInt(request.getParameter("subId"));
@@ -95,6 +113,8 @@ public class RestSellerProductServlet extends HttpServlet {
 		}
 	}
 
+
+	// DoPost method to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -104,9 +124,13 @@ public class RestSellerProductServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 
+		// if the action is null, then no action is given
 		if (action == null) {
 			System.out.println("No action is GIVEN");
-		} else if (action.equals("addsellerproduct")) {
+		}
+		
+		//if the action is addsellerproduct, then the seller will add a product to the database
+		else if (action.equals("addsellerproduct")) {
 
 			String encoded, productName, productImageName, productImagePath, productDescription;
 			int sid, catId, subcatId, unitId;

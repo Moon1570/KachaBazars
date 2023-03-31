@@ -1,3 +1,7 @@
+/*
+ * This Model creates and destroys the connection to the database and the sessions 
+ * 
+ */
 package dao;
 
 import java.io.File;
@@ -18,6 +22,7 @@ public class Connection {
 	private SessionFactory sessionFactory = null;
 	
 
+    // Creates a new session factory and returns it
 	public SessionFactory getSessionFactory() {
 		
 		if (sessionFactory == null) {
@@ -33,37 +38,11 @@ public class Connection {
          
         return sessionFactory;
 	}
+
+    // Closes the session factory
 	public void closeSessionFactory() { 
 		
 		   SessionFactory sessionFactory = getSessionFactory();
 		   sessionFactory.close();
 		}
-	
-	/*
-	
-	private static final SessionFactory sessionFactory = buildSessionFactory();
-    
-    private static SessionFactory buildSessionFactory() 
-    {
-        try
-        {
-            // Create the SessionFactory from hibernate.cfg.xml
-            return new AnnotationConfiguration().configure(new File("hibernate.cgf.xml")).buildSessionFactory();
-        }
-        catch (Throwable ex) {
-            // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-  
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-  
-    public static void shutdown() {
-        // Close caches and connection pools
-        getSessionFactory().close();
-    }
-    */
 }

@@ -1,3 +1,7 @@
+/*
+ * This Model defines the functions for all the profile related operations to the database..
+ * The return parameters are validated and tested before returning.
+ */
 package dao;
 
 import java.util.ArrayList;
@@ -17,6 +21,7 @@ import model.UpazillaModel;
 public class ProfileDao {
 	int counter=0;
 
+	// Returns all the orders by the customer id
 	public List<OrdersModel> getOrdersByCID(int cid) {
 		// TODO Auto-generated method stub
 		String query = "from OrdersModel orderModel";
@@ -50,6 +55,7 @@ public class ProfileDao {
 		return ordersModels2;
 	}
 
+	// Returns all the seller product orders by the customer id
 	public List<OrderSellerProductModel> getOrderSellerProducts(int cid) {
 		// TODO Auto-generated method stub
 		String query = "from OrderSellerProductModel orderSellerProductModel";

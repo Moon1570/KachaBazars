@@ -1,3 +1,8 @@
+
+/*
+ * This Model refelects the  cart details table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import javax.persistence.CascadeType;
@@ -18,9 +23,11 @@ public class CartDetailsModel {
 	@Column(name = "cart_details_id")
 	private  int cartDetailsId;
 	
+	// One cart can have many products.
 	@ManyToOne(cascade = CascadeType.ALL)
 	private CartModel cartId;
 	
+	// One product can be in many carts.
 	@ManyToOne(cascade = CascadeType.ALL)
 	private ProductModel productModel;
 	

@@ -1,3 +1,7 @@
+/*
+ * This Model defines the functions for all the search related operations to the database..
+ * The return parameters are validated and tested before returning.
+ */
 package dao;
 
 import java.util.List;
@@ -12,6 +16,7 @@ import model.SellersProduct;
 public class SearchDao {
 	int counter = 0;
 
+	// Returns all the products by the keyword and category id
 	public List<ProductModel> getProductByKeywordAndCategoryId(String keyword, int catId) {
 		// TODO Auto-generated method stub
 		String query = "from ProductModel product where product.productCategory=" + catId
@@ -29,6 +34,7 @@ public class SearchDao {
 		return productModels;
 	}
 
+	// Returns all the categories by the keyword and category id
 	public List<SellersProduct> getSellerProductByKeywordAndCategoryId(String keyword, int catId) {
 		// TODO Auto-generated method stub
 		String query = "from SellersProduct sellersProduct where sellersProduct.categoryModel=" + catId

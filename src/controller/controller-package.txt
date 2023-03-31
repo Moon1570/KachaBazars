@@ -1,0 +1,3 @@
+As MVC pattern was used to separate the views from business logic,
+ the responsibility of mapping request and response was handled by controllers.
+ These are servlets that is divided by the Single Responsibility Principle (SRP). 

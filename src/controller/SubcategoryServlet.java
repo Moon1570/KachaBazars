@@ -1,3 +1,8 @@
+
+/*
+ * This servlet is in charge of the subcategory, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the subcategory are handled here. such as viewing the subcategory page.
+ */
 package controller;
 
 import java.io.IOException;
@@ -16,6 +21,9 @@ import model.CategoryModel;
 import model.SubcategoryModel;
 
 
+/*
+ * This servlet will be handling all the request and response from the url /subcategory
+ */
 
 public class SubcategoryServlet extends HttpServlet {
 	
@@ -27,13 +35,16 @@ public class SubcategoryServlet extends HttpServlet {
      */
     
 
-	
+
+	// This method is used to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action = request.getParameter("action");
 
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
+
+		// If the action is new, the request will be forwarded to the newsubcategory.jsp page
 		if (action.equals("new")) {
 			SubcategoryModel subcategoryModel = new SubcategoryModel();
 			request.setAttribute("subcategories", subcategoryModel);
@@ -42,10 +53,14 @@ public class SubcategoryServlet extends HttpServlet {
 			request.getRequestDispatcher("/newsubcategory.jsp").forward(request, response);
 			
 		}
+
+		// If the action is view, the request will be forwarded to the subcategory.jsp page
 		else if (action.equals("view")) {
 			request.setAttribute("action", "view");
 			request.getRequestDispatcher("/subcategory.jsp").forward(request, response);
 		}
+
+		// If the action is delete, the request will be forwarded to the subcategory.jsp page
 		else if (action.equals("delete")) {
 			int id = Integer.parseInt(request.getParameter("id").toString());
 			SubcategoryModel subcategoryModel = new SubcategoryModel();
@@ -54,6 +69,8 @@ public class SubcategoryServlet extends HttpServlet {
 			db.deleteSubcategoryById(subcategoryModel);
 			request.getRequestDispatcher("/subcategory.jsp").forward(request, response);
 		}
+
+		// If the action is update, the request will be forwarded to the newsubcategory.jsp page
 		else if(action.equals("update")) {
 			int subCatId = Integer.parseInt(request.getParameter("id"));
 			SubcategoryModel subcategoryModel = db.getSubcategoryById(subCatId);
@@ -66,12 +83,15 @@ public class SubcategoryServlet extends HttpServlet {
 		}
 	}
 
+	// This method is used to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action").toString();
 		System.out.println(action);
+
+		// If the action is new, the request will be forwarded to the subcategory.jsp page
 		if (action.equals("new")) {
 			SubcategoryModel subcategory = new SubcategoryModel();
 			CategoryModel categoryModel=new CategoryModel();
@@ -90,7 +110,9 @@ public class SubcategoryServlet extends HttpServlet {
 
 			
 			request.getRequestDispatcher("/subcategory.jsp").forward(request, response);
-		} else if(action.equals("update")) {
+		} 
+		// If the action is update, the request will be forwarded to the subcategory.jsp page
+		else if(action.equals("update")) {
 			SubcategoryModel subcategory = new SubcategoryModel();
 
 			int sid = Integer.parseInt(request.getParameter("sid"));

@@ -1,3 +1,7 @@
+/*
+ * This servlet is in charge of the confirmation, the request, response handling, and URL mapping with the get and post methods. 
+ * It will contain all the common operations for the confirmation. 
+ */
 package controller;
 
 import java.io.IOException;
@@ -18,12 +22,17 @@ import model.CartDetailsModel;
 import model.ProductModel;
 import model.SellersProduct;
 
+
+/*
+ * Handles all the requests and responses for the "/confirmation*" URL
+ */
 public class ConfirmationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	HttpSession session;
 	DBData db = new DBData();
 
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -32,9 +41,11 @@ public class ConfirmationServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
+		// if the action is confirm, then the user will be redirected to the confirmation page
 		if (action.equals("confirm")) {
 			int pid = Integer.parseInt(request.getParameter("pid").toString());
 
+			// if the user is not logged in, then the user will be redirected to the login page
 			if (session.getAttribute("cid") == null) {
 				String url = request.getRequestURI();
 
@@ -47,6 +58,7 @@ public class ConfirmationServlet extends HttpServlet {
 
 			}
 
+			// if the user is logged in, then the user will be redirected to the confirmation page
 			else if (session.getAttribute("cid") != null) {
 				int cid = Integer.parseInt(session.getAttribute("cid").toString());
 				request.setAttribute("cid", cid);
@@ -57,8 +69,12 @@ public class ConfirmationServlet extends HttpServlet {
 				request.getRequestDispatcher("/Confirmation.jsp").forward(request, response);
 			}
 
-		} else if (action.equals("checkout")) {
+		} 
 
+		//If the action is checkout, then the user will be redirected to the cart_confirmation.jsp page
+		else if (action.equals("checkout")) {
+
+			// if the user is not logged in, then the user will be redirected to the login page
 			if (session.getAttribute("cid") != null) {
 				int cid = Integer.parseInt(session.getAttribute("cid").toString());
 				request.setAttribute("cid", cid);
@@ -66,9 +82,12 @@ public class ConfirmationServlet extends HttpServlet {
 				request.setAttribute("cartId", cartId);
 				request.getRequestDispatcher("/cart_confirmation.jsp").forward(request, response);
 			}
-		} else if (action.equals("confirmsellerproduct")) {
+		} 
+		//If the action is confirmsellerproduct, then the user will be redirected to the confirm_seller_product.jsp page
+		else if (action.equals("confirmsellerproduct")) {
 			int pid = Integer.parseInt(request.getParameter("pid").toString());
 
+			// if the user is not logged in, then the user will be redirected to the login page
 			if (session.getAttribute("cid") == null) {
 				String url = request.getRequestURI();
 
@@ -80,7 +99,7 @@ public class ConfirmationServlet extends HttpServlet {
 				response.sendRedirect(baseUrl);
 
 			}
-
+			// if the user is logged in, then the user will be redirected to the confirmation page
 			else if (session.getAttribute("cid") != null) {
 				int cid = Integer.parseInt(session.getAttribute("cid").toString());
 				request.setAttribute("cid", cid);
@@ -94,6 +113,8 @@ public class ConfirmationServlet extends HttpServlet {
 		}
 	}
 
+
+	// DoPost method to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 

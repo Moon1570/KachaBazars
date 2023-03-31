@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the Seller Products table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import javax.persistence.CascadeType;
@@ -25,9 +29,11 @@ public class SellersProduct {
 	@Column(name = "product_name")
 	private String productName;
 	
+	// One category can have many products.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private CategoryModel categoryModel;
 	
+	// One subcategory can have many products.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private SubcategoryModel subcategoryModel;
 	
@@ -41,9 +47,11 @@ public class SellersProduct {
 	@Column(name = "product_price")
 	private double productPrice;
 	
+	// One unit can have many products.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private UnitModel unitModel;
 
+	// One seller can have many products.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private SellerModel sellerModel;
 	

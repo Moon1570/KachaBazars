@@ -1,3 +1,8 @@
+
+/*
+ * This Model refelects the  union table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import javax.persistence.CascadeType;
@@ -18,6 +23,7 @@ public class UnionModel {
 	@Column(name = "id")
 	private int unionId;
 	
+	// Many unions can be in one upazilla.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private UpazillaModel upazillaModel;
 	

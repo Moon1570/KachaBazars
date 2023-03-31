@@ -1,3 +1,8 @@
+/*
+ * This servlet is in charge of the RestCart, the request, response handling, and URL mapping with the get and post methods.
+ * This is to handle the REST API calls for the android app.
+ * All the common operations for the RestCart are handled here. such as viewing the RestCart page.
+ */
 package controller;
 
 import java.io.ByteArrayOutputStream;
@@ -35,12 +40,19 @@ import model.ProductModel;
 import model.UnionModel;
 import model.UpazillaModel;
 
+/*
+ * This servlet will be handling all the request and response REST API calls from the url /restcart
+ */
 public class RestCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// DBData object to access the database
 	DBData db = new DBData();
+
+	// AreaDao object to access the database
 	AreaDao ad = new AreaDao();
 
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -49,6 +61,8 @@ public class RestCartServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String action = request.getParameter("action");
+
+		//if the action is getcartdetails, the response will be the cart details of the customer in JSON format
 		if (action.equalsIgnoreCase("getcartdetails")) {
 
 			int cid = Integer.parseInt(request.getParameter("cid"));
@@ -86,7 +100,10 @@ public class RestCartServlet extends HttpServlet {
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray.toString());
 
-		}else if(action.equals("getProfile")) {
+		}
+		
+		//if action is getProfile, then the profile info will be retrived from DB and response will be written in JSON format
+		else if(action.equals("getProfile")) {
 			int cid = Integer.parseInt(request.getParameter("cid"));
 			
 			CustomerModel customerModel= db.getCustomerById(cid);
@@ -146,7 +163,10 @@ public class RestCartServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else if(action.equals("getProfileseparated")) {
+		}
+		
+		//if action is getProfileseparated, then the profile info will be retrived from DB and response will be written in JSON format
+		else if(action.equals("getProfileseparated")) {
 			int cid = Integer.parseInt(request.getParameter("cid"));
 			
 			CustomerModel customerModel= db.getCustomerById(cid);
@@ -209,7 +229,10 @@ public class RestCartServlet extends HttpServlet {
 		}
 
 	}
+	
 
+
+	//this method will handle the post request from the client side
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -219,6 +242,8 @@ public class RestCartServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 
+
+		//if the action is cardadd, then the cart details will be added to the database
 		if (action.equalsIgnoreCase("cartadd")) {
 
 			int cid = Integer.parseInt(request.getParameter("cid"));
@@ -243,7 +268,10 @@ public class RestCartServlet extends HttpServlet {
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray.toString());
 
-		} else if (action.equalsIgnoreCase("cartorder")) {
+		} 
+		
+		//if the action is cartorder, then the cart details will be added to the database
+		else if (action.equalsIgnoreCase("cartorder")) {
 
 			int cid = Integer.parseInt(request.getParameter("cid"));
 
@@ -359,7 +387,10 @@ public class RestCartServlet extends HttpServlet {
 				pw.write(jsonArray.toString());  
 			
 
-		} else if (action.equalsIgnoreCase("cartorderdone")) {
+		} 
+		
+		//if the action is cartorderdone, then the cart details will be added to the database
+		else if (action.equalsIgnoreCase("cartorderdone")) {
 
 			String tranId = request.getParameter("tranId");
 

@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the  bid table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import java.util.Date;
@@ -25,6 +29,7 @@ public class BidModel {
 	@Column(name = "bid_quantity")
 	private int bidQuantity;
 	
+	// One bid can be placed for one product only.
 	@OneToOne(cascade = CascadeType.MERGE)
 	private ProductModel productModel;
 	

@@ -1,3 +1,7 @@
+/*
+ * This Model defines the functions for all the area related operations to the database..
+ * The return parameters are validated and tested before returning.
+ */
 package dao;
 
 import java.io.Serializable;
@@ -33,6 +37,7 @@ import model.UpazillaModel;
 public class AreaDao {
 	int counter=0;
 	
+	// This function returns all the district by division id. 
 	public List<DistrictModel> getDistrictByDivisionId(int divId) {
 		// TODO Auto-generated method stub
 		String query = "from DistrictModel DistrictModel";
@@ -67,6 +72,7 @@ public class AreaDao {
 	//	return cartDetailsModels;
 	}
 	
+	// This function returns all the upazillas by district id.
 	public List<UpazillaModel> getUpazillaByDistrictId(int disId) {
 		// TODO Auto-generated method stub
 		String query = "from UpazillaModel UpazillaModel";
@@ -101,6 +107,7 @@ public class AreaDao {
 	//	return cartDetailsModels;
 	}
 	
+	// This function returns all the unions by upazilla id.
 	public List<UnionModel> getUnionByUpazillaId(int upaId) {
 		// TODO Auto-generated method stub
 		String query = "from UnionModel UnionModel";
@@ -127,7 +134,6 @@ public class AreaDao {
 			}
 
 		}
-	//	getUnionByUpazillaId(upaId)
 
 		session.flush();
 		session.close();
@@ -137,6 +143,7 @@ public class AreaDao {
 	//	return cartDetailsModels;
 	}
 
+	// Returns the division by id.
 	public DivisionModel getDivisionById(int id) {
 		// TODO Auto-generated method stub
 		String query = "from DivisionModel division where division.id=" + id;
@@ -148,7 +155,8 @@ public class AreaDao {
 		con.closeSessionFactory();
 		return divisionModel;
 	}
-	
+	]
+	// Returns all the districts.
 	public List<DistrictModel> getAllDistricts() {
 		List<DistrictModel> districtModels = new ArrayList<>();
 		String query = "from DistrictModel district";
@@ -164,6 +172,7 @@ public class AreaDao {
 		return districtModels;
 	}
 	
+	// Returns all the Upazillas.
 	public List<UpazillaModel> getAllUpazillas() {
 		List<UpazillaModel> upazillaModels = new ArrayList<>();
 		String query = "from UpazillaModel upazilla";
@@ -178,6 +187,7 @@ public class AreaDao {
 		return upazillaModels;
 	}
 	
+	// Returns all the unions.
 	public List<UnionModel> getAllUnions() {
 		List<UnionModel> unionModels = new ArrayList<>();
 		String query = "from UnionModel unionModels";
@@ -192,6 +202,7 @@ public class AreaDao {
 		return unionModels;
 	}
 
+	// Returns the district by id.
 	public DistrictModel getDistrictById(int disId) {
 		// TODO Auto-generated method stub
 		String query = "from DistrictModel district where district.id=" + disId;
@@ -207,6 +218,7 @@ public class AreaDao {
 		return districtModel;
 	}
 
+	// Returns the upazilla by id.
 	public UpazillaModel getUpazillaById(int upaId) {
 		// TODO Auto-generated method stub
 		String query = "from UpazillaModel upazilla where upazilla.id=" + upaId;
@@ -222,6 +234,7 @@ public class AreaDao {
 		return upazillaModel;
 	}
 
+	// Returns the union by id.
 	public UnionModel getUnionById(int uniId) {
 		// TODO Auto-generated method stub
 		String query = "from UnionModel upazilla where upazilla.id=" + uniId;
@@ -237,6 +250,7 @@ public class AreaDao {
 		return upazillaModel;
 	}
 
+	// Returns the count of divisions.
 	public int countDivision() {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -252,6 +266,7 @@ public class AreaDao {
 		return count;
 	}
 
+	// Saves the division.
 	public void saveDivision(DivisionModel divisionModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -269,6 +284,7 @@ public class AreaDao {
 		System.out.println("Inserted...");
 	}
 
+	// Returns the last division id.
 	public int getLastDivId() {
 		// TODO Auto-generated method stub
 		
@@ -287,6 +303,8 @@ public class AreaDao {
 		return last.getDivisionId();
 	}
 
+
+	// Deletes the division.
 	public void deleteDivision(DivisionModel divisionModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -302,6 +320,7 @@ public class AreaDao {
 		System.out.println("Deleted...");
 	}
 
+	// Updates the division.
 	public void updateDivision(DivisionModel divisionModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -317,6 +336,7 @@ public class AreaDao {
 		System.out.println("Updated...");
 	}
 
+	//deletes the district
 	public void deleteDistrict(DistrictModel districtModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -332,6 +352,7 @@ public class AreaDao {
 		System.out.println("Deleted...");
 	}
 
+	//save the district
 	public void saveDistrict(DistrictModel districtModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -349,6 +370,7 @@ public class AreaDao {
 		System.out.println("Inserted...");
 	}
 
+	//update the district
 	public void updateDistrict(DistrictModel districtModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -364,6 +386,7 @@ public class AreaDao {
 		System.out.println("Updated...");
 	}
 
+	//save the upazilla
 	public void saveUpazilla(UpazillaModel upazillaModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -381,6 +404,7 @@ public class AreaDao {
 		System.out.println("Inserted...");
 	}
 
+	//delete the upazilla
 	public void deleteUpazilla(UpazillaModel upazillaModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -396,6 +420,7 @@ public class AreaDao {
 		System.out.println("Deleted...");
 	}
 
+	//update the upazilla
 	public void updateUpazilla(UpazillaModel upazillaModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -411,6 +436,7 @@ public class AreaDao {
 		System.out.println("Updated...");
 	}
 
+	//save the union
 	public void saveUnion(UnionModel unionModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -428,6 +454,7 @@ public class AreaDao {
 		System.out.println("Inserted...");
 	}
 
+	//delete the union
 	public void deleteUnion(UnionModel unionModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -443,6 +470,7 @@ public class AreaDao {
 		System.out.println("Deleted...");
 	}
 
+	//update the union
 	public void updateUnion(UnionModel unionModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();

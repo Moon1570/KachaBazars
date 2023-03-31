@@ -1,3 +1,7 @@
+/*
+ * This servlet is in charge of the seller, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the seller are handled here. such as viewing the seller page.
+ */
 package controller;
 
 import java.io.File;
@@ -32,13 +36,20 @@ import model.SellerModel;
 import model.UnionModel;
 import model.UpazillaModel;
 
+/*
+ * This servlet will be handling all the request and response from the url /seller
+ */
 @MultipartConfig
 public class SellerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// DBData object to access the database
 	DBData db = new DBData();
+
+	// AreaDao object to access the database
 	AreaDao aDao = new AreaDao();
 
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -50,6 +61,7 @@ public class SellerServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 
+		//if the action is view, the request will be forwarded to the sellers.jsp page
 		if (action.equals("view")) {
 			List<SellerModel> sellerModels = db.getAllSellers();
 			request.setAttribute("customers", sellerModels);
@@ -57,6 +69,8 @@ public class SellerServlet extends HttpServlet {
 			
 			request.getRequestDispatcher("/Sellers.jsp").forward(request, response);
 		}
+
+		//if the action is new, the request will be forwarded to the SellerRegistration.jsp page
 		else if(action.equals("new")) {
 			SellerModel sellerModel = new SellerModel();
 			
@@ -66,6 +80,8 @@ public class SellerServlet extends HttpServlet {
 
 			request.getRequestDispatcher("/SellerRegistration.jsp").forward(request, response);
 		}
+
+		// if the action is login, the request will be forwarded to the sellers_login.jsp page
 		else if (action.equals("login")) {
 			SellerModel sellerModel = new SellerModel();
 
@@ -74,11 +90,16 @@ public class SellerServlet extends HttpServlet {
 
 			request.getRequestDispatcher("/sellers_login.jsp").forward(request, response);
 		}
+
+		//if the action is logout, the session will be invalidated and the request will be forwarded to the sellers_login.jsp page
 		else if (action.equals("logout")) {
 			session.invalidate();
 			request.setAttribute("action", "login");
 			request.getRequestDispatcher("/sellers_login.jsp").forward(request, response);
-		} else if(action.equals("delete")) {
+		}
+		
+		//if the action is delete, the seller will be deleted from the database and the request will be forwarded to the sellers.jsp page
+		else if(action.equals("delete")) {
 			String page = request.getParameter("page");
 			int sid = Integer.parseInt(request.getParameter("sid"));
 			
@@ -91,6 +112,7 @@ public class SellerServlet extends HttpServlet {
 		}
 	}
 
+	// DoPost method to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -98,6 +120,8 @@ public class SellerServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		System.out.println("action = " + action);
+
+		//if the action is reg, the seller will be registered to the database and the request will be forwarded to the sellers.jsp page
 		if (action.equals("reg")) {
 			SellerModel sellerModel = new SellerModel();
 
@@ -169,6 +193,7 @@ public class SellerServlet extends HttpServlet {
 			request.getRequestDispatcher("/Sellers.jsp").forward(request, response);
 		}
 
+		//if the action is login, the seller will be logged in to the system and the request will be forwarded to the seller_home.jsp page
 		else if (action.equals("login")) {
 			String phone = request.getParameter("sellerPhone");
 			String password = request.getParameter("sellerPassword");

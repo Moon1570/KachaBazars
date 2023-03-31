@@ -1,0 +1,1 @@
+To access and manage the DataBase the dao package was used with defined functions to separate the db calls from logic.

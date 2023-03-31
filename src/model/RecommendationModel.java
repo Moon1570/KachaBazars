@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the recommendation table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import javax.persistence.CascadeType;

@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the  Order details table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import javax.persistence.CascadeType;
@@ -42,6 +46,7 @@ public class OrderDetailsModel {
 	@Column(name = "order_street")
 	private String orderStreet;
 	
+	// One order can have one order details only.
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id")
 	private OrdersModel orderModel;

@@ -1,3 +1,8 @@
+/*
+ * This servlet is in charge of the RestOrder, the request, response handling, and URL mapping with the get and post methods.
+ * This is to handle the REST API calls for the android app.
+ * All the common operations for the RestOrder are handled here. such as viewing the RestOrder page.
+ */
 package controller;
 
 import java.io.IOException;
@@ -32,17 +37,25 @@ import model.SellersProduct;
 import model.UnionModel;
 import model.UpazillaModel;
 
+/*
+ * This servlet will be handling all the request and response from the url /restorder
+ */
+
 public class RestOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	// OrderDao a object to access the database
     DBData db = new DBData();
+
+	// DBData object to access the database
     AreaDao ad = new AreaDao();
 	
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
-	
+	// DoPost method to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
@@ -50,6 +63,8 @@ public class RestOrderServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String action = request.getParameter("action");
+
+		//if the action is orderfrominventory, then the order will be placed from the inventory
 		if (action.equals("orderfrominventory")) {
 			
 			String coc, phone, expectedDate, street, village, zip, transId;
@@ -136,9 +151,9 @@ public class RestOrderServlet extends HttpServlet {
 			pw.write(jsonArray.toString());
 				
 			
-			
-			
 		}
+
+		//if the action is orderfromfarmer, then the order will be placed from the farmer
 		else if (action.equals("orderfromfarmer")) {
 
 			String coc, phone, expectedDate, street, village, zip, division, district, upazilla, tranId;
@@ -230,6 +245,8 @@ public class RestOrderServlet extends HttpServlet {
 			}
 			
 		}
+
+		//if the action is sellerordersuccess, then the order will be placed from the farmer
 		else if (action.equalsIgnoreCase("sellerorderSuccess")) {
 			String tranId = request.getParameter("tranId");
 			
@@ -249,7 +266,10 @@ public class RestOrderServlet extends HttpServlet {
 			
 			JSONArray jsonArray = new JSONArray();
 			pWriter.write(jsonArray.toString());
-		}else if (action.equalsIgnoreCase("orderfrominventory_cod")) {
+		}
+		
+		//if the action is orderfrominventory_cod, then the order will be placed from the inventory with cash on delivery
+		else if (action.equalsIgnoreCase("orderfrominventory_cod")) {
 			String coc, phone, expectedDate, street, village, zip, transId;
 			int cid, quantity, pid;
 			
@@ -333,7 +353,10 @@ public class RestOrderServlet extends HttpServlet {
 			pw.write(jsonArray.toString());
 				
 			
-		}else if(action.equalsIgnoreCase("orderfromfarmer_cod")) {
+		}
+		
+		//if the action is orderfromfarmer_cod, then the order will be placed from the farmer with cash on delivery
+		else if(action.equalsIgnoreCase("orderfromfarmer_cod")) {
 			String coc, phone, expectedDate, street, village, zip, division, district, upazilla, tranId;
 			int cid, quantity, spid;
 			

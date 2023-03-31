@@ -1,3 +1,8 @@
+
+/*
+ * This servlet is in charge of the testui, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the testing the UI are handled here.
+ */
 package controller;
 
 import java.io.IOException;
@@ -21,6 +26,9 @@ import model.SellersProduct;
 import model.UnionModel;
 
 
+/*
+ * This servlet will be handling all the request and response from the url /testui
+ */
 public class TestUiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -28,10 +36,13 @@ public class TestUiServlet extends HttpServlet {
 	DBData db = new DBData();
 	AreaDao ad = new AreaDao();
 	
+	// This method is used to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
+
+		// This is used to view the products
 		if (action.equals("view")) {
 			request.setAttribute("action", "view");
 			int cid = Integer.parseInt(session.getAttribute("cid").toString());
@@ -54,6 +65,8 @@ public class TestUiServlet extends HttpServlet {
 			
 			request.getRequestDispatcher("/test_ui.jsp").forward(request, response);
 		}
+
+		// This is to view all the seller products
 		else if (action.equals("all")) {
 			List<SellersProduct> sellersProducts = db.getAllSellerProductrs();
 			request.setAttribute("sellerproduct", sellersProducts);

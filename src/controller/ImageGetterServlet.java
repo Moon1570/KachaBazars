@@ -1,3 +1,10 @@
+
+/*
+ * This servlet is in charge of the ImageGetter, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the ImageGetter are handled here. such as getting the image from the database.
+ * 
+ */
+
 package controller;
 
 import java.io.IOException;
@@ -18,18 +25,24 @@ import model.ProductModel;
 import model.SellerModel;
 import model.SellersProduct;
 
-
+/*
+ * Handles all the requests and responses for the "/image*" URL
+ */
 public class ImageGetterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// DoGet method to handle the get requests
 	DBData db = new DBData();
 	
+
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 		
+		//if action is category, then the category image is retrieved from the database and sent to the client
 		if (action.equals("category")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			
@@ -40,7 +53,10 @@ public class ImageGetterServlet extends HttpServlet {
 			os.write(bytes);
 			os.flush();
 			os.close();
-		}else if (action.equals("product")) {
+		}
+		
+		//if action is product, then the product image is retrieved from the database and sent to the client
+		else if (action.equals("product")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			
 			ProductModel productModel = db.getProductById(id);
@@ -49,7 +65,10 @@ public class ImageGetterServlet extends HttpServlet {
 			os.write(bytes);
 			os.flush();
 			os.close();
-		}else if (action.equals("customer")) {
+		}
+		
+		//if action is customer, then the customer image is retrieved from the database and sent to the client
+		else if (action.equals("customer")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			
 			CustomerModel customerModel = db.getCustomerById(id);
@@ -58,7 +77,10 @@ public class ImageGetterServlet extends HttpServlet {
 			os.write(bytes);
 			os.flush();
 			os.close();
-		}else if (action.equals("seller")) {
+		}
+		
+		//if action is seller, then the seller image is retrieved from the database and sent to the client
+		else if (action.equals("seller")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			
 			SellerModel sellerModel = db.getSellerById(id);
@@ -67,7 +89,10 @@ public class ImageGetterServlet extends HttpServlet {
 			os.write(bytes);
 			os.flush();
 			os.close();
-		}else if (action.equals("sellerproduct")) {
+		}
+		
+		//if action is sellerproduct, then the sellerproduct image is retrieved from the database and sent to the client
+		else if (action.equals("sellerproduct")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			
 			SellersProduct sellersProduct = db.getSellerProductById(id);
@@ -76,7 +101,10 @@ public class ImageGetterServlet extends HttpServlet {
 			os.write(bytes);
 			os.flush();
 			os.close();
-		}else if (action.equals("delivery")) {
+		}
+		
+		//if action is delivery, then the delivery image is retrieved from the database and sent to the client
+		else if (action.equals("delivery")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			
 			DeliveryPersonModel deliveryPersonModel = db.getDeliveryPersonById(id);

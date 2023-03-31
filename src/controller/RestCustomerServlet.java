@@ -1,3 +1,8 @@
+/*
+ * This servlet is in charge of the RestCustomer, the request, response handling, and URL mapping with the get and post methods.
+ * This is to handle the REST API calls for the android app.
+ * All the common operations for the RestCustomer are handled here. such as viewing the RestCustomer page.
+ */
 package controller;
 
 import java.io.ByteArrayOutputStream;
@@ -31,11 +36,19 @@ import model.SellersProduct;
 import model.UnionModel;
 import model.UpazillaModel;
 
+
+/*
+ * This servlet will be handling all the request and response and REST API calls from the url /restcustomer
+ */
 public class RestCustomerServlet extends HttpServlet {
 
+	// DBData object to access the database
 	DBData db = new DBData();
+
+	// AreaDao object to access the database
 	AreaDao aDao = new AreaDao();
 
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -44,9 +57,14 @@ public class RestCustomerServlet extends HttpServlet {
 
 		String action = request.getParameter("action");
 		System.out.println(action);
+
+		//if the action is null, the response will be empty
 		if (action == null) {
 			System.out.println(" ");
-		} else if (action.equals("divisions")) {
+		}
+
+		// if the action is divisions, the response will be getting all the divisions in JSON format
+		else if (action.equals("divisions")) {
 
 			PrintWriter pw = response.getWriter();
 			ArrayList<DivisionModel> divisionModels = (ArrayList<DivisionModel>) db.getAllDivision();
@@ -61,7 +79,10 @@ public class RestCustomerServlet extends HttpServlet {
 			jsonArray.put(unionModels);
 
 			pw.write(jsonArray.toString());
-		} else if (action.equals("getProducts")) {
+		} 
+		
+		// if the action is getProducts, the response will be getting all the products in JSON format
+		else if (action.equals("getProducts")) {
 
 			PrintWriter pw = response.getWriter();
 			JSONArray jsonArray = new JSONArray();
@@ -70,7 +91,9 @@ public class RestCustomerServlet extends HttpServlet {
 			System.out.println("rest client " + action + " " + productModels);
 
 			pw.write(jsonArray.toString());
-		} else if (action.equals("getSellerProducts")) {
+		} 
+		// if the action is getSellerProducts, the response will be getting all the seller products in JSON format
+		else if (action.equals("getSellerProducts")) {
 			PrintWriter pw = response.getWriter();
 			JSONArray jsonArray = new JSONArray();
 			ArrayList<SellersProduct> sellersProducts = db.getAllSellerProductrsArraylist();
@@ -111,7 +134,10 @@ public class RestCustomerServlet extends HttpServlet {
 			}
 
 			pw.write(jsonArray.toString());
-		} else if (action.equals("disctrictbydivision")) {
+		} 
+		
+		// if the action is disctrictbydivision, the response will be getting all the districts by division id in JSON format
+		else if (action.equals("disctrictbydivision")) {
 
 			int divId = Integer.parseInt(request.getParameter("divId"));
 
@@ -122,7 +148,10 @@ public class RestCustomerServlet extends HttpServlet {
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray.toString());
 
-		} else if (action.equals("upazillabydistrict")) {
+		} 
+		
+		// if the action is upazillabydistrict, the response will be getting all the upazillas by district id in JSON format
+		else if (action.equals("upazillabydistrict")) {
 
 			String dis = request.getParameter("dis");
 			System.out.println(dis);
@@ -139,7 +168,10 @@ public class RestCustomerServlet extends HttpServlet {
 
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray.toString());
-		} else if (action.equals("getSellerProductByUpaId")) {
+		} 
+		
+		//if the action is getSellerProductByUpaId, the response will be getting all the seller products by upazilla id in JSON format
+		else if (action.equals("getSellerProductByUpaId")) {
 
 			int divId = Integer.parseInt(request.getParameter("divId"));
 			ArrayList<DistrictModel> districtModels = db.getDistrictByDivisionId(divId);
@@ -214,7 +246,10 @@ public class RestCustomerServlet extends HttpServlet {
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray.toString());
 
-		} else if (action.equalsIgnoreCase("getCategories")) {
+		} 
+		
+		//if the action is getCategories, the response will be getting all the categories in JSON format
+		else if (action.equalsIgnoreCase("getCategories")) {
 
 			JSONArray jsonArray = new JSONArray();
 
@@ -248,7 +283,10 @@ public class RestCustomerServlet extends HttpServlet {
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray.toString());
 
-		} else if (action.equalsIgnoreCase("getProductByCategoryId")) {
+		} 
+		
+		//if the action is getProductByCategoryId, the response will be getting all the products by category id in JSON format
+		else if (action.equalsIgnoreCase("getProductByCategoryId")) {
 
 			JSONArray jsonArray = new JSONArray();
 	
@@ -322,7 +360,10 @@ public class RestCustomerServlet extends HttpServlet {
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray.toString());
 
-		} else if (action.equals("unionbyupazilla")) {
+		}
+		
+		//if the action is unionbyupazilla, the response will be getting all the unions by upazilla id in JSON format
+		else if (action.equals("unionbyupazilla")) {
 
 			int divId = Integer.parseInt(request.getParameter("divId"));
 			ArrayList<DistrictModel> districtModels = db.getDistrictByDivisionId(divId);
@@ -343,7 +384,10 @@ public class RestCustomerServlet extends HttpServlet {
 
 			PrintWriter pw = response.getWriter();
 			pw.write(jsonArray.toString());
-		}else if (action.equalsIgnoreCase("getSellerProductByCategoryId")) {
+		}
+		
+		//if the action is getSellerProductByCategoryId, the response will be getting all the seller products by category id in JSON format
+		else if (action.equalsIgnoreCase("getSellerProductByCategoryId")) {
 
 			JSONArray jsonArray = new JSONArray();
 	
@@ -422,6 +466,7 @@ public class RestCustomerServlet extends HttpServlet {
 		}
 	}
 
+	// All the post REST API will be here
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		

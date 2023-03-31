@@ -1,3 +1,8 @@
+
+/*
+ * This servlet is in charge of the OrderOperation, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the OrderOperation are handled here. such as viewing and updating the order operation page.
+ */
 package controller;
 
 import java.io.IOException;
@@ -23,13 +28,24 @@ import model.UnionModel;
 import model.UpazillaModel;
 
 
+
+
+/*
+ * This servlet will be handling all the request and response from the url /orderoperation
+ */
+
 public class OrderOperationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
   
+	// DBData object to access the database
 	DBData db = new DBData();
+
+	// AreaDao object to access the database
 	AreaDao aDao = new AreaDao();
 	HttpSession session;
 	
+
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action = request.getParameter("action");
@@ -37,6 +53,7 @@ public class OrderOperationServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		System.out.println(action);
 		
+		//if the action is viewsellerorder, the request will be forwarded to the seller-orders.jsp page
 		if (action.equals("viewsellerorder")) {
 
 			String page = request.getParameter("page");
@@ -44,28 +61,38 @@ public class OrderOperationServlet extends HttpServlet {
 			OrderSellerProductModel orderSellerProductModel = db.getOrderSellerProductById(soid);
 			request.setAttribute("order", orderSellerProductModel);
 			
+			//if the page is sad, the request will be forwarded to the sad-seller-orders.jsp page
 			if (page.equalsIgnoreCase("sad")) {
 				request.setAttribute("dest", "/sad-seller-orders.jsp");
 				request.setAttribute("page", "sad");
-			} else {
+			} 
+			
+			//if the page is admin, the request will be forwarded to the seller_orders.jsp page
+			else {
 				request.setAttribute("dest", "/seller_orders.jsp");
 				request.setAttribute("page", "admin");
 			}
 			
 			request.getRequestDispatcher("view_order.jsp").forward(request, response);;
 		}
+
+		//if the action is vieworder, the request will be forwarded to the view_order_inventory.jsp page
 		else if (action.equals("vieworder")) {
 			int oid = Integer.parseInt(request.getParameter("oid"));
 			String page = request.getParameter("page");
 			OrdersModel ordersModel = db.getOrderById(oid);
 			
 			
+			//if the page is sad, the request will be forwarded to the sad-index.jsp page
 			
 			if (page.equalsIgnoreCase("sad")) {
 				request.setAttribute("dest", "/sad-index.jsp");
 				request.setAttribute("page", "sad");
 
-			} else {
+			} 
+			
+			//if the page is admin, the request will be forwarded to the index.jsp page
+			else {
 				request.setAttribute("dest", "/index.jsp");
 				request.setAttribute("page", "admin");
 
@@ -77,12 +104,14 @@ public class OrderOperationServlet extends HttpServlet {
 	}
 
 
+	// DoPost method to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 		
+		//if the action is editordersellerproduct, the request will be forwarded to the edit_order_seller_product.jsp page
 		if (action.equals("editordersellerproduct")) {
 			
 			String dest = request.getParameter("dest");
@@ -142,6 +171,8 @@ public class OrderOperationServlet extends HttpServlet {
 			
 			request.getRequestDispatcher(dest).forward(request, response);
 		}
+
+		//if the action is orderinventory, the request will be forwarded to the order_inventory.jsp page
 		else if (action.equals("orderinventory")) {
 			
 			request.setCharacterEncoding("UTF-8");

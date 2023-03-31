@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the  district table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import javax.persistence.CascadeType;
@@ -18,6 +22,7 @@ public class DistrictModel {
 	@Column(name = "id")
 	private int districtId;
 	
+	// Many districts can be in one division.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private  DivisionModel divisionModel;
 	

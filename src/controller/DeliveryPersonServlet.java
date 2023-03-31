@@ -1,3 +1,8 @@
+/*
+ * This servlet is in charge of the DeliveryPerson, the request, response handling, and URL mapping with the get and post methods. 
+ * All the common operations for the delivery person are handled here. such as adding, removing, updating, and viewing the delivery person.
+ */
+
 package controller;
 
 import java.io.File;
@@ -26,11 +31,19 @@ import model.DeliveryPersonModel;
 import model.DivisionModel;
 import model.SellerModel;
 
+
+/*
+ * Handles all the requests and responses for the "/delivery_person*" URL
+ */
 @MultipartConfig
 public class DeliveryPersonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	// DBData object to access the database
 	DBData db = new DBData();
 
+
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -38,25 +51,36 @@ public class DeliveryPersonServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
+		//if the action is view, the request will be forwarded to the delivery_person.jsp page
 		if (action.equals("view")) {
 			List<DeliveryPersonModel> deliveryPersonModels = db.getAllDeliveryPersons();
 			request.setAttribute("delivery", deliveryPersonModels);
 			request.setAttribute("page", request.getParameter("page"));
 			request.getRequestDispatcher("/delivery_person.jsp").forward(request, response);
-		} else if (action.equals("add")) {
+		} 
+		
+		//if the action is add, the request will be forwarded to the new_delivery_person.jsp page
+		else if (action.equals("add")) {
 
 			request.setAttribute("action", "add");
 			request.setAttribute("page", request.getParameter("page"));
 			request.getRequestDispatcher("/new_delivery_person.jsp").forward(request, response);
 			
-		}else if (action.equals("update")) {
+		}
+		
+		//if the action is update, the request will be forwarded to the new_delivery_person.jsp page
+		else if (action.equals("update")) {
 			int dpid = Integer.parseInt(request.getParameter("dpid"));
 			DeliveryPersonModel deliveryPersonModel = db.getDeliveryPersonById(dpid);
 			
 			request.setAttribute("page", request.getParameter("page"));
 			request.setAttribute("delivery", deliveryPersonModel);
 			request.getRequestDispatcher("/new_delivery_person.jsp").forward(request, response);
-		}else if (action.equals("delete")) {
+		}
+		
+		//if the action is delete, the request will be forwarded to the delivery_person.jsp page
+		
+		else if (action.equals("delete")) {
 			int dpid = Integer.parseInt(request.getParameter("dpid"));
 			DeliveryPersonModel deliveryPersonModel = db.getDeliveryPersonById(dpid);
 			request.setAttribute("page", request.getParameter("page"));
@@ -65,6 +89,8 @@ public class DeliveryPersonServlet extends HttpServlet {
 		}
 	}
 
+
+	// DoPost method to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -74,6 +100,8 @@ public class DeliveryPersonServlet extends HttpServlet {
 		AreaDao ad = new AreaDao();
 		DBData db = new DBData();
 
+
+		//if the action is add, the request will be forwarded to the delivery_person.jsp page with the new delivery person added
 		if (action.equals("add")) {
 
 			DeliveryPersonModel deliveryPersonModel = new DeliveryPersonModel();
@@ -132,7 +160,10 @@ public class DeliveryPersonServlet extends HttpServlet {
 			request.getRequestDispatcher("/delivery_person.jsp").forward(request, response);
 			
 			
-		} else if (action.equals("update")) {
+		} 
+		
+		//if the action is update, the request will be forwarded to the delivery_person.jsp page with the updated delivery person
+		else if (action.equals("update")) {
 			
 			int dpid = Integer.parseInt(request.getParameter("dpid"));
 			DeliveryPersonModel deliveryPersonModel = db.getDeliveryPersonById(dpid);
@@ -195,6 +226,7 @@ public class DeliveryPersonServlet extends HttpServlet {
 
 	}
 
+	//this method will return the file name of the image
 	private String getImageFileName(Part part) {
 		String contentDisp = part.getHeader("content-disposition");
 		String[] tokens = contentDisp.split(";");

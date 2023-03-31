@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the Upazilla table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import javax.persistence.CascadeType;
@@ -18,7 +22,7 @@ public class UpazillaModel {
 	@Column(name = "id")
 	private int upazillaId;
 	
-	
+	//Many Upazilla can be in one District
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private DistrictModel districtModel;
 	

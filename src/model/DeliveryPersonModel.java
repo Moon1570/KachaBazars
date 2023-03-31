@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the  delivery person table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import java.util.Date;
@@ -30,15 +34,19 @@ public class DeliveryPersonModel {
 	@Column(name = "delivery_person_last_name")
 	private String deliveryPersonLastName;
 	
+	// Many delivery persons can be from one division.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private DivisionModel divisionmodel;
 	
+	// Many delivery persons can be from one district.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private DistrictModel districtModel;
 	
+	// Many delivery persons can be from one upazilla.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private UpazillaModel upazillaModel;
-	
+
+	// Many delivery persons can be from one union.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private UnionModel unionModel;
 	

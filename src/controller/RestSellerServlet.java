@@ -1,3 +1,9 @@
+
+/*
+ * This servlet is in charge of the RestSeller, the request, response handling, and URL mapping with the get and post methods.
+ * This is to handle the REST API calls for the android app.
+ * All the common operations for the RestSeller are handled here. such as viewing the RestSeller page.
+ */
 package controller;
 
 import java.io.IOException;
@@ -23,11 +29,16 @@ import model.SellerModel;
 import model.SellersProduct;
 
 
+/*
+ * This servlet will be handling all the request and response from the url /restseller
+ */
 public class RestSellerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	// DBData object to access the database
 	DBData db = new DBData();
 	
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
@@ -37,9 +48,12 @@ public class RestSellerServlet extends HttpServlet {
 		
 		System.out.println(action);
 		
+		// if the action is null, then no action is given
 		if (action == null) {
 			System.out.println("No action is GIVEN");
 		}
+
+		// if the action is getSellerproductById, then get the seller product by the seller id
 		else if (action.equals("getSellerProductsById")) {
 			
 			Integer sid = Integer.parseInt(request.getParameter("sid"));
@@ -92,6 +106,7 @@ public class RestSellerServlet extends HttpServlet {
 	}
 
 
+	// DoPost method to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
@@ -100,9 +115,13 @@ public class RestSellerServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		System.out.println("Post seler");
+
+		// if the action is null, then no action is given
 		if (action == null) {
 			System.out.println("No action Given");
 		}
+
+		// if the action is sellerlogin, then login the seller
 		else if (action.equals("sellerlogin")) {
 			String phone = request.getParameter("k1");
 			String pass = request.getParameter("k2");

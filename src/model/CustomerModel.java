@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the  customer table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import java.util.Date;
@@ -31,15 +35,19 @@ public class CustomerModel {
 	@Column(name = "customer_last_name")
 	private String customerLastName;
 	
+	// Many customers can be from one division.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private DivisionModel divisionmodel;
 	
+	// Many customers can be from one district.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private DistrictModel districtModel;
 	
+	// Many customers can be from one upazilla.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private UpazillaModel upazillaModel;
 	
+	// Many customers can be from one union.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private UnionModel unionModel;
 	

@@ -1,3 +1,7 @@
+/*
+ * This servlet is in charge of the pagination, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the pagination are handled here. such as viewing the pagination page.
+ */
 package controller;
 
 import java.io.IOException;
@@ -16,6 +20,9 @@ import dao.DBData;
 import model.ProductModel;
 
 
+/*
+ * This servlet will be handling all the request and response from the url /pagination
+ */
 public class PaginationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	DBData db=new DBData();

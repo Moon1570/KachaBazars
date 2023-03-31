@@ -1,3 +1,9 @@
+
+/*
+ * This servlet is in charge of the RestLocal, the request, response handling, and URL mapping with the get and post methods.
+ * This is to handle the REST API calls for the android app.
+ * All the common operations for the RestLocal are handled here. such as viewing the RestLocal page.
+ */
 package controller;
 
 import java.io.ByteArrayOutputStream;
@@ -35,12 +41,19 @@ import model.SellersProduct;
 import model.UnionModel;
 import model.UpazillaModel;
 
+/*
+ * This servlet will be handling all the request and response from the url /restlocal
+ */
 public class RestLocalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// DBData object to access the database
 	DBData db = new DBData();
+
+	// AreaDao object to access the database
 	AreaDao areaDao = new AreaDao();
 
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -49,9 +62,13 @@ public class RestLocalServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
+		// if the action is null, then no action is given
 		if (action == null) {
 			System.out.println("No action given");
-		} else if (action.equals("getLocalProducts")) {
+		}
+
+		//if the action is getLocalProducts, then the products will be returned in JSON format to the android app REST client
+		else if (action.equals("getLocalProducts")) {
 			int cid = Integer.parseInt(request.getParameter("cid"));
 			CustomerModel customerModel = db.getCustomerById(cid);
 
@@ -265,6 +282,8 @@ public class RestLocalServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
+
+		// Registration
 		if (action.equalsIgnoreCase("reg")) {
 
 			int divId = Integer.parseInt(request.getParameter("divId"));
@@ -346,7 +365,9 @@ public class RestLocalServlet extends HttpServlet {
 			jsonArray.put(jsonObject);
 			pWriter.write(jsonArray.toString());
 
-		} else if (action.equals("updateprofile")) {
+		} 
+		// if the action is updateprofile, the customer profile will be updated
+		else if (action.equals("updateprofile")) {
 
 			int cid = Integer.parseInt(request.getParameter("cid"));
 

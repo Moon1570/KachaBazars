@@ -1,3 +1,9 @@
+
+/*
+ * This servlet is in charge of the RestDelivery, the request, response handling, and URL mapping with the get and post methods.
+ * This is to handle the REST API calls for the android app.
+ * All the common operations for the RestDelivery are handled here. such as viewing the RestDelivery page.
+ */
 package controller;
 
 import java.io.IOException;
@@ -24,14 +30,21 @@ import model.OrderSellerProductModel;
 import model.OrdersModel;
 
 
+/*
+ * This servlet will be handling all the request and response from the url /restdelivery
+ */
 public class RestDeliveryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
 	
 	
+	// OrderDao a object to access the database
 	OrderDao od = new OrderDao();
+
+	// DBData object to access the database
 	DBData db = new DBData();
    
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
@@ -39,9 +52,12 @@ public class RestDeliveryServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		
+		// if the action is null, then no action is given
 		if (action == null) {
 			System.out.println("No action is GIVEN");
 		}
+
+		// if the action is getorders, then the orders will be returned in JSON format to the android app REST client
 		else if (action.equals("getorders")) {
 			double qty = 0;
 			
@@ -104,6 +120,8 @@ public class RestDeliveryServlet extends HttpServlet {
 			
 						
 		}
+
+		// if the action is markAsComplete, then the order will be marked as complete in the database
 		else if (action.equals("markAsComplete")) {
 			
 
@@ -119,6 +137,8 @@ public class RestDeliveryServlet extends HttpServlet {
 			
 			pw.write(jsonArray.toString());
 		}
+
+		//if action is getsellerorders, then the seller orders will be returned in JSON format to the android app REST client
 		else if (action.equals("getsellerorders")) {
 			double qty = 0;
 			
@@ -180,7 +200,10 @@ public class RestDeliveryServlet extends HttpServlet {
 			
 			PrintWriter printWriter = response.getWriter();
 			printWriter.write(jsonArray.toString());
-		}else if (action.equals("markAsCompletesellerOrder")) {
+		}
+		
+		// if the action is markAsCompletesellerOrder, then the order will be marked as complete in the database
+		else if (action.equals("markAsCompletesellerOrder")) {
 			
 
 			int oid = Integer.parseInt(request.getParameter("orderId"));
@@ -198,6 +221,7 @@ public class RestDeliveryServlet extends HttpServlet {
 	}
 
 
+	// this method is to handle post request
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
@@ -208,9 +232,12 @@ public class RestDeliveryServlet extends HttpServlet {
 		
 		System.out.println(action);
 		
+		//if the action is null, then the action is not given
 		if (action == null) {
 			System.out.println("No action is GIVEN");
 		}
+
+		//if the action is delilogin, Deliveryman login will be done after authentication
 		else if (action.equals("deliLogin")) {
 			
 			String phone, pass;

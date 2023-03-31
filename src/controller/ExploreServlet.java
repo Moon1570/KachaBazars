@@ -1,3 +1,8 @@
+
+/*
+ * This servlet is in charge of the Explore, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the Explore are handled here. such as adding, removing, updating, and viewing the Explore.
+ */
 package controller;
 
 import java.io.IOException;
@@ -18,9 +23,14 @@ import model.SellersProduct;
 public class ExploreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// DBData object to access the database
 	DBData db = new DBData();
+
+	// AreaDao object to access the database
 	AreaDao ad = new AreaDao();
 
+
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -28,10 +38,13 @@ public class ExploreServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
+		//if the action is null, the request will be forwarded to the explore.jsp page
 		if (action == null) {
 			System.out.println("No action GIVEN");
 		}
 
+		//if the action is union, the request will be forwarded to the explore.jsp page
+		
 		else if (action.equals("union")) {
 
 			int uniId = Integer.parseInt(request.getParameter("uid"));
@@ -41,7 +54,10 @@ public class ExploreServlet extends HttpServlet {
 			request.setAttribute("name", "Union Products");
 
 			request.getRequestDispatcher("/explore.jsp").forward(request, response);
-		} else if (action.equals("upazilla")) {
+		} 
+		
+		//if the action is upazilla, the request will be forwarded to the explore.jsp page
+		else if (action.equals("upazilla")) {
 
 			int upaId = Integer.parseInt(request.getParameter("upaId"));
 
@@ -50,7 +66,10 @@ public class ExploreServlet extends HttpServlet {
 			request.setAttribute("name", "Upazilla Products");
 
 			request.getRequestDispatcher("/explore.jsp").forward(request, response);
-		} else if (action.equals("district")) {
+		} 
+		
+		//if the action is district, the request will be forwarded to the explore.jsp page
+		else if (action.equals("district")) {
 
 			int disId = Integer.parseInt(request.getParameter("disId"));
 
@@ -59,7 +78,10 @@ public class ExploreServlet extends HttpServlet {
 			request.setAttribute("name", "District Products");
 
 			request.getRequestDispatcher("/explore.jsp").forward(request, response);
-		} else if (action.equals("division")) {
+		} 
+		
+		//if the action is division, the request will be forwarded to the explore.jsp page
+		else if (action.equals("division")) {
 
 			int divId = Integer.parseInt(request.getParameter("divId"));
 
@@ -68,7 +90,10 @@ public class ExploreServlet extends HttpServlet {
 			request.setAttribute("name", "Division Products");
 
 			request.getRequestDispatcher("/explore.jsp").forward(request, response);
-		} else if (action.equalsIgnoreCase("category")) {
+		} 
+		
+		//if the action is category, the request will be forwarded to the explore.jsp page
+		else if (action.equalsIgnoreCase("category")) {
 
 			String catName = request.getParameter("catName");
 			List<ProductModel> productList1 = db.getProductByCategoryName(catName);
@@ -82,7 +107,10 @@ public class ExploreServlet extends HttpServlet {
 
 			System.out.println(" productList = " + productList);
 
-		} else if (action.equalsIgnoreCase("divisionside")) {
+		} 
+		
+		//if the action is divisionside, the request will be forwarded to the explorearea.jsp page
+		else if (action.equalsIgnoreCase("divisionside")) {
 			
 			int divId = Integer.parseInt(request.getParameter("divId"));
 			DivisionModel divisionModel = ad.getDivisionById(divId);
@@ -93,7 +121,10 @@ public class ExploreServlet extends HttpServlet {
 			request.setAttribute("name", "In "+ divisionModel.getDivisionName());
 			request.getRequestDispatcher("/explorearea.jsp").forward(request, response);
 			
-		} else if (action.equalsIgnoreCase("browseall")) {
+		} 
+		
+		//if the action is browseall, the request will be forwarded to the explore.jsp page
+		else if (action.equalsIgnoreCase("browseall")) {
 			
 			List<ProductModel>productModels = db.getAllProducts();
 			List<SellersProduct> products = db.getAllSellerProductrs();
@@ -107,6 +138,7 @@ public class ExploreServlet extends HttpServlet {
 
 	}
 
+	// DoPost method to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub

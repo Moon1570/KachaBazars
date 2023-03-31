@@ -1,3 +1,7 @@
+/*
+ * This Model defines the functions for all the Dropdown and spinner related operations to the database..
+ * The return parameters are validated and tested before returning.
+ */
 package dao;
 
 import java.util.ArrayList;
@@ -20,6 +24,7 @@ import model.UpazillaModel;
 
 public class DropDownDAO {
 	
+	// Returns all the divisions
 	public List<DivisionModel> getAllDivisions() {
 		
 		List<DivisionModel> divisionsModel = new ArrayList<>();
@@ -37,6 +42,7 @@ public class DropDownDAO {
 		
 	}
 	
+	// Returns all the districts by the division id
 	public List<DistrictModel> getAllDistrictsByDivisions(int divisionsId){
 		
 		List<DistrictModel> districtsModels = new ArrayList<>();
@@ -56,6 +62,7 @@ public class DropDownDAO {
 		
 	}
 
+	// Returns all the upazillas by the district id
 	public List<UpazillaModel> getAllUpazillasByDistricts(int districtsId) {
 		List<UpazillaModel> upazillasModels = new ArrayList<>();
 		String query = "from UpazillasModel upazillas where upazillas.districtModelId='"+districtsId+"'";
@@ -73,6 +80,7 @@ public class DropDownDAO {
 		return upazillasModels;
 	}
 
+	// Returns all the districts by the division id
 	public Map<String, String> getAllDistrictsByDivisionsMap(int divisionsId) {
 		String query = "from DistrictModel DistrictModel";
 		Connection con = new Connection();
@@ -102,6 +110,7 @@ public class DropDownDAO {
 		return options;
 	}
 
+	// Returns all the upazillas by the district id
 	public Map<String, String> getAllUpazillasByDistrictsMap(int districtsId) {
 		String query = "from UpazillaModel UpazillaModel";
 		Connection con = new Connection();
@@ -131,6 +140,7 @@ public class DropDownDAO {
 		return options;
 	}
 
+	// Returns all the unions by the upazilla id
 	public Map<String, String> getAllUnionsByUpazillasMap(int upazillasId) {
 		String query = "from UnionModel UnionModel";
 		Connection con = new Connection();
@@ -161,6 +171,7 @@ public class DropDownDAO {
 		return options;
 	}
 
+	// Returns all the deliveryman by the union id
 	public Map<String, String> getAllDeliveryManByUnionIdMap(int unionId) {
 		// TODO Auto-generated method stub
 		String query = "from DeliveryPersonModel DeliveryPersonModel";

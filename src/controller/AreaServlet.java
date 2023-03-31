@@ -1,3 +1,8 @@
+
+/*
+ * This servlet is in charge of the area, the request, response handling, and URL mapping with the get and post methods. 
+ * It Divisions, Districts, Upazillas, Unions, and Areas. 
+ */
 package controller;
 
 import java.io.IOException;
@@ -29,12 +34,19 @@ import model.SellersProduct;
 import model.UnionModel;
 import model.UpazillaModel;
 
+/*
+ * Handles all the requests and responses for the "/area*" URL
+ */
 public class AreaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+	// DBData object to access the database
 	DBData db = new DBData();
+
+	// AreaDao object to access the database
 	AreaDao ad = new AreaDao();
 
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
@@ -45,6 +57,7 @@ public class AreaServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		
+		//If the action is div, then the list of divisions is sent to the request
 		if (action.equals("div")) {
 			List<DivisionModel> div = db.getAllDivision();
 			
@@ -74,6 +87,7 @@ public class AreaServlet extends HttpServlet {
 			
 			response.getWriter().write(gson.toString());
 		}
+		//If the action is dis, then the list of districts is sent to the request
 		else if (action.equals("dis")) {
 			List<DistrictModel> dis = ad.getAllDistricts();
 			
@@ -107,6 +121,8 @@ public class AreaServlet extends HttpServlet {
 			response.getWriter().write(gson.toString());
 		}
 		
+		//If the action is upa, then the list of upazillas is sent to the request
+
 		else if (action.equals("upa")) {
 			List<UpazillaModel> upa = ad.getAllUpazillas();
 			
@@ -139,6 +155,8 @@ public class AreaServlet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(gson.toString());
 		}
+
+		//If the action is uni, then the list unions is sent to the request
 		else if (action.equals("uni")) {
 			List<UnionModel> uni = ad.getAllUnions();
 			
@@ -172,6 +190,8 @@ public class AreaServlet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(gson.toString());
 		}
+
+		//If the action is divPage, the request is forwarded to the view_division.jsp
 		else if(action.equalsIgnoreCase("divPage")) {
 			session.setAttribute("page", request.getParameter("page"));
 			
@@ -179,27 +199,37 @@ public class AreaServlet extends HttpServlet {
 			request.getRequestDispatcher("/view_division.jsp").forward(request, response);
 			
 		}
+
+		//If the action is disPage, the request is forwarded to the view_district.jsp
 		else if(action.equalsIgnoreCase("disPage")) {
 			session.setAttribute("page", request.getParameter("page"));
 			request.setAttribute("page", request.getParameter("page"));
 			request.getRequestDispatcher("/view_district.jsp").forward(request, response);
 			
 		}
+
+		//If the action is upaPage, the request is forwarded to the view_upazilla.jsp
 		else if (action.equalsIgnoreCase("upaPage")) {
 			session.setAttribute("page", request.getParameter("page"));
 			request.setAttribute("page", request.getParameter("page"));
 			request.getRequestDispatcher("/view_upazilla.jsp").forward(request, response);
 
 		}
+
+		//If the action is uniPage, the request is forwarded to the view_union.jsp
 		else if (action.equalsIgnoreCase("uniPage")) {
 			session.setAttribute("page", request.getParameter("page"));
 			request.setAttribute("page", request.getParameter("page"));
 			request.getRequestDispatcher("/view_union.jsp").forward(request, response);
 		}
+
+		//If the action is adddis, the request is forwarded to the new_district.jsp
 		else if(action.equalsIgnoreCase("adddiv")) {
 			request.setAttribute("page", request.getParameter("page"));
 			request.getRequestDispatcher("/new_division.jsp").forward(request, response);
 		}
+
+		//If the action is delete, then the division is deleted from the database and the request is forwarded to the view_division.jsp
 		else if(action.equals("delete")) {
 			request.setAttribute("page", session.getAttribute("page"));
 			int id = Integer.parseInt(request.getParameter("divId"));
@@ -210,6 +240,8 @@ public class AreaServlet extends HttpServlet {
 			request.getRequestDispatcher("/view_division.jsp").forward(request, response);
 			
 		}
+
+		//If the action is update, then the request is forwarded to the update_division.jsp with the divisionModel object
 		else if(action.equals("update")) {
 			request.setAttribute("page", session.getAttribute("page"));
 			int id = Integer.parseInt(request.getParameter("divId"));
@@ -218,6 +250,8 @@ public class AreaServlet extends HttpServlet {
 			request.setAttribute("divi", divisionModel);
 			request.getRequestDispatcher("/update_division.jsp").forward(request, response);
 		}
+
+		//If the action is deletedis, then the district is deleted from the database and the request is forwarded to the view_district.jsp
 		else if(action.equals("deletedis")) {
 			request.setAttribute("page", session.getAttribute("page"));
 			int dis = Integer.parseInt(request.getParameter("disId"));
@@ -225,6 +259,8 @@ public class AreaServlet extends HttpServlet {
 			ad.deleteDistrict(districtModel);
 			request.getRequestDispatcher("/view_district.jsp").forward(request, response);
 		}
+
+		//If the action is updatedis, then the request is forwarded to the update_district.jsp with the districtModel object
 		else if(action.equalsIgnoreCase("updatedis")) {
 			request.setAttribute("page", session.getAttribute("page"));
 			int dis = Integer.parseInt(request.getParameter("disId"));
@@ -236,6 +272,8 @@ public class AreaServlet extends HttpServlet {
 			
 			request.getRequestDispatcher("/update_district.jsp").forward(request, response);
 		}
+
+		//If the action is deleteUpa, then the upazilla is deleted from the database and the request is forwarded to the view_upazilla.jsp
 		else if(action.equalsIgnoreCase("deleteUpa")) {
 			request.setAttribute("page", session.getAttribute("page"));
 			int upaId = Integer.parseInt(request.getParameter("upaId"));
@@ -245,6 +283,8 @@ public class AreaServlet extends HttpServlet {
 			
 			request.getRequestDispatcher("/view_upazilla.jsp").forward(request, response);
 		}
+
+		//If the action is updateUpa, then the request is forwarded to the update_upazilla.jsp with the upazillaModel object
 		else if(action.equalsIgnoreCase("updateUpa")) {
 			request.setAttribute("page", session.getAttribute("page"));
 			int upa = Integer.parseInt(request.getParameter("upaId"));
@@ -256,6 +296,8 @@ public class AreaServlet extends HttpServlet {
 			
 			request.getRequestDispatcher("/update_upazilla.jsp").forward(request, response);
 		}
+
+		//If the action is deleteUni, then the union is deleted from the database and the request is forwarded to the view_union.jsp
 		else if(action.equalsIgnoreCase("deleteUni")) {
 			request.setAttribute("page", session.getAttribute("page"));
 			int upiId = Integer.parseInt(request.getParameter("uniId"));
@@ -265,6 +307,8 @@ public class AreaServlet extends HttpServlet {
 			
 			request.getRequestDispatcher("/view_union.jsp").forward(request, response);
 		}
+
+		//If the action is updateUni, then the request is forwarded to the update_union.jsp with the unionModel object
 		else if(action.equalsIgnoreCase("updateUni")) {
 			request.setAttribute("page", session.getAttribute("page"));
 			int uniId = Integer.parseInt(request.getParameter("uniId"));
@@ -280,7 +324,7 @@ public class AreaServlet extends HttpServlet {
 		
 	}
 
-
+	//This is to handle the post requests from the jsp pages
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
@@ -290,6 +334,8 @@ public class AreaServlet extends HttpServlet {
 		
 		System.out.println(action);
 
+		//If the action is adddiv, then the division is added to the database and the request is forwarded to the view_division.jsp
+		
 		if (action.equals("adddiv")) {
 
 			request.setAttribute("page", request.getParameter("page"));
@@ -302,19 +348,7 @@ public class AreaServlet extends HttpServlet {
 			ad.saveDivision(divisionModel);
 			request.getRequestDispatcher("/view_division.jsp").forward(request, response);
 			
-		//	int id = ad.getLastDivId();
-			
-		//	JsonObject item = new JsonObject();
-		//	item.addProperty("id", id);
-		//	item.addProperty("count", count);
-		//	item.addProperty("name", request.getParameter("divName"));
-			
-		//	System.out.println("Triggered");
-		//	PrintWriter out = response.getWriter();
-//			//response.setContentType("application/json");
-//			//response.setCharacterEncoding("UTF-8");
-//			//response.getWriter().write(gson.toString());
-			//out.write(item.toString());
+		//If the action is updatediv, then the division is updated in the database and the request is forwarded to the view_division.jsp
 		} else if(action.equalsIgnoreCase("updatediv")) {
 			request.setAttribute("page", request.getParameter("page"));
 			int id = Integer.parseInt(request.getParameter("divId"));
@@ -326,7 +360,9 @@ public class AreaServlet extends HttpServlet {
 			
 			ad.updateDivision(divisionModel);
 			request.getRequestDispatcher("/view_division.jsp").forward(request, response);
-		} else if(action.equals("adddis")) {
+		} 
+		//If the action is adddis, then the district is added to the database and the request is forwarded to the view_district.jsp
+		else if(action.equals("adddis")) {
 			request.setAttribute("page", request.getParameter("page"));
 			int divId = Integer.parseInt(request.getParameter("divisiondd"));
 			String name = request.getParameter("disName");
@@ -337,7 +373,9 @@ public class AreaServlet extends HttpServlet {
 			
 			ad.saveDistrict(districtModel);
 			request.getRequestDispatcher("/view_district.jsp").forward(request, response);
-		} else if(action.equals("updatedis")) {
+		} 
+		//If the action is updatedis, then the district is updated in the database and the request is forwarded to the view_district.jsp
+		else if(action.equals("updatedis")) {
 			request.setAttribute("page", request.getParameter("page"));
 			int disId = Integer.parseInt(request.getParameter("disId"));
 			int divId = Integer.parseInt(request.getParameter("divisiondd"));
@@ -351,7 +389,10 @@ public class AreaServlet extends HttpServlet {
 			ad.updateDistrict(districtModel);
 			request.getRequestDispatcher("/view_district.jsp").forward(request, response);
 			
-		} else if(action.equalsIgnoreCase("addupa")) {
+		}
+		//If the action is addupa, then the upazilla is added to the database and the request is forwarded to the view_upazilla.jsp
+		
+		else if(action.equalsIgnoreCase("addupa")) {
 			request.setAttribute("page", request.getParameter("page"));
 			int disId = Integer.parseInt(request.getParameter("disdd"));
 			String name = request.getParameter("upaName");
@@ -364,7 +405,9 @@ public class AreaServlet extends HttpServlet {
 			
 			request.getRequestDispatcher("/view_upazilla.jsp").forward(request, response);
 			
-		} else if(action.equalsIgnoreCase("updateupa")) {
+		}
+		//If the action is updateupa, then the upazilla is updated in the database and the request is forwarded to the view_upazilla.jsp
+		else if(action.equalsIgnoreCase("updateupa")) {
 			request.setAttribute("page", request.getParameter("page"));
 			int upaId = Integer.parseInt(request.getParameter("upaId"));
 			UpazillaModel upazillaModel = ad.getUpazillaById(upaId);
@@ -378,7 +421,10 @@ public class AreaServlet extends HttpServlet {
 			ad.updateUpazilla(upazillaModel);
 			
 			request.getRequestDispatcher("/view_upazilla.jsp").forward(request, response);
-		} else if(action.equalsIgnoreCase("adduni")) {
+		} 
+		
+		//If the action is adduni, then the union is added to the database and the request is forwarded to the view_union.jsp
+		else if(action.equalsIgnoreCase("adduni")) {
 			request.setAttribute("page", request.getParameter("page"));
 			String name = request.getParameter("uniName");
 			int upaId = Integer.parseInt(request.getParameter("upadd"));
@@ -391,7 +437,9 @@ public class AreaServlet extends HttpServlet {
 			ad.saveUnion(unionModel);
 			
 			request.getRequestDispatcher("/view_union.jsp").forward(request, response);
-		} else if(action.equalsIgnoreCase("updateuni")) {
+		} 
+		//If the action is updateuni, then the union is updated in the database and the request is forwarded to the view_union.jsp
+		else if(action.equalsIgnoreCase("updateuni")) {
 			request.setAttribute("page", request.getParameter("page"));
 			String name = request.getParameter("uniName");
 			int uniId = Integer.parseInt(request.getParameter("uniId"));

@@ -35,6 +35,13 @@
 
 	<%
 	
+	/*
+	 * Filtering the featured products as per customer location
+	 * Local area products and products from other areas
+	 * Product from inventory and product from sellers
+	*/
+
+
 	DBData db = new DBData();
 	List<ProductModel> productModels = db.getFeaturedProducts();
 	
@@ -103,13 +110,15 @@
 		</h2>
 	</div>
 
+	<!-- Product Container for featured products
+	 -->
 	<div class="product-container">
 		<div class="featured-product">
 		<h2>Featured Products</h2>
 		<ul>
 		
 			
-			
+			<!-- Product Card - For each to iterate -->
 			
 			<c:forEach items="${product}" var="product">
 					
@@ -146,7 +155,7 @@
 		</div>
 		</div>
 	</div>
-
+<!-- Logged In checking -->
 	<%
 						if ((session.getAttribute("cid") == null)) {
 		%>
@@ -336,7 +345,7 @@
 				
 		%>
 
-
+		<!-- Product Section  for local area product (Union level)-->
 
 		<div class="product-container">
 			<h2>Local Market Products</h2>
@@ -373,6 +382,8 @@
 			</div>
 		</div>
 
+		<!-- Product Section  for local area product (Upazila level)-->
+
 		<div class="product-container">
 			<h2>Upazila Market Products</h2>
 			<ul>
@@ -405,6 +416,7 @@
 		</div>
 		</div>
 		
+		<!-- Product Section  for local area product (District level)-->
 
 		<div class="product-container">
 			<h2>District Market Products</h2>
@@ -439,6 +451,7 @@
 		</div>
 	
 		
+		<!-- Product Section  for local area product (Division level)-->
 
 		<div class="product-container">
 			<h2>Division Market Products</h2>

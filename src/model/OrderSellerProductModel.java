@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the Order details for seller product table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import java.util.Date;
@@ -25,15 +29,19 @@ public class OrderSellerProductModel {
 	@Column(name = "order_date")
 	private String orderDate;
 	
+	// Many products can be ordered by one order.
 	@ManyToOne(cascade = CascadeType.ALL)
 	private SellersProduct sellersProduct;
 	
+	// Many customer can order same product.
 	@ManyToOne(cascade = CascadeType.ALL)
 	private CustomerModel customerModel;	
 	
+	// Many order can be delivered by one delivery person.
 	@ManyToOne(cascade = CascadeType.ALL)
 	private DeliveryPersonModel deliveryPersonModel;
 	
+	// Many order can be delivered by one seller.
 	@ManyToOne(cascade = CascadeType.ALL)
 	private SellerModel sellerModel;
 

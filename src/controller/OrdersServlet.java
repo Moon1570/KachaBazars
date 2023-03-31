@@ -1,3 +1,8 @@
+
+/*
+ * This servlet is in charge of the order servlet, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the order servlet are handled here. such as viewing and updating the order page.
+ */
 package controller;
 
 import java.io.IOException;
@@ -43,13 +48,25 @@ import model.UnionModel;
 import model.UpazillaModel;
 import sslcommerz.TransactionInitiator;
 
+
+
+/*
+ * This servlet will be handling all the request and response from the url /orders
+ */
 public class OrdersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// DBData object to access the database
 	DBData db = new DBData();
+
+	// AreaDao object to access the database
 	AreaDao aDao = new AreaDao();
+
+	// DoGet method to handle the session
 	HttpSession session;
 	
+
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -59,16 +76,23 @@ public class OrdersServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		System.out.println("line : "+action);
 		
+		//if the action is view, the request will be forwarded to the index.jsp page
 		if (action.equals("view")) {
 			
 			request.setAttribute("action", "view");
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 			
-		} else if(action.equalsIgnoreCase("viewsad")) {
+		} 
+		
+		//if the action is viewsad, the request will be forwarded to the sad-index.jsp page
+		else if(action.equalsIgnoreCase("viewsad")) {
 			
 			request.getRequestDispatcher("/sad-index.jsp").forward(request, response);
 			
-		} else if (action.equals("confirm")) {
+		}
+		
+		//if the action is confirm, the request will be forwarded to the confirmation.jsp page
+		else if (action.equals("confirm")) {
 			OrdersModel ordersModel = new OrdersModel();
 
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -85,6 +109,8 @@ public class OrdersServlet extends HttpServlet {
 			request.getRequestDispatcher("/Confirmation.jsp").forward(request, response);
 			// db.saveOrder(ordersModel);
 		}
+
+		//if the action is edit, the request will be forwarded to the update_order.jsp page
 		else if (action.equals("edit")) {
 			int oid = Integer.parseInt(request.getParameter("oid"));
 			OrdersModel ordersModel = new OrdersModel();
@@ -95,6 +121,8 @@ public class OrdersServlet extends HttpServlet {
 			
 			request.getRequestDispatcher("/update_order.jsp").forward(request, response);
 		}
+
+		//if the action is done, the request will be forwarded to the index.jsp page
 		else if (action.equals("done")) {
 			
 			OrdersModel ordersModel = new OrdersModel();
@@ -132,6 +160,8 @@ public class OrdersServlet extends HttpServlet {
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 			
 		}
+
+		//if the action is addtocard, the request will be forwarded to the ViewProduct.jsp page
 		else if (action.equals("addtocart")) {
 			Integer pid = Integer.parseInt(request.getParameter("pid").toString());
 			System.out.println("cid = " + session.getAttribute("cid").toString());
@@ -149,6 +179,8 @@ public class OrdersServlet extends HttpServlet {
 			request.getRequestDispatcher("/ViewProduct.jsp").forward(request, response);
 			
 		}
+
+		//if the action is confirmsellerproduct, the request will be forwarded to the confirm_seller_product.jsp page
 		else if (action.equals("confirmsellerproduct")) {
 			OrdersModel ordersModel = new OrdersModel();
 
@@ -169,13 +201,20 @@ public class OrdersServlet extends HttpServlet {
 		
 	}
 
+	//doPost method
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
+
+		
 		DBData db = new DBData();
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
+
+		//if the action is confirm, the request will be forwarded to the index.jsp page
+		else
 		if (action.equals("confirm")) {
 			int cid = Integer.parseInt(request.getParameter("cid"));
 			int pid = Integer.parseInt(request.getParameter("pid"));
@@ -272,6 +311,8 @@ public class OrdersServlet extends HttpServlet {
 		//	request.setAttribute("action", "view");
 		//	request.getRequestDispatcher("/Homepage.jsp").forward(request, response);
 		}
+
+		//if the action is edit, the request will be forwarded to the edit.jsp page
 		else if (action.equals("edit")) {
 			OrdersModel ordersModel = new OrdersModel();
 			
@@ -321,6 +362,8 @@ public class OrdersServlet extends HttpServlet {
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 			
 		}
+
+		//if the action is cartconfirm, then the request will be forwarded to the cartconfirm.jsp page
 		else if (action.equals("cartconfirm")) {
 			int cid = Integer.parseInt(request.getParameter("cid"));
 			int cartId = Integer.parseInt(request.getParameter("cartId"));
@@ -428,6 +471,8 @@ public class OrdersServlet extends HttpServlet {
 		//	request.setAttribute("action", "view");
 		//	request.getRequestDispatcher("/Homepage.jsp").forward(request, response);
 		}
+
+		//if the action is confirm sellerproduct, then the request will be forwarded to the confirmsellerproduct.jsp page	
 		else if (action.equals("confirmsellerproduct")) {
 			int cid = Integer.parseInt(request.getParameter("cid"));
 			int pid = Integer.parseInt(request.getParameter("pid"));
@@ -518,6 +563,8 @@ public class OrdersServlet extends HttpServlet {
 			
 			response.sendRedirect(response1);
 		}
+
+		//if the action is confirmsellerproductcurrentinfo, then the request will be forwarded to the confirmsellerproductcurrentinfo.jsp page
 		else if (action.equalsIgnoreCase("confirmsellerproductcurrentinfo")) {
 			int cid = Integer.parseInt(request.getParameter("cid"));
 			int pid = Integer.parseInt(request.getParameter("pid"));
@@ -598,6 +645,8 @@ public class OrdersServlet extends HttpServlet {
 			
 			response.sendRedirect(response1);
 		}
+
+		//if the action is usercurrentinfo, then the request will be forwarded to the usercurrentinfo.jsp page
 		else if (action.equalsIgnoreCase("usecurrentinfo")) {
 			int cid = Integer.parseInt(request.getParameter("cid"));
 			int pid = Integer.parseInt(request.getParameter("pid"));

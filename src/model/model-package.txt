@@ -1,0 +1,1 @@
+As MVC pattern was used, all the entities are structured along with their relationship in the model package.

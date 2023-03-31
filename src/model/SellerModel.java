@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the Seller table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import java.util.Date;
@@ -29,15 +33,19 @@ public class SellerModel {
 	@Column(name = "seller_last_name")
 	private String sellerLastName;
 	
+	// Many sellers can be from one division.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private DivisionModel divisionmodel;
 	
+	// Many sellers can be from one district.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private DistrictModel districtModel;
 	
+	// Many sellers can be from one upazilla.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private UpazillaModel upazillaModel;
 	
+	// Many sellers can be from one union.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private UnionModel unionModel;
 	

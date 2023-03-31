@@ -1,3 +1,8 @@
+/*
+ * This servlet is in charge of the Product, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the Product are handled here. such as viewing the product page.
+
+ */
 package controller;
 
 import java.io.File;
@@ -25,13 +30,19 @@ import model.ProductModel;
 import model.SubcategoryModel;
 import model.UnitModel;
 
+
+/*
+ * Handles all the requests and responses for the "/product*" URL
+ */
 @MultipartConfig
 public class ProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+	// DBData object to access the database
 	DBData db = new DBData();
     
     
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
@@ -40,6 +51,8 @@ public class ProductServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 	//	System.out.println("jhm"+action);
+
+		//if the action is new, the request will be forwarded to the newproduct.jsp page
 		if(action.equals("new"))
 		{
 			ProductModel productModel=new ProductModel();
@@ -47,6 +60,8 @@ public class ProductServlet extends HttpServlet {
 			request.setAttribute("action", "new");
 			request.getRequestDispatcher("/newproduct.jsp").forward(request, response);
 		}
+
+		//if the action is view, the request will be forwarded to the product.jsp page
 		else if (action.equals("view")) {
 			ProductModel productModel = new ProductModel();
 			request.setAttribute("products", productModel);
@@ -54,6 +69,8 @@ public class ProductServlet extends HttpServlet {
 			
 			request.getRequestDispatcher("/product.jsp").forward(request, response);
 		}
+
+		//if the action is update, the request will be forwarded to the newproduct.jsp page
 		else if (action.equals("update")) {
 			int pid = Integer.parseInt(request.getParameter("pid").toString());
 			ProductModel productModel = db.getProductById(pid);
@@ -63,7 +80,10 @@ public class ProductServlet extends HttpServlet {
 			
 			
 			request.getRequestDispatcher("/newproduct.jsp").forward(request, response);
-		}else if (action.equals("delete")) {
+		}
+		
+		//if the action is delete, the request will be forwarded to the product.jsp page and the product will be deleted
+		else if (action.equals("delete")) {
 			int pid = Integer.parseInt(request.getParameter("pid").toString());
 			ProductModel productModel = db.getProductById(pid);
 			db.deleteProduct(productModel);
@@ -73,6 +93,7 @@ public class ProductServlet extends HttpServlet {
 	}
 
 	
+	// DoPost method to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
@@ -80,6 +101,7 @@ public class ProductServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		System.out.println("line 50 "+action);
 		
+		//if the action is submit, the request will be forwarded to the product.jsp page and the product will be saved
 		if (action.equals("submit")) {
 			String productName = request.getParameter("productName");
 			String productDescription = request.getParameter("productDescription");
@@ -148,6 +170,7 @@ public class ProductServlet extends HttpServlet {
 
 		}
 		
+		//Too add more than one product at a time
 		else if(action.equals("addmore")) {
 			String productName = request.getParameter("productName");
 			String productDescription = request.getParameter("productDescription");
@@ -215,6 +238,8 @@ public class ProductServlet extends HttpServlet {
 			request.setAttribute("action", "addmore");
 			request.getRequestDispatcher("/newproduct.jsp").forward(request, response);
 		}
+
+		//if the action is update, the request will be forwarded to the product.jsp page and the product will be updated
 		else if (action.equals("update")) {
 			String productImageName = null;
 			String productName = request.getParameter("productName");

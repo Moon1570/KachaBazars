@@ -1,3 +1,7 @@
+/*
+ * This Model defines the functions for all the generalized customer, product, and order related operations to the database..
+ * The return parameters are validated and tested before returning.
+ */
 package dao;
 
 import java.io.Serializable;
@@ -38,6 +42,7 @@ import model.UpazillaModel;
 public class DBData {
 	int counter=0;
 
+	// save the category to the database
 	public void saveCategory(CategoryModel category) {
 
 		Connection con = new Connection();
@@ -55,6 +60,7 @@ public class DBData {
 		System.out.println("Inserted...");
 	}
 
+	// Returns category by id
 	public CategoryModel getCategoryById(int id) {
 		String query = "from CategoryModel category where category.id=" + id;
 		Connection con = new Connection();
@@ -69,6 +75,7 @@ public class DBData {
 		return categoryModel;
 	}
 
+	// Returns all the categories
 	public List<CategoryModel> getAllCategories() {
 		List<CategoryModel> categoryModel = new ArrayList<>();
 		String query = "from CategoryModel book";
@@ -83,6 +90,7 @@ public class DBData {
 		return categoryModel;
 	}
 
+	// Returns all the categories
 	public List<CategoryModel> getAllCategoryModels() {
 		List<CategoryModel> categoryModel = new ArrayList<>();
 
@@ -98,6 +106,7 @@ public class DBData {
 		return categoryModel;
 	}
 
+	// Updates the category
 	public void updateCategory(CategoryModel category) {
 		Connection con = new Connection();
 
@@ -112,6 +121,7 @@ public class DBData {
 		System.out.println("Updated...");
 	}
 
+	// Deletes the category
 	public void deleteCategory(CategoryModel categoryModel) {
 
 		Connection con = new Connection();
@@ -127,6 +137,7 @@ public class DBData {
 		System.out.println("Deleted...");
 	}
 
+	// Saves the subcategory
 	public void saveSubcategory(SubcategoryModel subcategory) {
 		Connection con = new Connection();
 
@@ -141,6 +152,7 @@ public class DBData {
 		con.closeSessionFactory();
 	}
 
+	// Returns all the subcategories
 	public List<SubcategoryModel> getAllSubcategories() {
 		List<SubcategoryModel> subcategoryModel = new ArrayList<>();
 		String query = "from SubategoryModel subcategory";
@@ -155,6 +167,7 @@ public class DBData {
 		return subcategoryModel;
 	}
 
+	// Returns subcategory by id
 	public SubcategoryModel getSubcategoryById(int id) {
 		String query = "from SubcategoryModel subcategory where subcategory.id=" + id;
 		Connection con = new Connection();
@@ -168,6 +181,7 @@ public class DBData {
 		return subcategoryModel;
 	}
 
+	// save the product to the database
 	public void saveProduct(ProductModel productModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -184,6 +198,7 @@ public class DBData {
 		System.out.println("Inserted...");
 	}
 
+	// Returns all the products
 	public List<ProductModel> getAllProducts() {
 		List<ProductModel> productModels = new ArrayList<>();
 		String query = "from ProductModel productModels";
@@ -198,6 +213,7 @@ public class DBData {
 		return productModels;
 	}
 
+	// Returns product by id
 	public ProductModel getProductById(int id) {
 		String query = "from ProductModel product where product.id=" + id;
 		Connection con = new Connection();
@@ -212,6 +228,7 @@ public class DBData {
 		return productModel;
 	}
 
+	// Returns all the customers
 	public List<CustomerModel> getAllCustomers() {
 		// TODO Auto-generated method stub
 		List<CustomerModel> customerModels = new ArrayList<>();
@@ -227,6 +244,7 @@ public class DBData {
 		return customerModels;
 	}
 
+	// Returns all the sellers
 	public List<SellerModel> getAllSellers() {
 		// TODO Auto-generated method stub
 		List<SellerModel> sellerModels = new ArrayList<>();
@@ -242,6 +260,7 @@ public class DBData {
 		return sellerModels;
 	}
 
+	// Returns all the delivery persons
 	public List<DeliveryPersonModel> getAllDeliveryPersons() {
 		// TODO Auto-generated method stub
 		List<DeliveryPersonModel> deliveryPersonModels = new ArrayList<>();
@@ -257,8 +276,7 @@ public class DBData {
 		return deliveryPersonModels;
 	}
 	
-	
-
+	// Returns all the orders
 	public List<OrdersModel> getAllOrders() {
 		// TODO Auto-generated method stub
 		List<OrdersModel> ordersModels = new ArrayList<>();
@@ -274,6 +292,7 @@ public class DBData {
 		return ordersModels;
 	}
 
+	// Returns customer by id
 	public CustomerModel getCustomerById(int id) {
 		
 		/*
@@ -309,6 +328,7 @@ public class DBData {
 		
 	}
 
+	// Save the order to the database
 	public void saveOrder(OrdersModel ordersModel) {
 
 		Connection con = new Connection();
@@ -325,6 +345,7 @@ public class DBData {
 	}
 
 
+	//save the seller to the database
 	public void saveSeller(SellerModel sellerModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -340,6 +361,7 @@ public class DBData {
 		con.closeSessionFactory();
 	}
 
+	// returns the seller pass by phone
 	public SellerModel getPasswordByPhone(String phone) {
 		String query = "from SellerModel seller where seller.sellerPhone='"+phone+"'";
 		Connection con = new Connection();
@@ -361,6 +383,7 @@ public class DBData {
 		return sellerModel;
 	}
 
+	//returns the cart by customer id
 	public CartModel getCartByCustomerId(int id) {
 		// TODO Auto-generated method stub
 		String query = "from CartModel cart where cart.customerModel.customerId=" + id;
@@ -377,6 +400,7 @@ public class DBData {
 		return cart;
 	}
 
+	//save the cart details to the database
 	public void saveCartDetails(CartDetailsModel cartDetailsModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -392,6 +416,7 @@ public class DBData {
 		System.out.println("Inserted...");
 	}
 
+	//returns the cart details by cart id
 	public List<CartDetailsModel> getCartDetailsByCartId(int cartId) {
 		// TODO Auto-generated method stub
 		String query = "from CartDetailsModel cartDetailsModels";
@@ -427,6 +452,7 @@ public class DBData {
 	//	return cartDetailsModels;
 	}
 
+	//save the customer to the database
 	public void saveCustomer(CustomerModel customerModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -442,6 +468,7 @@ public class DBData {
 		con.closeSessionFactory();
 	}
 
+	//returns the customer by phone
 	public CustomerModel getCustomerPasswordByPhone(String customerPhone) {
 		// TODO Auto-generated method stub
 		String query = "from CustomerModel customer where customer.customerPhone='"+customerPhone+"'";
@@ -464,6 +491,7 @@ public class DBData {
 		return customerModel;
 	}
 
+	//save the cart to the database
 	public void saveCart(CartModel cartModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -479,6 +507,7 @@ public class DBData {
 		con.closeSessionFactory();
 	}
 
+	//returns the demands by date
 	public List<OrdersModel> getDemandsByDate(String date) {
 		// TODO Auto-generated method stub
 		String query = "from OrdersModel ordersModel";
@@ -507,6 +536,7 @@ public class DBData {
 		return ordersModels2;
 	}
 
+	//returns the orders by order id
 	public OrdersModel getOrderById(int oid) {
 		// TODO Auto-generated method stub
 		String query = "from OrdersModel order where order.id=" + oid;
@@ -524,6 +554,7 @@ public class DBData {
 	}
 
 
+	//update the order
 	public void updateOrder(OrdersModel ordersModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -537,6 +568,7 @@ public class DBData {
 		System.out.println("Updated...");
 	}
 
+	//returns the delivery person by id
 	public DeliveryPersonModel getDeliveryPersonById(int id) {
 		// TODO Auto-generated method stub
 		String query = "from DeliveryPersonModel deliveryPerson where deliveryPerson.id=" + id;
@@ -551,6 +583,7 @@ public class DBData {
 		return deliveryPerson;
 	}
 
+	//returns the seller by id
 	public SellerModel getSellerById(int id) {
 		// TODO Auto-generated method stub
 		String query = "from SellerModel seller where seller.id=" + id;
@@ -567,6 +600,7 @@ public class DBData {
 
 	
 
+	//save the delivery person to the database
 	public void saveDeliveryPerson(DeliveryPersonModel deliveryPersonModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -582,6 +616,7 @@ public class DBData {
 		System.out.println("Inserted...");
 	}
 
+	//update the product
 	public void updateProduct(ProductModel productModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -595,6 +630,7 @@ public class DBData {
 		con.closeSessionFactory();
 	}
 
+	//returns the product limited to the number of records given
 	public List<ProductModel> getAllProductLimitedTo(int offSet, int recordPerPage) {
 		List<ProductModel> productModels = new ArrayList<>();
 		String query = "from ProductModel productModels";
@@ -612,6 +648,7 @@ public class DBData {
 		return productModels;
 	}
 
+	//returns all the records
 	public int getAllRecords() {
 		String query = "from ProductModel productModels";
 		Connection con = new Connection();
@@ -633,6 +670,7 @@ public class DBData {
 		return counter;
 	}
 
+	//delete the cart details by cart id
 	public void deleteCartDetailsByCartId(CartDetailsModel cartDetailsModel) {
 		Connection con = new Connection();
 
@@ -649,6 +687,7 @@ public class DBData {
 
 	}
 
+	//save the bid to the database
 	public void saveBid(BidModel bidModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -664,6 +703,7 @@ public class DBData {
 		con.closeSessionFactory();
 	}
 
+	//returns all the bids
 	public List<BidModel> getAllBids() {
 		// TODO Auto-generated method stub
 		List<BidModel> bidModels = new ArrayList<>();
@@ -679,6 +719,7 @@ public class DBData {
 		return bidModels;
 	}
 
+	//save the recommendation to the database
 	public void saveRecommendation(RecommendationModel recommendationModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -695,6 +736,7 @@ public class DBData {
 	}
 
 
+	//delete the subcategory by id
 	public void deleteSubcategoryById(SubcategoryModel subcategoryModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -710,6 +752,7 @@ public class DBData {
 		System.out.println("Deleted...");
 	}
 	
+	//returns all the units
 	public List<UnitModel> getAllUnits()
 	{
 		List<UnitModel> unitModels = new ArrayList<>();
@@ -725,6 +768,7 @@ public class DBData {
 		return unitModels;
 	}
 
+	//returns the unit by id
 	public UnitModel getUnitById(int uid) {
 		// TODO Auto-generated method stub
 		String query = "from UnitModel unit where unit.id=" + uid;
@@ -739,6 +783,7 @@ public class DBData {
 		return unit;
 	}
 	
+	//returns all the divisions
 	public List<DivisionModel> getAllDivision() {
 		// TODO Auto-generated method stub
 		List<DivisionModel> divisionModels = new ArrayList<>();
@@ -754,6 +799,7 @@ public class DBData {
 		return divisionModels;
 	}
 
+	//save the seller product to the database
 	public void saveSellerProduct(SellersProduct sellersProduct) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -769,6 +815,7 @@ public class DBData {
 		System.out.println("Inserted...");
 	}
 
+	//returns all products by union id
 	public List<SellersProduct> getProductByUnion(int unionId) {
 		// TODO Auto-generated method stub
 		String query = "from SellersProduct sellersProducts";
@@ -805,6 +852,7 @@ public class DBData {
 	//	return cartDetailsModels;
 	}
 
+	//returns all products by upazilla id
 	public List<SellersProduct> getProductByUpazilla(int upaId) {
 		// TODO Auto-generated method stub
 		String query = "from SellersProduct sellersProducts";
@@ -836,6 +884,7 @@ public class DBData {
 		return sellersProducts2;
 	}
 
+	//returns all products by district id
 	public List<SellersProduct> getProductByDistrict(int disId) {
 		// TODO Auto-generated method stub
 		String query = "from SellersProduct sellersProducts";
@@ -867,6 +916,7 @@ public class DBData {
 		return sellersProducts2;
 	}
 
+	//returns all products by division id
 	public List<SellersProduct> getProductByDivision(int divId) {
 		// TODO Auto-generated method stub
 		String query = "from SellersProduct sellersProducts";
@@ -898,6 +948,7 @@ public class DBData {
 		return sellersProducts2;
 	}
 
+	//returns the seller product by id
 	public SellersProduct getSellerProductById(Integer spid) {
 		// TODO Auto-generated method stub
 		String query = "from SellersProduct product where product.id=" + spid;
@@ -914,6 +965,7 @@ public class DBData {
 		return sellersProduct;
 	}
 
+	//save the seller product
 	public void saveSellerProductOrder(OrderSellerProductModel ordersModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -930,6 +982,7 @@ public class DBData {
 		System.out.println("Inserted...");
 	}
 	
+	//returns all the seller product
 	public List<OrderSellerProductModel> getAllOrderFromSeller() {
 		List<OrderSellerProductModel> orderSellerProductModels = new ArrayList<>();
 		String query = "from OrderSellerProductModel orderSellerProductModels";
@@ -944,6 +997,7 @@ public class DBData {
 		return orderSellerProductModels;
 	}
 
+	//get the order from seller product by id
 	public OrderSellerProductModel getOrderSellerProductById(int soid) {
 		// TODO Auto-generated method stub
 		String query = "from OrderSellerProductModel orderSellerProductModel where orderSellerProductModel.id=" + soid;
@@ -959,6 +1013,7 @@ public class DBData {
 		return orderSellerProductModel;
 	}
 
+	//update the order from seller product
 	public void updateOrderSellerProduct(OrderSellerProductModel orderSellerProductModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -974,6 +1029,7 @@ public class DBData {
 		System.out.println("Updated...");
 	}
 
+	//returns all the seller product
 	public List<SellersProduct> getAllSellerProductrs() {
 		// TODO Auto-generated method stub
 		List<SellersProduct> sellersProducts = new ArrayList<>();
@@ -988,7 +1044,8 @@ public class DBData {
 		con.closeSessionFactory();
 		return sellersProducts;
 	}
-	
+
+	//returns all the seller product
 	public ArrayList<SellersProduct> getAllSellerProductrsArraylist() {
 		// TODO Auto-generated method stub
 		ArrayList<SellersProduct> sellersProducts = new ArrayList<>();
@@ -1004,6 +1061,7 @@ public class DBData {
 		return sellersProducts;
 	}
 
+	//returns customer by phone number and password
 	public ArrayList<CustomerModel> getCustomerPasswordByPhoneList(String phone, String pass) {
 		// TODO Auto-generated method stub
 	
@@ -1037,6 +1095,7 @@ public class DBData {
 		
 	}
 
+	//returns all the products
 	public ArrayList<ProductModel> getAllProductsArrayList() {
 		// TODO Auto-generated method stub
 		ArrayList<ProductModel> productModels = new ArrayList<>();
@@ -1052,6 +1111,7 @@ public class DBData {
 		return productModels;
 	}
 
+	//returns the seller product by id
 	public ArrayList<SellersProduct> getSellerProductBySID(Integer sid) {
 		// TODO Auto-generated method stub
 		String query = "from SellersProduct sellersProduct";
@@ -1085,6 +1145,7 @@ public class DBData {
 		return sellersProducts2;
 	}
 
+	//returns the district by division id
 	public ArrayList<DistrictModel> getDistrictByDivisionId(int divId) {
 		// TODO Auto-generated method stub
 		String query = "from DistrictModel districtModel";
@@ -1117,6 +1178,7 @@ public class DBData {
 		return districtModels2;
 	}
 
+	//returns the upazilla by district id
 	public ArrayList<UpazillaModel> getUpazillaByDistrictId(int disId) {
 		// TODO Auto-generated method stub
 		String query = "from UpazillaModel upazillaModel";
@@ -1149,6 +1211,7 @@ public class DBData {
 		return upazillaModels2;
 	}
 
+	//returns the seller product by division id
 	public ArrayList<SellersProduct> getSellerProductByDivisionId(int divId) {
 		// TODO Auto-generated method stub
 		String query = "from SellersProduct sellersProduct";
@@ -1181,6 +1244,7 @@ public class DBData {
 		return sellersProducts2;
 	} 
 
+	//returns the seller product by upazilla id
 	public ArrayList<SellersProduct> getSellerProductByUpazillaId(int upaId) {
 		// TODO Auto-generated method stub
 		String query = "from SellersProduct sellersProduct";
@@ -1213,6 +1277,7 @@ public class DBData {
 		return sellersProducts2;
 	}
 
+	// returns the product by category name
 	public List<ProductModel> getProductByCategoryName(String action) {
 		// TODO Auto-generated method stub
 		String query = "from ProductModel productModel";
@@ -1245,6 +1310,7 @@ public class DBData {
 		return productModels2;
 	}
 
+	//returns the seller product by category name
 	public List<SellersProduct> getSellerProductByCategoryName(String catName) {
 		// TODO Auto-generated method stub
 		String query = "from SellersProduct sellersProduct";
@@ -1277,6 +1343,7 @@ public class DBData {
 		return sellersProducts2;
 	}
 
+	//returns the admin password by name
 	public AdminModel getAdminPasswordByName(String name) {
 		// TODO Auto-generated method stub
 		String query = "from AdminModel adminModel where adminModel.adminName='"+name+"'";
@@ -1299,6 +1366,7 @@ public class DBData {
 		return adminModel;
 	}
 	
+	//returns the list of featured products
 	public List<ProductModel>  getFeaturedProducts()
 	{
 		
@@ -1316,6 +1384,7 @@ public class DBData {
 		return productModels;
 	}
 
+	//returns the order by transaction id
 	public OrdersModel getOrderByTransId(String tranId) {
 		// TODO Auto-generated method stub
 		String query = "from OrdersModel order where order.tranId=" + tranId;
@@ -1331,7 +1400,7 @@ public class DBData {
 	}
 	
 	
-
+	//returns the customer by phone number
 	public CustomerModel getCustomerByphone(String phone) {
 		// TODO Auto-generated method stub
 		String query = "from CustomerModel order where order.customerPhone=" + phone;
@@ -1346,6 +1415,7 @@ public class DBData {
 		return customerModel;
 	}
 
+	//returns the list of orders by transaction id
 	public List<OrdersModel> getOrderlistByTranId(String tranId) {
 		// TODO Auto-generated method stub
 		String query = "from OrdersModel order where order.tranId=" + tranId;
@@ -1362,6 +1432,7 @@ public class DBData {
 		return ordersModels;
 	}
 
+	//returns the order of seller product by transaction id
 	public OrderSellerProductModel getOrderSellerProductByTranId(String tranId) {
 		// TODO Auto-generated method stub
 		String query = "from OrderSellerProductModel order where order.tranId=" + tranId;
@@ -1376,6 +1447,7 @@ public class DBData {
 		return ordersModel;
 	}
 
+	//updates the seller product
 	public void updateSellerProduct(SellersProduct sellersProduct) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -1389,6 +1461,7 @@ public class DBData {
 		con.closeSessionFactory();
 	}
 
+	//updates the delivery person
 	public void updateDeliveryPerson(DeliveryPersonModel deliveryPersonModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -1402,6 +1475,7 @@ public class DBData {
 		con.closeSessionFactory();
 	}
 
+	//deletes the delivery person
 	public void deleteDeliveryPerson(DeliveryPersonModel deliveryPersonModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -1418,6 +1492,7 @@ public class DBData {
 		
 	}
 
+	//deletes the  product
 	public void deleteProduct(ProductModel productModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -1433,6 +1508,7 @@ public class DBData {
 		System.out.println("Deleted...");
 	}
 
+	//updates the customer
 	public void updateCustomer(CustomerModel customerModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -1448,6 +1524,7 @@ public class DBData {
 		System.out.println("Updated...");
 	}
 
+	//returns the list of orders by month and year for report
 	public List<OrdersModel> getOrderforReport(String month, String year) {
 		// TODO Auto-generated method stub
 	//	select so from SomeObject so where TO_CHAR(order.orderDate, 'MM') = :month_as_string
@@ -1469,6 +1546,7 @@ public class DBData {
 		return OrdersModel;
 	}
 
+	// deletes the cart details by id
 	public void deleteCartDetailsModelId(CartDetailsModel sub) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -1484,6 +1562,7 @@ public class DBData {
 		System.out.println("Deleted...");
 	}
 
+	//updates the subcategory
 	public void updateSubcategory(SubcategoryModel subcategory) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -1499,6 +1578,7 @@ public class DBData {
 		System.out.println("Updated...");
 	}
 
+	// returns the android about details
 	public AndroidModel getAndroidDetails() {
 		// TODO Auto-generated method stub
 		String query = "from AndroidModel android where android.androidId=" + 1;
@@ -1514,6 +1594,7 @@ public class DBData {
 		return android;
 	}
 
+	//updates the android details
 	public void updateAndroidDetails(AndroidModel android) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -1529,6 +1610,7 @@ public class DBData {
 		System.out.println("Updated...");
 	}
 
+	//deletes the seller 
 	public void deleteSeller(SellerModel sellerModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -1544,6 +1626,7 @@ public class DBData {
 		System.out.println("Deleted...");
 	}
 
+	//deletes the customer
 	public void deleteCustomer(CustomerModel customerModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();
@@ -1559,6 +1642,7 @@ public class DBData {
 		System.out.println("Deleted...");
 	}
 
+	//deletes the cart details by cart id
 	public void deleteCartDetailsByCartId(int cartId) {
 		// TODO Auto-generated method stub
 		List<CartDetailsModel> cdm = new ArrayList<>();
@@ -1589,6 +1673,7 @@ public class DBData {
 		con.closeSessionFactory();
 	}
 
+	//deletes the cart details by cart details id
 	public void deleteCartBycartId(CartModel cartModel) {
 		// TODO Auto-generated method stub
 		Connection con = new Connection();

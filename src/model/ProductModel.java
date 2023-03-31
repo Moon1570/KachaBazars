@@ -1,3 +1,7 @@
+/*
+ * This Model refelects the Product table in the database.
+ * All the properties, fucntions, getters, setters, realation between entities and constructors are defined here.
+ */
 package model;
 
 import javax.persistence.CascadeType;
@@ -37,6 +41,7 @@ public class ProductModel {
 	@Column(name = "stock")
 	private double productStock;
 	
+	//Many products can have one unit.
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private UnitModel productUnit;
 	

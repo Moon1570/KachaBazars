@@ -1,3 +1,9 @@
+
+
+/*
+ * This servlet is in charge of the order success servler, the request, response handling, and URL mapping with the get and post methods.
+ * All the common operations for the order success are handled here. such as viewing the order success page.
+ */
 package controller;
 
 import java.io.IOException;
@@ -21,17 +27,25 @@ import model.SellersProduct;
 import sslcommerz.TransactionResponseValidator;
 
 
+/*
+ * This servlet will be handling all the request and response from the url /ordersuccess
+ */
 public class OrderSuccessServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// DBData object to access the database
 	DBData db = new DBData();
+
+	// AreaDao object to access the database
 	OrderDao od = new OrderDao();
 	
+	// DoGet method to handle the get requests
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
 
+	// DoPost method to handle the post requests
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
@@ -42,6 +56,8 @@ public class OrderSuccessServlet extends HttpServlet {
 		Map<String, String> map2 = new HashMap<String, String>();
 	
 		String[] act = map.get("action");
+
+		//if the action is inventoryorder and the order is sucessfully done, the request will be forwarded to the success.jsp page
 		if ((act[0]).equalsIgnoreCase("inventoryorder")) {
 			TransactionResponseValidator transactionResponseValidator = new TransactionResponseValidator();
 			//		transactionResponseValidator.receiveSuccessResponse(map);
@@ -84,6 +100,8 @@ public class OrderSuccessServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+
+		//if the action is cardorder, and the order is sucessfully done, the request will be forwarded to the success.jsp page
 		else if ((act[0]).equalsIgnoreCase("cartorder")) {
 			
 			TransactionResponseValidator transactionResponseValidator = new TransactionResponseValidator();
@@ -144,6 +162,8 @@ public class OrderSuccessServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+
+		//if the action is sellerproduct, and the order is sucessfully done, the request will be forwarded to the success.jsp page
 		else if ((act[0]).equalsIgnoreCase("sellerproduct")) {
 			
 			TransactionResponseValidator transactionResponseValidator = new TransactionResponseValidator();

@@ -1,3 +1,8 @@
+
+/*
+ * This servlet is in charge of the DropDown, the request, response handling, and URL mapping with the get and post methods. 
+ * All the common operations for the DropDown are handled here. such as adding, removing, updating, and viewing the DropDown elements.
+ */
 package controller;
 
 import java.io.IOException;
@@ -21,9 +26,14 @@ import model.DistrictModel;
 import model.UpazillaModel;
 
 
+/*
+ * Handles all the requests and responses for the "/dropdown*" URL
+ */
+
 public class DropDownServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// DBData object to access the database
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
@@ -31,11 +41,15 @@ public class DropDownServlet extends HttpServlet {
 		System.out.println("Hello World...");
 		RequestDispatcher rd = null;
 		int divisionsId = 0;
+
+		// DBData object to access the database
 		DropDownDAO db = new DropDownDAO();
 		List<DistrictModel> listOfDistrictsModel = null;
 		List<UpazillaModel> listOfUpazillasModel = null;
 		String action = request.getParameter("action");
 
+
+		// If the action is divisions, then get all divisions from the request and write the response
 		if (action.equals("divisions")) {
 			divisionsId = Integer.parseInt(request.getParameter("divisionsId"));
 
@@ -52,6 +66,8 @@ public class DropDownServlet extends HttpServlet {
 
 		}
 
+
+		// If the action is districts, then get all districts from the request and write the response
 		else if (action.equals("districts")) {
 
 			int districtsId = Integer.parseInt(request.getParameter("districtId"));
@@ -88,6 +104,9 @@ public class DropDownServlet extends HttpServlet {
 			 */
 		}
 
+
+		// If the action is upazillas, then get all upazillas from the request and write the response
+
 		else if (action.equals("upazillas")) {
 
 			int upazillasId = Integer.parseInt(request.getParameter("upazillasId"));
@@ -103,6 +122,8 @@ public class DropDownServlet extends HttpServlet {
 			response.getWriter().write(json);
 
 		}
+
+		// If the action is unions, then get all unions from the request and write the response
 		else if (action.equalsIgnoreCase("unions")) {
 			int upazillasId = Integer.parseInt(request.getParameter("upazillasId"));
 
@@ -116,6 +137,8 @@ public class DropDownServlet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
 		}
+
+		// If the action is delivery, then get all delivery from the request and write the response
 		else if (action.equals("delivery")) {
 			int unionId = Integer.parseInt(request.getParameter("unionId"));
 
@@ -132,6 +155,8 @@ public class DropDownServlet extends HttpServlet {
 
 	}
 
+	
+	// Post method
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
